@@ -1,0 +1,106 @@
+.aside {
+  flex: 0 0 15%;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  align-items: center;
+  height: 100vh;
+  @include maxWidth767 {
+    position: fixed;
+    left: 200%;
+    order: 1;
+    min-width: auto;
+    width: 50%;
+    flex: 0 1 0%;
+    background-color: $c-primary;
+    transition: all 1s ease-in-out;
+  }
+  &_active {
+    inset: 0;
+    left: 50%;
+    transition: left .5s ease;
+  }
+  &__wrapper {
+    height: 100%;
+    width: 100%;
+    border-right: 1px solid rgba(255, 255, 255, .1);
+    @include maxWidth767 {
+      border-right: 0;
+      border-left: 1px solid rgba(255, 255, 255, .1);
+    }
+    &_opened {
+      @extend .aside__wrapper;
+      @include maxWidth767 {
+        display: block;
+      }
+    }
+  }
+  &__burger {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    @include maxWidth767 {
+      display: flex;
+    }
+
+    &_button {
+      position: relative;
+      height: 26px;
+      width: 35px;
+      cursor: pointer;
+      background-color: transparent;
+
+      &.active {
+        span {
+          opacity: 0;
+        }
+        &.aside__burger_button:before,
+        &.aside__burger_button:after  {
+          top: 40%;
+        }
+        &.aside__burger_button:before {
+          transform: rotate(45deg);
+        }
+        &.aside__burger_button:after {
+          transform: rotate(-45deg);
+        }
+      }
+
+      span,
+      &:before,
+      &:after {
+        display: block;
+        position: absolute;
+        height: 4px;
+        width: 100%;
+        background-color: $c-white;
+        border-radius: 6px;
+        opacity: 1;
+      }
+      &:before,
+      &:after {
+        content: "";
+        transition: top .35s cubic-bezier(.23,1,.32,1),transform .35s cubic-bezier(.23,1,.32,1);
+      }
+
+      span {
+        top: 40%;
+        transform: translateY(-50%);
+      }
+      &:before {
+        top: 0;
+      }
+      &:after {
+        top: calc(90% - 6px);
+      }
+    }
+  }
+  h1 {
+    display: none;
+  }
+}

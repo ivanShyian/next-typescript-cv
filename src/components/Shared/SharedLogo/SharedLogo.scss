@@ -1,0 +1,16 @@
+.logo {
+  font-family: Changa, sans-serif;
+  margin: 40px 20px 20px 40px;
+  width: calc(100% - 59px);
+  font-size: 3rem;
+  color: $c-white; // deepskyblue
+  span:last-child {
+    color: $c-orange; // yellow
+  }
+  @include maxWidth767 {
+    margin: 60px 0 0 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
