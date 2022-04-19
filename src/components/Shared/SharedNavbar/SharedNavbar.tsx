@@ -19,7 +19,7 @@ export const SharedNavbar:  NextPage = () => {
   const navList: ListItem[] = [
     {id: 0, name: 'Home', iconComponent: <Home />},
     {id: 1, name: 'About', iconComponent: <Person />},
-    {id: 2, name: 'Work Exp.', iconComponent: <Briefcase />},
+    {id: 2, name: 'Experience', iconComponent: <Briefcase />},
     {id: 3, name: 'Projects', iconComponent: <Workflow />},
     {id: 4, name: 'Education', iconComponent: <Book />},
     {id: 5, name: 'Contacts', iconComponent: <IdBadge />}

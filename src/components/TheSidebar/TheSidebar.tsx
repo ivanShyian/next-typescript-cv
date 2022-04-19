@@ -8,7 +8,7 @@ export const TheSidebar: NextPage = () => {
   const [isNavOpened, changeNavState] = useState(false)
 
   //@TODO Rewrite
-  const asideClasses = isNavOpened ? 'aside aside_active' : 'aside'
+  const asideClasses = isNavOpened ? 'aside_active' : 'aside'
   const asideWrapperClasses = isNavOpened ? 'aside__wrapper_opened' : 'aside__wrapper'
   const asideBurgerBtnClasses = isNavOpened ? 'aside__burger_button active' : 'aside__burger_button'
 

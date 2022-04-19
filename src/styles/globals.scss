@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+html {
+  font-size: 15px;
+}
+
 html,
 body,
 div {
@@ -12,9 +16,13 @@ body {
   background-color: $c-primary;
 }
 
-nav, ul, li {
+h1, h2, h3, h4, h5, h6, p, nav, ul, li {
   margin: 0;
   padding: 0;
+}
+
+li {
+  list-style: none;
 }
 
 .container {

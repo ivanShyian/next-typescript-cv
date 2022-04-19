@@ -7,6 +7,7 @@
   height: 100vh;
   @include maxWidth767 {
     position: fixed;
+    z-index: 100;
     left: 200%;
     order: 1;
     min-width: auto;
@@ -16,10 +17,24 @@
     transition: all 1s ease-in-out;
   }
   &_active {
-    inset: 0;
-    left: 50%;
-    transition: left .5s ease;
+    @extend .aside;
+    @include maxWidth767 {
+      inset: 0;
+      left: 50%;
+      transition: left .5s ease;
+    }
+    .aside__wrapper_opened {
+      @include maxWidth767 {
+        border-right: 0;
+        border-left: 1px solid rgba(255, 255, 255, .1);
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
+    }
   }
+
+
   &__wrapper {
     height: 100%;
     width: 100%;
@@ -27,12 +42,6 @@
     @include maxWidth767 {
       border-right: 0;
       border-left: 1px solid rgba(255, 255, 255, .1);
-    }
-    &_opened {
-      @extend .aside__wrapper;
-      @include maxWidth767 {
-        display: block;
-      }
     }
   }
   &__burger {
