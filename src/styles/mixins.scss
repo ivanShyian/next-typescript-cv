@@ -1,3 +1,9 @@
+@mixin minWidth1824 {
+  @media (min-width: 1824px){
+    @content;
+  }
+}
+
 @mixin maxWidth1170 {
   @media (max-width: 1170px){
     @content;

@@ -1,0 +1,54 @@
+.cutaway-parallax {
+  position: absolute;
+  inset: 0;
+  opacity: .8;
+  z-index: 0;
+  .parallax-icon {
+    position: absolute;
+  }
+
+  &__js {
+    right: 10%;
+    top: 40%;
+  }
+
+  &__ts {
+    left: 19%;
+    top: 16%;
+  }
+
+  &__vue {
+    left: 29%;
+    top: 33%;
+  }
+
+  &__nuxt {
+    left: 23%;
+    top: 64%;
+  }
+
+  &__next {
+    right: 21%;
+    top: 56%;
+  }
+
+  &__react {
+    right: 24%;
+    top: 24%;
+  }
+
+  &__node {
+    left: 12%;
+    top: 46%;
+  }
+
+  &__mongo {
+    top: 73%;
+    right: 9%;
+  }
+
+  &__firebase {
+    left: 10%;
+    top: 80%;
+  }
+}

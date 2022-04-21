@@ -1,10 +1,11 @@
 .aside {
-  flex: 0 0 15%;
+  position: fixed;
   display: flex;
   flex-direction: column;
-  min-width: 200px;
+  min-width: 250px;
   align-items: center;
   height: 100vh;
+  background-color: $c-primary;
   @include maxWidth767 {
     position: fixed;
     z-index: 100;
@@ -13,7 +14,6 @@
     min-width: auto;
     width: 50%;
     flex: 0 1 0%;
-    background-color: $c-primary;
     transition: all 1s ease-in-out;
   }
   &_active {
@@ -38,7 +38,7 @@
   &__wrapper {
     height: 100%;
     width: 100%;
-    border-right: 1px solid rgba(255, 255, 255, .1);
+    border-right: 2px solid rgba(255, 255, 255, .3);
     @include maxWidth767 {
       border-right: 0;
       border-left: 1px solid rgba(255, 255, 255, .1);

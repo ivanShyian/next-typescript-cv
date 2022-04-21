@@ -9,6 +9,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
+        {/*Lato, League Spartan, Libre Baskerville, Rubik, Oswald, Changa, Amatic SC, Josefin Sans*/}
         {/*@TODO Clear head*/}
         <title>ivanShyian</title>
         <meta name="description" content="Ivan Shyian Portfolio" />
@@ -21,6 +22,7 @@ const Home: NextPage = () => {
       </Head>
       <IndexCutaway />
       <IndexAbout />
+
       <IndexExperience />
     </>
   )

@@ -1,0 +1,32 @@
+.tech-item {
+  margin-bottom: 1rem;
+  &__heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 0 .5rem .5rem .25rem;
+    font-size: 1.1rem;
+    font-family: 'Rubik', 'sans-serif';
+    &_value {
+      font-size: .9rem;
+    }
+  }
+}
+.tech-progress {
+  position: relative;
+  background-color: #e5e5e5;
+  border-radius: 1rem;
+  color: $c-white;
+  overflow: hidden;
+  height: .5rem;
+  &__indicator {
+    content: '';
+    position: absolute;
+    background-color: $c-secondary-lighten;
+    border-radius: 1rem;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}

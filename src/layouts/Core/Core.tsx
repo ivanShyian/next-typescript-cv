@@ -5,9 +5,9 @@ import './Core.scss'
 
 export default function Core({ children }: PropsWithChildren<{}>) {
   return (
-    <div className='container'>
+    <div className="core-layout">
       <TheSidebar />
-      <main className='main'>{children}</main>
+      <main className="main">{children}</main>
       {/*<TheFooter />*/}
     </div>
   )

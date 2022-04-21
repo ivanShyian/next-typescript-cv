@@ -1,0 +1,49 @@
+.experience-item {
+  display: flex;
+  margin-bottom: .5rem;
+  &__icon {
+    position: relative;
+    margin: 0 1.5rem 0 .2rem;
+    svg {
+      fill: $c-secondary;
+    }
+    &:after {
+      position: absolute;
+      top: 30px;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: block;
+      content: '';
+      background-color: lighten($c-secondary, 10);
+      width: 2px;
+    }
+  }
+  &__content {
+    flex: 1;
+    padding-bottom: 1rem;
+
+  }
+  &__term {
+    margin: .3rem 0 .6rem 0;
+    letter-spacing: .8px;
+    font-family: Lato, sans-serif;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .5);
+    font-size: .9rem;
+    text-transform: uppercase;
+  }
+  &__title {
+    color: $c-primary;
+    font-size: 1.2rem;
+    letter-spacing: .8px;
+    font-family: 'Rubik', 'sans-serif';
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+  &__text {
+    color: #666666;
+    letter-spacing: .9px;
+    line-height: 1.1rem;
+  }
+}

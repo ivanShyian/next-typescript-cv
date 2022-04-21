@@ -5,7 +5,7 @@
   font-size: 3rem;
   color: $c-white; // deepskyblue
   span:last-child {
-    color: $c-orange; // yellow
+    color: $c-secondary; // yellow
   }
   @include maxWidth767 {
     margin: 60px 0 0 0;

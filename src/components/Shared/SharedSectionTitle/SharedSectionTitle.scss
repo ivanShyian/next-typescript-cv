@@ -1,0 +1,18 @@
+.shared-section-title {
+  margin-bottom: 3rem;
+  position: relative;
+  &__text {
+    font-weight: 600;
+    font-family: 'League Spartan', 'sans-serif';
+    font-size: 2.5rem;
+    color: $c-primary;
+  }
+  svg {
+    position: absolute;
+    top: -13px;
+    left: -13px;
+    g {
+      fill: #000;
+    }
+  }
+}

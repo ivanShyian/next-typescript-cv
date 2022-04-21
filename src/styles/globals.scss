@@ -5,6 +5,22 @@ html {
   font-size: 15px;
 }
 
+// Scrollbar styles
+body {
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $c-primary;
+    border-radius: 100px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $c-white;
+    box-shadow: inset 2px 2px 5px 0 rgba($c-primary, 0.5);
+    border-radius: 100px;
+  }
+}
+
 html,
 body,
 div {
@@ -12,8 +28,8 @@ div {
   font-family: 'Fira Sans', sans-serif;
 }
 
-body {
-  background-color: $c-primary;
+body, html {
+  background-color: $c-white-darken-1;
 }
 
 h1, h2, h3, h4, h5, h6, p, nav, ul, li {
@@ -26,5 +42,21 @@ li {
 }
 
 .container {
-  display: flex;
+  margin: 0 auto;
+  max-width: 1140px;
+}
+
+.section {
+  box-sizing: border-box;
+  padding: 60px 20px 60px;
+  width: 100%;
+}
+
+.card {
+  border-radius: 1.5rem;
+  padding: 1.7rem;
+  //box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  //box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  background-color: $c-white;
 }
