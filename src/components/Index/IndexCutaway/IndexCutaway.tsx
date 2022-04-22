@@ -1,7 +1,9 @@
 import {NextPage} from 'next'
 import Image from 'next/image'
 import './IndexCutaway.scss'
+
 import {useEffect, useState} from 'react'
+import {useScroll} from '@/use/useScroll'
 
 import image from '@/public/assets/Avatar.png'
 import FacebookIcon from '@/public/icons/social-icons/facebook.svg'
@@ -24,13 +26,13 @@ const subtitleList = [
 export const IndexCutaway: NextPage = () => {
   const [transformValue, changeTransformValue] = useState(0)
   const [negativeOrder, changeOrderBool] = useState(false)
+  const [scrollTo] = useScroll()
 
-  const scrollY = () => {
-    const clientHeight = document.documentElement.clientHeight
-    window.scroll({
-      top: clientHeight,
-      behavior: "smooth"
-    })
+  const onScroll = () => {
+    // @TODO Extend useScroll hook with this
+    const scrolled = document.documentElement.scrollTop
+    const offsetHeight = (document.querySelector('.index__about') as HTMLDivElement).getBoundingClientRect()
+    scrollTo(scrolled + offsetHeight.top, 600)
   }
 
   useEffect(() => {
@@ -62,8 +64,8 @@ export const IndexCutaway: NextPage = () => {
           <Image
             className="cutaway__image_img"
             src={image}
-            width={175}
-            height={175}
+            width="175"
+            height="175"
             alt="avatar"
           />
         </div>
@@ -117,8 +119,8 @@ export const IndexCutaway: NextPage = () => {
         <div className="cutaway__hire">
           <SharedButton>Hire me</SharedButton>
         </div>
-        <div className="cutaway__scroll">
-          <DoubleDown onClick={scrollY} />
+        <div className="cutaway__scroll" onClick={onScroll}>
+          <DoubleDown />
         </div>
       </div>
       <CutawayParallax />

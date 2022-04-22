@@ -3,7 +3,12 @@
   height: 100vh;
   background-color: $c-primary;
   position: relative;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include maxWidth767 {
+    justify-content: flex-start;
+  }
   &__wrapper {
     display: flex;
     flex-direction: column;
@@ -12,7 +17,6 @@
     position: relative;
     z-index: 1;
   }
-
   &__image {
     margin-bottom: 1.5rem;
     &_img {
@@ -24,6 +28,10 @@
     color: $c-white;
     font-family: 'League Spartan', 'sans-serif';
     font-size: 1.77rem;
+    @include maxWidth767 {
+      font-size: 1.5rem;
+      margin-bottom: .7rem;
+    }
   }
   &__subtitle {
     max-height: 1.4rem;
@@ -47,6 +55,7 @@
   }
   &__social {
     margin-bottom: 1.5rem;
+    cursor: pointer;
     &_list {
       display: flex;
     }
@@ -61,25 +70,40 @@
       }
     }
   }
-
   &__hire {
     display: flex;
     justify-content: center;
     margin-bottom: 8rem;
     width: 100%;
+    @include maxWidth767 {
+      margin-bottom: 4rem;
+    }
+    @include maxWidth450 {
+      margin-bottom: 0;
+    }
   }
-
   &__scroll {
     position: absolute;
     bottom: -60px;
     animation: 2s bounce infinite;
     cursor: pointer;
+    @include maxWidth767 {
+      bottom: -90px;
+    }
     svg {
       width: 50px;
       g {
         fill: $c-white;
       }
     }
+  }
+
+  &__image,
+  &__name,
+  &__subtitle,
+  &__social svg,
+  &__scroll svg {
+    pointer-events: none;
   }
 }
 

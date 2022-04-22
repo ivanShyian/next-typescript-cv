@@ -4,51 +4,88 @@
   opacity: .8;
   z-index: 0;
   .parallax-icon {
+    pointer-events: none;
     position: absolute;
   }
 
   &__js {
     right: 10%;
     top: 40%;
+    @include maxWidth450 {
+      right: 14%;
+      top: 8%;
+    }
   }
 
   &__ts {
     left: 19%;
     top: 16%;
+    @include maxWidth450 {
+      left: 14%;
+      top: 8%;
+    }
   }
 
   &__vue {
     left: 29%;
     top: 33%;
+    @include maxWidth450 {
+      left: 7%;
+    }
   }
 
   &__nuxt {
     left: 23%;
     top: 64%;
+    @include maxWidth450 {
+      left: 50%;
+      transform: translateX(-50%);
+      top: 74%;
+    }
   }
 
   &__next {
     right: 21%;
     top: 56%;
+    @include maxWidth450 {
+      right: 8%;
+      top: 64%;
+    }
   }
 
   &__react {
     right: 24%;
     top: 24%;
+    @include maxWidth450 {
+      right: 8%;
+      top: 33%;
+    }
   }
 
   &__node {
     left: 12%;
     top: 46%;
+    @include maxWidth450 {
+      top: 64%;
+      left: 8%;
+    }
   }
 
   &__mongo {
     top: 73%;
     right: 9%;
+    @include maxWidth450 {
+      top: 83%;
+      right: 14%;
+    }
   }
 
   &__firebase {
     left: 10%;
     top: 80%;
+    @include maxWidth450 {
+      left: 14%;
+      top: 83%;
+    }
   }
 }

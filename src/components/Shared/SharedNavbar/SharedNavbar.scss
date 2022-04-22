@@ -41,6 +41,9 @@
         fill: $c-secondary-lighten !important;
         margin-right: 1rem;
       }
+      svg, span {
+        pointer-events: none;
+      }
     }
   }
 }

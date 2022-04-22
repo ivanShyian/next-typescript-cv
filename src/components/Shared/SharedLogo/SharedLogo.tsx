@@ -3,7 +3,7 @@ import './SharedLogo.scss'
 
 export const SharedLogo: NextPage = () => {
   return (
-    <p className='logo'>
+    <p className="logo">
       <span>IS</span>
       <span>.</span>
     </p>

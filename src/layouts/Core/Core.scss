@@ -1,3 +1,7 @@
+.core-layout {
+  height: 100%;
+}
+
 .main {
   margin-left: 250px;
   @include maxWidth767 {

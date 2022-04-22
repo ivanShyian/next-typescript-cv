@@ -15,3 +15,15 @@
     @content;
   }
 }
+
+@mixin maxWidth450 {
+  @media (max-width: 450px) {
+    @content
+  }
+}
+
+@mixin maxWidth350 {
+  @media (max-width: 35px) {
+    @content
+  }
+}

@@ -19,15 +19,15 @@ export const SharedNavbar:  NextPage = () => {
   const navList: ListItem[] = [
     {id: 0, name: 'Home', iconComponent: <Home />},
     {id: 1, name: 'About', iconComponent: <Person />},
-    {id: 2, name: 'Experience', iconComponent: <Briefcase />},
+    {id: 2, name: 'Education', iconComponent: <Book />},
+    {id: 3, name: 'Work', iconComponent: <Briefcase />},
     {id: 3, name: 'Projects', iconComponent: <Workflow />},
-    {id: 4, name: 'Education', iconComponent: <Book />},
-    {id: 5, name: 'Contacts', iconComponent: <IdBadge />}
+    {id: 5, name: 'Contact me', iconComponent: <IdBadge />}
   ]
 
   const listItem = (item: ListItem) => {
     return (
-      <li key={item.id}>
+      <li className="nav__item" key={item.id}>
         {item.iconComponent}
         <span>{item.name}</span>
       </li>
@@ -35,9 +35,9 @@ export const SharedNavbar:  NextPage = () => {
   }
 
   return (
-    <div className='navigation'>
-      <nav className='navigation__nav nav'>
-        <ul className='nav__list'>
+    <div className="navigation">
+      <nav className="navigation__nav nav">
+        <ul className="nav__list">
           {navList.map(listItem)}
         </ul>
       </nav>

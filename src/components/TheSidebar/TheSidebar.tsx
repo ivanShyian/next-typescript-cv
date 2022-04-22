@@ -1,8 +1,9 @@
 import type { NextPage } from 'next'
-import {useState} from 'react'
+import {RefObject, useEffect, useState} from 'react'
 import './TheSidebar.scss'
 import SharedNavbar from '@/components/Shared/SharedNavbar'
 import SharedLogo from '@/components/Shared/SharedLogo'
+import {useElementOnScreen} from '@/use/useElementOnScreen'
 
 export const TheSidebar: NextPage = () => {
   const [isNavOpened, changeNavState] = useState(false)
@@ -10,11 +11,19 @@ export const TheSidebar: NextPage = () => {
   const asideClasses = isNavOpened ? 'aside_active' : 'aside'
   const asideBurgerBtnClasses = isNavOpened ? 'aside__burger_button active' : 'aside__burger_button'
 
+  const [containerRef, isVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.05
+  }, '.index__cutaway') as [RefObject<HTMLDivElement> | null, boolean]
+
   const onBurgerClick = () => {
     changeNavState((state: boolean) => {
       return !state
     })
   }
+
+  const burgerClass = isVisible ? 'aside__burger' : 'aside__burger darken'
 
   return (
     <aside className={asideClasses}>
@@ -22,7 +31,7 @@ export const TheSidebar: NextPage = () => {
         <SharedLogo />
         <SharedNavbar />
       </div>
-      <div className="aside__burger">
+      <div className={burgerClass}>
         <div
           onClick={onBurgerClick}
           className={asideBurgerBtnClasses}

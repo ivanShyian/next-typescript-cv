@@ -1,4 +1,4 @@
-.experience-item {
+.education-item {
   display: flex;
   margin-bottom: .5rem;
   &__icon {
@@ -16,7 +16,7 @@
       display: block;
       content: '';
       background-color: lighten($c-secondary, 10);
-      width: 2px;
+      width: 1.8px;
     }
   }
   &__content {

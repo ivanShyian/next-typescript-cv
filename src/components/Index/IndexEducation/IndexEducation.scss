@@ -1,0 +1,50 @@
+.education {
+  &__content {
+    width: 100%;
+    display: flex;
+    @include maxWidth1170 {
+      flex-direction: column;
+    }
+  }
+
+  &__card {
+    flex: 1;
+    margin-right: 2rem;
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.typeEducation,
+    &.typeLearning {
+      position: relative;
+      &:after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50%;
+        opacity: .06;
+        @include maxWidth1170 {
+          background-position: 75% 50%;
+          background-size: 30%;
+        }
+        @include maxWidth450 {
+          background-position: 50%;
+          background-size: 50%;
+        }
+      }
+    }
+    &.typeEducation:after {
+      background-image: url("/icons/education-icons/education.svg");
+    }
+
+    &.typeLearning:after {
+      background-image: url("/icons/education-icons/learning.svg");
+    }
+
+    @include maxWidth1170 {
+      margin: 0 0 2rem 0;
+    }
+  }
+}

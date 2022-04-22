@@ -108,6 +108,16 @@
         top: calc(90% - 6px);
       }
     }
+
+    &.darken {
+      .aside__burger_button {
+        span,
+        &:before,
+        &:after {
+          background-color: $c-primary !important;
+        }
+      }
+    }
   }
   h1 {
     display: none;

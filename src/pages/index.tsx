@@ -1,18 +1,20 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
+import {Fragment} from 'react'
 
+import Head from 'next/head'
 import IndexCutaway from '@/components/Index/IndexCutaway'
 import IndexAbout from '@/components/Index/IndexAbout'
-import IndexExperience from '@/components/Index/IndexExperience'
+import IndexEducation from '@/components/Index/IndexEducation'
 
 const Home: NextPage = () => {
   return (
-    <>
+    <Fragment>
       <Head>
         {/*Lato, League Spartan, Libre Baskerville, Rubik, Oswald, Changa, Amatic SC, Josefin Sans*/}
         {/*@TODO Clear head*/}
         <title>ivanShyian</title>
         <meta name="description" content="Ivan Shyian Portfolio" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
@@ -22,9 +24,8 @@ const Home: NextPage = () => {
       </Head>
       <IndexCutaway />
       <IndexAbout />
-
-      <IndexExperience />
-    </>
+      <IndexEducation />
+    </Fragment>
   )
 }
 
