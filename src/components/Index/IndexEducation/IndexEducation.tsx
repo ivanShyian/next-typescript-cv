@@ -16,7 +16,7 @@ const educationWork = [
 
 export const IndexEducation: NextPage = () => {
   return (
-    <section className='index__education section education'>
+    <section id="education" className='index__education section education'>
       <div className="education__wrapper container">
         <SharedSectionTitle>Education</SharedSectionTitle>
         <div className="education__content">

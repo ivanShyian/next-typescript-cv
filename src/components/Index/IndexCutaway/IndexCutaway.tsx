@@ -28,13 +28,6 @@ export const IndexCutaway: NextPage = () => {
   const [negativeOrder, changeOrderBool] = useState(false)
   const [scrollTo] = useScroll()
 
-  const onScroll = () => {
-    // @TODO Extend useScroll hook with this
-    const scrolled = document.documentElement.scrollTop
-    const offsetHeight = (document.querySelector('.index__about') as HTMLDivElement).getBoundingClientRect()
-    scrollTo(scrolled + offsetHeight.top, 600)
-  }
-
   useEffect(() => {
     const interval = setInterval(() => {
       changeTransformValue((value) => {
@@ -58,7 +51,7 @@ export const IndexCutaway: NextPage = () => {
   }, [transformValue, negativeOrder])
 
   return (
-    <section className="index__cutaway section cutaway">
+    <section id="cutaway" className="index__cutaway section cutaway">
       <div className="cutaway__wrapper container">
         <div className="cutaway__image">
           <Image
@@ -119,7 +112,7 @@ export const IndexCutaway: NextPage = () => {
         <div className="cutaway__hire">
           <SharedButton>Hire me</SharedButton>
         </div>
-        <div className="cutaway__scroll" onClick={onScroll}>
+        <div className="cutaway__scroll" onClick={() => scrollTo('.index__about', 600)}>
           <DoubleDown />
         </div>
       </div>

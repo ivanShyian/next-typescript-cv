@@ -24,10 +24,9 @@
     li {
       display: flex;
       align-items: center;
-      //font-family: 'Amatic SC', 'sans-serif';
+      cursor: pointer;
       font-family: 'Josefin Sans', 'sans-serif';
       font-size: 1.3rem;
-      //letter-spacing: .1px;
       list-style: none;
       font-weight: 700;
       color: $c-white;

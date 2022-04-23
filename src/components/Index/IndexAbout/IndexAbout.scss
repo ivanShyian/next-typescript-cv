@@ -3,7 +3,7 @@
 }
 
 .about-skills {
-  color: lighten(#000, 40);
+  color: lighten($c-primary, 10);
   display: flex;
   justify-content: center;
   @include maxWidth1170 {

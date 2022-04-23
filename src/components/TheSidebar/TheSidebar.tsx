@@ -39,6 +39,7 @@ export const TheSidebar: NextPage = () => {
           <span />
         </div>
       </div>
+      <b className="hr" />
     </aside>
   )
 }

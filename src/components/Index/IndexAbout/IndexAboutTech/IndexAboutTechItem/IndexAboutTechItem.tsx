@@ -14,7 +14,7 @@ export const IndexAboutTechItem: FC<Props> = ({tech}: Props) => {
         <span className="tech-item__heading_value">{tech.value}%</span>
       </div>
       <div className="tech-item__progress tech-progress">
-        <div className="tech-progress__indicator" style={{width: `${tech.value}%`, backgroundColor: tech.color}}/>
+        <div className="tech-progress__indicator" style={{width: `${tech.value}%`, backgroundColor: tech.color || 'orange'}}/>
       </div>
     </li>
   )

@@ -11,14 +11,14 @@ const techs = [
   {id: 0, key: 'Javascript, Typescript', value: 85, color: 'darkorange'},
   {id: 0, key: 'Vue, Nuxt', value: 80, color: 'aqua'},
   {id: 0, key: 'React, Next', value: 60, color: 'FD6060FF'},
-  {id: 0, key: 'Node, Express', value: 70, color: 'blue'},
+  {id: 0, key: 'Node, Express', value: 70, color: 'silver'},
   {id: 0, key: 'Mongo, Mongoose, Firebase', value: 75, color: 'red'},
   {id: 0, key: 'Tailwind, Bootstrap', value: 85, color: ''},
 ]
 
 export const IndexAbout: NextPage = () => {
   return (
-    <section className="index__about section about">
+    <section id="about" className="index__about section about">
       <div className="about__wrapper container">
         <SharedSectionTitle>About Me</SharedSectionTitle>
         <div className="about__skills about-skills">

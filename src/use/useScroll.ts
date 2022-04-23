@@ -1,7 +1,11 @@
-type Options = (yPosition: number, duration: number) => void
+type Options = (selector: string, duration?: number) => void
 
 export const useScroll = () => {
-  const scrollTo: Options = (yPosition, duration) => {
+  const scrollTo: Options = (selector, duration = 600) => {
+    const scrolled = document.documentElement.scrollTop
+    const offsetHeight = (document.querySelector(selector) as HTMLDivElement).getBoundingClientRect()
+
+    const yPosition = scrolled + offsetHeight.top
     const startY = window.scrollY
     const difference = yPosition - startY
     const startTime = performance.now()

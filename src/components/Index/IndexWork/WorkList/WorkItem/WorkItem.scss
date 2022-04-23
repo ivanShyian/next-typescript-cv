@@ -1,0 +1,181 @@
+.work {
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &_img {
+      flex: 0 0 20%;
+      @include maxWidth1170 {
+        display: none;
+      }
+      svg {
+        @include maxWidth1170 {
+          width: 130px;
+        }
+      }
+    }
+    &_card {
+      flex: 1;
+    }
+  }
+  &-card {
+    position: relative;
+    overflow: hidden;
+    &__content {
+      position: relative;
+      z-index: 2;
+    }
+    &__heading {
+      &_content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    &__title {
+      display: flex;
+      justify-content: space-between;
+      color: $c-primary;
+      font-family: 'Rubik', 'sans-serif';
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-bottom: -.2rem;
+      letter-spacing: -1.2px;
+      @include maxWidth767 {
+        margin-bottom: .25rem;
+        font-size: 1.3rem;
+      }
+    }
+    &__position {
+      display: flex;
+      align-items: center;
+      color: $c-primary;
+      font-family: 'Rubik', 'sans-serif';
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      font-size: 1.2rem;
+      opacity: .9;
+      @include maxWidth1170 {
+        font-size: 1rem;
+      }
+      @include maxWidth767 {
+        font-size: .8rem;
+      }
+      svg {
+        margin-right: .5rem;
+        @include maxWidth1170 {
+          width: 20px;
+          margin-right: .25rem;
+        }
+        @include maxWidth767 {
+          width: 18px;
+        }
+      }
+      &.nuxt svg {
+        margin-top: -5px;
+      }
+    }
+    &__subtitle {
+      opacity: .7;
+      margin-bottom: 1rem;
+      margin-left: 1rem;
+      @include maxWidth767 {
+        margin-left: .5rem;
+      }
+    }
+    &__description {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-right: 2rem;
+      @include maxWidth767 {
+        margin-right: 0;
+      }
+      &_wrapper {
+        display: flex;
+        @include maxWidth767 {
+          flex-direction: column;
+        }
+      }
+      &_text {
+        line-height: 1.4rem;
+        margin-bottom: 2rem;
+        @include maxWidth767 {
+          margin-bottom: 1rem;
+        }
+      }
+      &_tech {
+        color: $c-primary;
+        font-family: 'Rubik', 'sans-serif';
+        font-size: .9rem;
+        font-weight: 700;
+        @include maxWidth767 {
+          display: none;
+        }
+      }
+    }
+    &__background {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      position: absolute;
+      margin: 0 1rem .5rem 0;
+      inset: 0;
+
+      font-size: 7rem;
+      font-family: 'Oswald', 'sans-serif';
+      letter-spacing: 2px;
+      z-index: 0;
+      opacity: .15;
+      color: $c-primary;
+      //text-decoration: underline;
+      text-shadow:
+              -0.0075em 0.0075em 0 mix(#fff, #e91e63, 94%),
+              0.005em 0.005em 0 mix(#fff, #e91e63, 60%),
+              0.01em 0.01em 0 mix(#fff, #e91e63, 62%),
+              0.015em 0.015em mix(#fff, #e91e63, 64%),
+              0.02em 0.02em 0 mix(#fff, #e91e63, 66%),
+              0.025em 0.025em 0 mix(#fff, #e91e63, 68%),
+              0.03em 0.03em 0 mix(#fff, #e91e63, 70%),
+              0.035em 0.035em 0 mix(#fff, #e91e63, 72%);
+
+      @include maxWidth767 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+.work-card__responsibilities {
+  @include maxWidth767 {
+    display: flex;
+    justify-content: space-between;
+  }
+  &_list {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    flex-wrap: wrap;
+    margin-right: 1rem;
+    flex: 0 0 20%;
+    opacity: .7;
+    @include maxWidth767 {
+      text-align: left;
+    }
+    li {
+      margin-bottom: .3rem;
+      white-space: nowrap;
+    }
+  }
+  &_tech {
+    @extend .work-card__responsibilities_list;
+    display: none;
+    @include maxWidth767 {
+      display: flex;
+    }
+  }
+}
