@@ -5,6 +5,7 @@ import Head from 'next/head'
 import IndexCutaway from '@/components/Index/IndexCutaway'
 import IndexAbout from '@/components/Index/IndexAbout'
 import IndexEducation from '@/components/Index/IndexEducation'
+import IndexWork from '@/components/Index/IndexWork'
 
 const Home: NextPage = () => {
   return (
@@ -25,6 +26,7 @@ const Home: NextPage = () => {
       <IndexCutaway />
       <IndexAbout />
       <IndexEducation />
+      <IndexWork />
     </Fragment>
   )
 }

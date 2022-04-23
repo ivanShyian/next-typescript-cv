@@ -1,0 +1,103 @@
+.work {
+
+  // item
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &_img {
+      flex: 0 0 20%;
+      svg {
+        opacity: .6;
+      }
+    }
+    &_descr {
+      flex: 1;
+    }
+  }
+  &-card {
+    position: relative;
+    &__content {
+      position: relative;
+      z-index: 2;
+    }
+    &__heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-right: 1rem;
+      &_right {
+        display: flex;
+        align-items: center;
+        color: $c-primary;
+        font-family: 'Rubik', 'sans-serif';
+        font-weight: 700;
+        letter-spacing: -1.2px;
+        font-size: 1.2rem;
+        opacity: .9;
+        svg {
+          margin-right: .5rem;
+        }
+        &.nuxt svg {
+          margin-top: -5px;
+        }
+      }
+    }
+    &__title {
+      display: flex;
+      justify-content: space-between;
+      color: $c-primary;
+      font-family: 'Rubik', 'sans-serif';
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-bottom: -.2rem;
+      letter-spacing: -1.2px;
+    }
+    &__subtitle {
+      opacity: .7;
+      margin-bottom: 1rem;
+      margin-left: 1rem;
+    }
+    &__description {
+      margin-bottom: 2rem;
+    }
+    &__background {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      inset: 0;
+
+      font-size: 7rem;
+      font-family: 'Oswald', 'sans-serif';
+      letter-spacing: 2px;
+      z-index: 0;
+      opacity: .15;
+      color: $c-primary;
+      text-decoration: underline;
+      text-shadow:
+              -0.0075em 0.0075em 0 mix(#fff, #e91e63, 94%),
+              0.005em 0.005em 0 mix(#fff, #e91e63, 60%),
+              0.01em 0.01em 0 mix(#fff, #e91e63, 62%),
+              0.015em 0.015em mix(#fff, #e91e63, 64%),
+              0.02em 0.02em 0 mix(#fff, #e91e63, 66%),
+              0.025em 0.025em 0 mix(#fff, #e91e63, 68%),
+              0.03em 0.03em 0 mix(#fff, #e91e63, 70%),
+              0.035em 0.035em 0 mix(#fff, #e91e63, 72%);
+    }
+  }
+}
+
+.work-resp__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 2rem;
+  li {
+    list-style: inside;
+    margin-bottom: .5rem;
+    flex: 0 0 33%;
+  }
+}
