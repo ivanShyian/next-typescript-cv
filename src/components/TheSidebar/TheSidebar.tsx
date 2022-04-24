@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import {RefObject, useEffect, useState} from 'react'
+import {RefObject, useState} from 'react'
 import './TheSidebar.scss'
 import SharedNavbar from '@/components/Shared/SharedNavbar'
 import SharedLogo from '@/components/Shared/SharedLogo'
@@ -28,7 +28,9 @@ export const TheSidebar: NextPage = () => {
   return (
     <aside className={asideClasses}>
       <div className="aside__wrapper">
-        <SharedLogo />
+        <div className="aside__logo">
+          <SharedLogo />
+        </div>
         <SharedNavbar />
       </div>
       <div className={burgerClass}>

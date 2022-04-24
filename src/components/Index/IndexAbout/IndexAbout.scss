@@ -1,5 +1,11 @@
-.about__wrapper {
-  position: relative;
+.about {
+  margin-top: 60px;
+  @include maxWidth767 {
+    margin-top: 40px;
+  }
+  &__wrapper {
+    position: relative;
+  }
 }
 
 .about-skills {

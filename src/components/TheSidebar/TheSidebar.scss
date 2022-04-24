@@ -33,8 +33,6 @@
       }
     }
   }
-
-
   &__wrapper {
     height: 100%;
     width: 100%;
@@ -42,6 +40,12 @@
     @include maxWidth767 {
       border-right: 0;
       border-left: 1px solid rgba(255, 255, 255, .5);
+    }
+  }
+  &__logo {
+    margin-bottom: 8rem;
+    @include maxWidth767 {
+      margin-bottom: 5rem;
     }
   }
   &__burger {

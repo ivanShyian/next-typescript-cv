@@ -18,9 +18,6 @@
     align-items: center;
   }
   &__list {
-    margin: auto 0;
-    position: absolute;
-    top: calc(50vh - 285px);
     li {
       display: flex;
       align-items: center;
