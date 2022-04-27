@@ -1,21 +1,23 @@
 .education {
+  position: relative;
   &__content {
     width: 100%;
     display: flex;
+    align-items: flex-start;
     @include maxWidth1170 {
       flex-direction: column;
     }
   }
 
-  &__card {
-    flex: 1;
-    margin-right: 2rem;
-    &:last-child {
-      margin-right: 0;
-    }
+  &__courses {
+    position: absolute;
+    right: 64px;
+  }
 
-    &.typeEducation,
-    &.typeLearning {
+  &__card {
+    width: 350px;
+    margin-right: 2rem;
+    &.typeEducation {
       position: relative;
       &:after {
         position: absolute;
@@ -38,7 +40,6 @@
     &.typeEducation:after {
       background-image: url("/icons/education-icons/education.svg");
     }
-
     &.typeLearning:after {
       background-image: url("/icons/education-icons/learning.svg");
     }

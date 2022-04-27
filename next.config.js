@@ -2,7 +2,7 @@ const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   sassOptions: {
     includePaths: [path.join(__dirname, 'src', 'styles'), path.join(__dirname, 'public')],
     additionalData: `@import "src/styles/variables.scss"; @import "src/styles/mixins.scss";`
