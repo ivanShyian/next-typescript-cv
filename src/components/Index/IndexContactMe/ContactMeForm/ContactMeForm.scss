@@ -3,15 +3,31 @@
     margin: 0 auto;
   }
   &__button {
-    width: 100%;
-    > button {
-      width: 100%;
-    }
+    display: flex;
+    justify-content: flex-end;
   }
   .form-control {
     margin-bottom: 1.5rem;
-    input,
-    textarea {
+    &__heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin: 0 1rem .25rem 1rem;
+      label {
+        font-size: 1.1rem;
+        display: block;
+        font-family: Rubik, sans-serif;
+        font-weight: 600;
+        color: $c-primary;
+      }
+      span {
+        font-family: "League Spartan", "sans-serif";
+        font-size: .9rem;
+        color: $c-secondary-lighten;
+        font-weight: 600;
+      }
+    }
+    &__input {
       opacity: .8;
       box-sizing: border-box;
       font-size: 1.2rem;
@@ -23,18 +39,14 @@
       width: 100%;
       font-family: "League Spartan", sans-serif;
       background-color: $c-white-darken-1;
-    }
-    textarea {
       resize: none;
-    }
-    label {
-      font-size: 1.1rem;
-      display: block;
-      margin-left: 1rem;
-      margin-bottom: .25rem;
-      font-family: Rubik, sans-serif;
-      font-weight: 600;
-      color: $c-primary;
+      &_error {
+        @extend .form-control__input;
+        border: 2px solid $c-secondary-lighten;
+      }
+      @include maxWidth1170 {
+        opacity: 1;
+      }
     }
   }
 }

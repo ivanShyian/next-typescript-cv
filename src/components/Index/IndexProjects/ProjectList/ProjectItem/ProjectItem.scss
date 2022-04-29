@@ -1,5 +1,5 @@
 .project-item {
-  flex: 0 1 calc(33% - 1.8rem);
+  flex: 0 1 calc(33% - 1.9rem);
   margin: 0 3rem 3rem 0;
   position: relative;
   min-height: calc((1170px / 3) - 3rem);
@@ -22,6 +22,7 @@
     }
   }
   @include maxWidth767 {
+    position: relative;
     width: 80%;
     margin: 0 0 3rem 0 !important;
     flex-basis: 100%;
@@ -34,6 +35,9 @@
     .project-wrapper:before {
       opacity: .75;
       transition: opacity .25s ease-in;
+      @include maxWidth767 {
+        transition: none;
+      }
     }
     .project-content__heading {
       top: 0;
@@ -68,9 +72,16 @@
     z-index: 2;
     inset: 0;
     content: '';
-    background-color: #353353;
+    background-color: $c-primary;
     opacity: 0;
-    transition: all .25s ease-in;
+    transition: opacity .25s ease-in;
+    @include maxWidth767 {
+      opacity: .75;
+    }
+  }
+  @include maxWidth767 {
+    position: absolute;
+    inset: 0;
   }
 }
 .project-content {
@@ -80,6 +91,9 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  @include maxWidth767 {
+    padding: 1.7rem;
+  }
   p {
     color: $c-white;
     font-family: Rubik, sans-serif;
@@ -90,6 +104,10 @@
     position: relative;
     top: -200px;
     transition: all .25s ease-in;
+    @include maxWidth767 {
+      opacity: 1;
+      top: 0;
+    }
   }
   &__title {
     font-size: 1.8rem;
@@ -116,6 +134,10 @@
     opacity: 0;
     bottom: -200px;
     transition: all .25s ease-in;
+    @include maxWidth767 {
+      bottom: 0;
+      opacity: 1;
+    }
     svg {
       margin: -1px 0 0 -1px;
       path {

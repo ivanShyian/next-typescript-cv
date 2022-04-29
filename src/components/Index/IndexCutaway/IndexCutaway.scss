@@ -16,6 +16,9 @@
     justify-content: center;
     position: relative;
     z-index: 1;
+    @include maxWidth767 {
+      position: static;
+    }
   }
   &__image {
     margin-bottom: 1.5rem;
@@ -88,7 +91,7 @@
     animation: 2s bounce infinite;
     cursor: pointer;
     @include maxWidth767 {
-      bottom: -90px;
+      bottom: 80px;
     }
     svg {
       width: 50px;

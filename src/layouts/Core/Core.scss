@@ -4,6 +4,9 @@
 
 .main {
   margin-left: 250px;
+  @include maxWidth1170 {
+    margin-left: 200px;
+  }
   @include maxWidth767 {
     display: flex;
     flex-direction: column;

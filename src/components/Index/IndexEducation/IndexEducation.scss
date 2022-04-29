@@ -4,6 +4,7 @@
     width: 100%;
     display: flex;
     align-items: flex-start;
+    position: relative;
     @include maxWidth1170 {
       flex-direction: column;
     }
@@ -11,10 +12,9 @@
 
   &__courses {
     position: absolute;
-    right: 64px;
-    top: -50%;
-    transform: translateY(60%);
-    @include maxWidth767 {
+    right: 0;
+    top: -25%;
+    @include maxWidth1170 {
       width: 100%;
       position: relative;
       inset: 0;

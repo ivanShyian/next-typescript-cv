@@ -6,6 +6,9 @@
   align-items: center;
   height: 100vh;
   background-color: $c-primary;
+  @include maxWidth1170 {
+    min-width: 200px;
+  }
   @include maxWidth767 {
     position: fixed;
     z-index: 100;

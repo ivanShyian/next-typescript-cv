@@ -10,6 +10,9 @@
   span {
     pointer-events: none;
   }
+  @include maxWidth1170 {
+    margin-left: 30px;
+  }
   @include maxWidth767 {
     margin: 60px 0 0 0;
     width: 100%;

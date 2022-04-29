@@ -34,7 +34,7 @@ export const IndexEducation: NextPage = () => {
     const cardCurrent = cardRef.current
     const educationCurrent = educationRef.current
     if (cardCurrent && educationCurrent) {
-      const isDesktop = document.documentElement.clientWidth > 767
+      const isDesktop = document.documentElement.clientWidth > 1170
       const CARD_MARGIN = 0
       changeCircleSizes({
         width: isDesktop ? educationCurrent.clientWidth - (cardCurrent.clientWidth + CARD_MARGIN) : educationCurrent.clientWidth,

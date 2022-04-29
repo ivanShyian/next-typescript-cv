@@ -1,11 +1,35 @@
 .contact {
   &__content {
     display: flex;
+    @include maxWidth1170 {
+      flex-direction: column;
+      position: relative;
+    }
   }
   &__base {
     display: flex;
     flex-direction: column;
     flex: 2;
+    @include maxWidth1170 {
+      flex-direction: row;
+      align-items: flex-end;
+    }
+  }
+  &__form {
+    flex: 3;
+    @include maxWidth1170 {
+      position: relative;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  &__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     font-weight: 600;
     font-size: 2rem;
     color: $c-primary;
@@ -13,23 +37,55 @@
       font-family: 'League Spartan', 'sans-serif';
       display: block;
       letter-spacing: -.5px;
+      order: 1;
       &:last-child {
+        order: 2;
         margin-top: -.25rem;
         opacity: .8;
         font-size: 1.6rem;
       }
+      @include maxWidth1170 {
+        font-size: 1.6rem;
+        text-align: end;
+        &:last-child {
+          order: 0;
+          margin-top: 0;
+          margin-bottom: -.5rem;
+        }
+      }
+      @include maxWidth450 {
+        font-size: 1.35rem !important;
+      }
     }
-  }
-  &__form {
-    flex: 3;
-  }
-  &__text {
-    flex: 1;
+    @include maxWidth1170 {
+      order: 1;
+      //margin-bottom: .75rem;
+    }
   }
   &__image {
     flex: 2;
     width: 70%;
     margin: 0 auto;
     padding-right: 4rem;
+    @include maxWidth1170 {
+      flex: unset;
+      order: 0;
+      width: 50px;
+      padding-right: 0;
+      margin: 0;
+      > svg {
+        width: 50px;
+      }
+    //  padding-right: 0;
+    //  opacity: .4;
+    //  position: absolute;
+    //  inset: 0;
+    //  top: 50%;
+    //  transform: translateY(-50%);
+    //  width: 40%;
+    }
+    //@include maxWidth767 {
+    //  width: 60%;
+    //}
   }
 }
