@@ -1,0 +1,40 @@
+.contact-form {
+  &__content {
+    margin: 0 auto;
+  }
+  &__button {
+    width: 100%;
+    > button {
+      width: 100%;
+    }
+  }
+  .form-control {
+    margin-bottom: 1.5rem;
+    input,
+    textarea {
+      opacity: .8;
+      box-sizing: border-box;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+      padding: .7rem 1.5rem;
+      border-radius: 2rem;
+      outline: none;
+      border: 2px solid rgba(0, 0, 0, .1);
+      width: 100%;
+      font-family: "League Spartan", sans-serif;
+      background-color: $c-white-darken-1;
+    }
+    textarea {
+      resize: none;
+    }
+    label {
+      font-size: 1.1rem;
+      display: block;
+      margin-left: 1rem;
+      margin-bottom: .25rem;
+      font-family: Rubik, sans-serif;
+      font-weight: 600;
+      color: $c-primary;
+    }
+  }
+}

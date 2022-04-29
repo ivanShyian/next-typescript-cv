@@ -1,4 +1,5 @@
 import {NextPage} from 'next'
+import './IndexProjects.scss'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import ProjectsList from '@/components/Index/IndexProjects/ProjectList'
 

@@ -7,6 +7,7 @@ import IndexAbout from '@/components/Index/IndexAbout'
 import IndexEducation from '@/components/Index/IndexEducation'
 import IndexWork from '@/components/Index/IndexWork'
 import IndexProjects from '@/components/Index/IndexProjects'
+import IndexContactMe from '@/components/Index/IndexContactMe'
 
 const Home: NextPage = () => {
   return (
@@ -29,6 +30,7 @@ const Home: NextPage = () => {
       <IndexEducation />
       <IndexWork />
       <IndexProjects />
+      <IndexContactMe />
     </Fragment>
   )
 }

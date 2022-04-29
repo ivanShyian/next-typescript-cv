@@ -1,14 +1,13 @@
-import {FC, ReactChild} from 'react'
+import {ButtonHTMLAttributes, FC, ReactChild} from 'react'
 import './SharedButton.scss'
 
 interface Props {
-  link?: boolean,
-  children?: ReactChild | string
+  children?: ReactChild | string,
+  type?: 'button' | 'submit'
 }
 
-export const SharedButton: FC<Props> = ({link, children} : Props) => {
-  const CustomTag = link ? 'a' : 'button' as keyof JSX.IntrinsicElements
+export const SharedButton: FC<Props> = ({children, type = 'button'} : Props) => {
   return (
-    <CustomTag className="shared-button">{children}</CustomTag>
+    <button type={type} className="shared-button">{children}</button>
   )
 }

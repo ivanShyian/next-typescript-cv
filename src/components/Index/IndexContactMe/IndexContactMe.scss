@@ -1,0 +1,35 @@
+.contact {
+  &__content {
+    display: flex;
+  }
+  &__base {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    font-weight: 600;
+    font-size: 2rem;
+    color: $c-primary;
+    span {
+      font-family: 'League Spartan', 'sans-serif';
+      display: block;
+      letter-spacing: -.5px;
+      &:last-child {
+        margin-top: -.25rem;
+        opacity: .8;
+        font-size: 1.6rem;
+      }
+    }
+  }
+  &__form {
+    flex: 3;
+  }
+  &__text {
+    flex: 1;
+  }
+  &__image {
+    flex: 2;
+    width: 70%;
+    margin: 0 auto;
+    padding-right: 4rem;
+  }
+}

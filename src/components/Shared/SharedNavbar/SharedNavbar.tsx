@@ -24,8 +24,8 @@ export const SharedNavbar:  NextPage = () => {
     {id: 1, name: 'About', iconComponent: <Person />, className: '.index__about'},
     {id: 2, name: 'Education', iconComponent: <Book />, className: '.index__education'},
     {id: 3, name: 'Work', iconComponent: <Briefcase />, className: '.index__work'},
-    {id: 4, name: 'Projects', iconComponent: <Workflow />},
-    {id: 5, name: 'Contact me', iconComponent: <IdBadge />}
+    {id: 4, name: 'Projects', iconComponent: <Workflow />, className: '.index__projects'},
+    {id: 5, name: 'Contact me', iconComponent: <IdBadge />, className: '.index__contact'}
   ]
 
   const [scrollTo] = useScroll()
