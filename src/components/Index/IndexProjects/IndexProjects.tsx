@@ -3,11 +3,11 @@ import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import ProjectsList from '@/components/Index/IndexProjects/ProjectList'
 
 const projects = [
-  {id: 0, name: 'Someee', image: ''},
-  {id: 1, name: 'So', image: ''},
-  {id: 2, name: 'Som', image: ''},
-  {id: 3, name: 'Some', image: ''},
-  {id: 4, name: 'Somee', image: ''}
+  {id: 0, name: 'Someee', subtitle: 'Subtitle here is sss', image: ''},
+  {id: 1, name: 'So', subtitle: 'Subtitle here is sss', image: ''},
+  {id: 2, name: 'Som', subtitle: 'Subtitle here is sss', image: ''},
+  {id: 3, name: 'Some', subtitle: 'Subtitle here is sss', image: ''},
+  {id: 4, name: 'Somee', subtitle: 'Subtitle here is sss', image: ''}
 ]
 
 export const IndexProjects: NextPage = () => {

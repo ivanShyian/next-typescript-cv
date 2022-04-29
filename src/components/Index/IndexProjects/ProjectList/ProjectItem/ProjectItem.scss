@@ -1,6 +1,9 @@
 .project-item {
-  flex: 0 1 calc(33% - .66rem);
-  margin: 0 1rem 1rem 0;
+  flex: 0 1 calc(33% - 1.8rem);
+  margin: 0 3rem 3rem 0;
+  position: relative;
+  min-height: calc((1170px / 3) - 3rem);
+  overflow: hidden;
   &:nth-child(3n+3) {
     margin-right: 0;
     @include maxWidth1170 {
@@ -8,6 +11,22 @@
     }
     @include maxWidth767 {
       margin-right: 0;
+    }
+  }
+  &:hover {
+    .project-wrapper:before {
+      opacity: .75;
+      transition: opacity .25s ease-in;
+    }
+    .project-content__heading {
+      top: 0;
+      opacity: 1;
+      transition: opacity .25s ease-in, top .35s ease-out;
+    }
+    .project-content__button {
+      bottom: 0;
+      opacity: 1;
+      transition: opacity .25s ease-in, bottom .35s ease-out;
     }
   }
   @include maxWidth1170 {
@@ -19,5 +38,101 @@
   @include maxWidth767 {
     flex-basis: 100%;
     margin-right: 0;
+  }
+  &__background {
+    position: absolute;
+    inset: 0;
+    opacity: .9;
+    z-index: 1;
+    span {
+      height: 100% !important;
+      width: 100% !important;
+    }
+  }
+}
+.project-wrapper {
+  position: relative;
+  margin: -1.7rem;
+  height: calc(100% + 3.4rem);
+  width: calc(100% + 3.4rem);
+  padding: 1.7rem;
+  &:before {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    content: '';
+    background-color: #353353;
+    opacity: 0;
+    transition: all .25s ease-in;
+  }
+}
+.project-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  p {
+    color: $c-white;
+    font-family: Rubik, sans-serif;
+    font-weight: 700;
+  }
+  &__heading {
+    opacity: 0;
+    position: relative;
+    top: -200px;
+    //transform: translateY(-200px);
+    transition: all .25s ease-in;
+  }
+  &__title {
+    font-size: 1.8rem;
+    margin-bottom: -.25rem;
+  }
+  &__subtitle {
+    font-size: 1.3rem;
+    margin-left: 1.3rem;
+    color: $c-secondary-lighten !important;
+  }
+  &__button {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+    border-radius: 50%;
+    animation: pulse-white 2s infinite;
+    border: 1px solid rgba(255, 255, 255, .5);
+    background-color: $c-white;
+    height: 40px;
+    width: 40px;
+    opacity: 0;
+    bottom: -200px;
+    transition: all .25s ease-in;
+    svg {
+      margin: -1px 0 0 -1px;
+      path {
+        fill: $c-primary;
+      }
+    }
+  }
+}
+
+
+@keyframes pulse-white {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   }
 }
