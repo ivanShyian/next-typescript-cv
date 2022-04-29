@@ -7,11 +7,28 @@
   &:nth-child(3n+3) {
     margin-right: 0;
     @include maxWidth1170 {
-      margin-right: 1rem;
+      margin: 0 2rem 2rem 0;
     }
     @include maxWidth767 {
       margin-right: 0;
     }
+  }
+  @include maxWidth1170 {
+    flex-basis: calc(50% - 1rem);
+    min-height: calc((900px / 2) - 2rem);
+    margin: 0 2rem 2rem 0;
+    &:nth-child(2n+2) {
+      margin-right: 0;
+    }
+  }
+  @include maxWidth767 {
+    width: 80%;
+    margin: 0 0 3rem 0 !important;
+    flex-basis: 100%;
+  }
+  @include maxWidth450 {
+    min-height: 350px;
+    width: 100%;
   }
   &:hover {
     .project-wrapper:before {
@@ -28,16 +45,6 @@
       opacity: 1;
       transition: opacity .25s ease-in, bottom .35s ease-out;
     }
-  }
-  @include maxWidth1170 {
-    flex-basis: calc(50% - .5rem);
-    &:nth-child(2n+2) {
-      margin-right: 0;
-    }
-   }
-  @include maxWidth767 {
-    flex-basis: 100%;
-    margin-right: 0;
   }
   &__background {
     position: absolute;
@@ -82,7 +89,6 @@
     opacity: 0;
     position: relative;
     top: -200px;
-    //transform: translateY(-200px);
     transition: all .25s ease-in;
   }
   &__title {

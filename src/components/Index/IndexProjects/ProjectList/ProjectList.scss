@@ -1,4 +1,9 @@
 .project-list {
   display: flex;
   flex-wrap: wrap;
+  @include maxWidth767 {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+  }
 }
