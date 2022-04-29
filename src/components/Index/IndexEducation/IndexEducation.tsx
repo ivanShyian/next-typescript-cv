@@ -34,9 +34,10 @@ export const IndexEducation: NextPage = () => {
     const cardCurrent = cardRef.current
     const educationCurrent = educationRef.current
     if (cardCurrent && educationCurrent) {
-      const CARD_MARGIN = 30
+      const isDesktop = document.documentElement.clientWidth > 767
+      const CARD_MARGIN = 0
       changeCircleSizes({
-        width: educationCurrent.clientWidth - (cardCurrent.clientWidth + CARD_MARGIN),
+        width: isDesktop ? educationCurrent.clientWidth - (cardCurrent.clientWidth + CARD_MARGIN) : educationCurrent.clientWidth,
         height: cardCurrent.clientHeight
       })
     }
@@ -53,7 +54,7 @@ export const IndexEducation: NextPage = () => {
           <div className="education__courses typeLearning">
             <EducationCircles
               width={circleSizes.width}
-              height={circleSizes.height}
+              height={circleSizes.height * 1.5}
               skillList={skillList}
             />
           </div>

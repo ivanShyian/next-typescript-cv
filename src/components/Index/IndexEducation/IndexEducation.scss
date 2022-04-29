@@ -12,11 +12,22 @@
   &__courses {
     position: absolute;
     right: 64px;
+    top: -50%;
+    transform: translateY(60%);
+    @include maxWidth767 {
+      width: 100%;
+      position: relative;
+      inset: 0;
+      transform: unset;
+    }
   }
 
   &__card {
     width: 350px;
-    margin-right: 2rem;
+    @include maxWidth1170 {
+      width: 100%;
+      margin: 0 0 2rem 0;
+    }
     &.typeEducation {
       position: relative;
       &:after {
@@ -42,10 +53,6 @@
     }
     &.typeLearning:after {
       background-image: url("/icons/education-icons/learning.svg");
-    }
-
-    @include maxWidth1170 {
-      margin: 0 0 2rem 0;
     }
   }
 }
