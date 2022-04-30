@@ -59,6 +59,9 @@
       @include maxWidth450 {
         font-size: 1.35rem !important;
       }
+      @include maxWidth450 {
+        font-size: 1.15rem !important;
+      }
     }
     @include maxWidth1170 {
       order: 1;
@@ -79,16 +82,12 @@
       > svg {
         width: 50px;
       }
-    //  padding-right: 0;
-    //  opacity: .4;
-    //  position: absolute;
-    //  inset: 0;
-    //  top: 50%;
-    //  transform: translateY(-50%);
-    //  width: 40%;
     }
-    //@include maxWidth767 {
-    //  width: 60%;
-    //}
+    @include maxWidth350 {
+      width: 35px;
+      > svg {
+        width: 35px;
+      }
+    }
   }
 }

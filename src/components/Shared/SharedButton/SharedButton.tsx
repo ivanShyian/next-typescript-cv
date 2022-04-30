@@ -2,12 +2,13 @@ import {ButtonHTMLAttributes, FC, ReactChild} from 'react'
 import './SharedButton.scss'
 
 interface Props {
-  children?: ReactChild | string,
+  children?: ReactChild | string
   type?: 'button' | 'submit'
+  onClick: () => any
 }
 
-export const SharedButton: FC<Props> = ({children, type = 'button'} : Props) => {
+export const SharedButton: FC<Props> = ({children, type = 'button', onClick} : Props) => {
   return (
-    <button type={type} className="shared-button">{children}</button>
+    <button onClick={onClick} type={type} className="shared-button">{children}</button>
   )
 }

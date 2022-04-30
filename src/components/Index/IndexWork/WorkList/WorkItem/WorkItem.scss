@@ -19,11 +19,6 @@
       @include maxWidth1170 {
         display: none;
       }
-      svg {
-        @include maxWidth1170 {
-          width: 130px;
-        }
-      }
     }
     &_card {
       flex: 1;

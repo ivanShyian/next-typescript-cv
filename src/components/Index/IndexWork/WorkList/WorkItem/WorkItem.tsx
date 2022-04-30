@@ -17,7 +17,7 @@ export const WorkItem: FC<Props> = ({item}: Props) => {
   return (
     <li className="work__item">
       <div className="work__item_img">
-        <Image src={item.workLogo} alt="work logo" objectFit={"contain"} />
+        <Image src={item.workLogo} width={250} alt="work logo" objectFit={"contain"} />
       </div>
       <div className="work__item_card card work-card">
         <div className="work-card__content">

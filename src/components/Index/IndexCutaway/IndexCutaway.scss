@@ -8,6 +8,11 @@
   justify-content: center;
   @include maxWidth767 {
     justify-content: flex-start;
+    padding-top: 3rem;
+  }
+  @include maxWidth350 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   &__wrapper {
     display: flex;
@@ -100,6 +105,9 @@
     cursor: pointer;
     @include maxWidth767 {
       bottom: 80px;
+    }
+    @include maxWidth350 {
+      bottom: 55px;
     }
     svg {
       width: 50px;

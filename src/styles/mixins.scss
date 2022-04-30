@@ -23,7 +23,7 @@
 }
 
 @mixin maxWidth350 {
-  @media (max-width: 35px) {
+  @media (max-width: 350px) {
     @content
   }
 }

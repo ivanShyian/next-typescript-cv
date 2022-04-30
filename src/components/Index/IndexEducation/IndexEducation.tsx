@@ -68,7 +68,7 @@ export const IndexEducation: NextPage = () => {
           <div className="education__courses typeLearning">
             <EducationCircles
               width={circleSizes.width}
-              height={circleSizes.width}
+              height={circleSizes.height}
               skillList={skillList}
               onCourseClick={onCourseClick}
             />
@@ -81,15 +81,7 @@ export const IndexEducation: NextPage = () => {
         onRequestClose={handleCloseModal}
         contentLabel="Example Modal"
       >
-        <h2>Hello</h2>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+        modal
       </Modal>
     </section>
   )

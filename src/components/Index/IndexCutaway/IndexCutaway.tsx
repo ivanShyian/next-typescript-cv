@@ -119,7 +119,7 @@ export const IndexCutaway: NextPage = () => {
           </ul>
         </div>
         <div className="cutaway__hire">
-          <SharedButton>Hire me</SharedButton>
+          <SharedButton onClick={() => scrollTo('.index__contact', 1200)}>Hire me</SharedButton>
         </div>
         <div className="cutaway__scroll" onClick={() => scrollTo('.index__about', 600)}>
           <DoubleDown />
