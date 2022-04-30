@@ -1,12 +1,10 @@
-import {FC, useEffect} from 'react'
-import Grid from '../../../../helpers/circleGrid'
-import {select, selectAll} from 'd3-selection'
+import { FC, useEffect, memo } from 'react'
+import {select} from 'd3-selection'
 import { scaleOrdinal } from 'd3-scale'
 import { schemeTableau10 } from 'd3-scale-chromatic'
 import { transition } from 'd3-transition'
 import { line, curveCardinalClosed } from 'd3-shape'
 import './EducationCircles.scss'
-import {TimeInterval} from 'd3-time'
 
 select.prototype.transition = transition
 
@@ -14,9 +12,10 @@ interface Props {
   width: number
   height: number
   skillList: {name: string}[]
+  onCourseClick: (id: number | string) => void
 }
 
-export const EducationCircles: FC<Props> = ({width, height, skillList}: Props) => {
+const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: Props) => {
   useEffect(() => {
     draw()
   })
@@ -58,7 +57,6 @@ export const EducationCircles: FC<Props> = ({width, height, skillList}: Props) =
       .y(() => Math.random() * (h - margin) + margin)
       .curve(curveCardinalClosed)
 
-    console.log(w)
     const svg = select("#circleCanvas")
       .attr("width", w + margin)
       .attr("height", h + margin)
@@ -80,6 +78,9 @@ export const EducationCircles: FC<Props> = ({width, height, skillList}: Props) =
         .style('cursor', 'pointer')
         .style('position', 'relative')
         .style('z-index', '1')
+        .on('click', (e) => {
+          onCourseClick(idx)
+        })
         .on("mouseover", function() {
           select(this)
             .raise()
@@ -130,6 +131,7 @@ export const EducationCircles: FC<Props> = ({width, height, skillList}: Props) =
           transition(n)
         })
 
+
       const circle = group.append("circle")
         .attr("r", cRad)
         .attr("class", `circle_${idx}`)
@@ -174,3 +176,5 @@ export const EducationCircles: FC<Props> = ({width, height, skillList}: Props) =
     </div>
   )
 }
+
+export default memo(EducationCircles)

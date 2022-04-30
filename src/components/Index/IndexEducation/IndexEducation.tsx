@@ -4,7 +4,8 @@ import dynamic from 'next/dynamic'
 import './IndexEducation.scss'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import EducationList from '@/components/Index/IndexEducation/EducationList'
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState, useCallback} from 'react'
+import Modal from 'react-modal'
 const EducationCircles = dynamic(() => import('@/components/Index/IndexEducation/EducationCircles'), {ssr: false})
 
 const educationGraduation = [
@@ -13,19 +14,20 @@ const educationGraduation = [
 ]
 
 const skillList = [
-  {name: 'Typescript'},
-  {name: 'VueJS'},
-  {name: 'ReactJS'},
-  {name: 'Node'},
-  {name: 'NextJS'},
-  {name: 'Express'},
-  {name: 'Javascript'},
-  {name: 'NuxtJS'},
-  {name: 'D3JS'}
+  {id: 0, name: 'Typescript'},
+  {id: 1, name: 'VueJS'},
+  {id: 2, name: 'ReactJS'},
+  {id: 3, name: 'Node'},
+  {id: 4, name: 'NextJS'},
+  {id: 5, name: 'Express'},
+  {id: 6, name: 'Javascript'},
+  {id: 7, name: 'NuxtJS'},
+  {id: 8, name: 'D3JS'}
 ]
 
 export const IndexEducation: NextPage = () => {
   const [circleSizes, changeCircleSizes] = useState({width: 0, height: 0})
+  const [isModalOpen, changeModalState] = useState(false)
 
   const cardRef = useRef<HTMLDivElement>(null)
   const educationRef = useRef<HTMLDivElement>(null)
@@ -36,12 +38,24 @@ export const IndexEducation: NextPage = () => {
     if (cardCurrent && educationCurrent) {
       const isDesktop = document.documentElement.clientWidth > 1170
       const CARD_MARGIN = 0
+      const width = isDesktop ? educationCurrent.clientWidth - (cardCurrent.clientWidth + CARD_MARGIN) : educationCurrent.clientWidth
+      const height = cardCurrent.clientHeight * 1.5
       changeCircleSizes({
-        width: isDesktop ? educationCurrent.clientWidth - (cardCurrent.clientWidth + CARD_MARGIN) : educationCurrent.clientWidth,
-        height: cardCurrent.clientHeight
+        width,
+        height
       })
     }
   }, [cardRef, educationRef])
+
+  const onCourseClick = useCallback((id: string | number) => {
+    console.log(id)
+    // Start loader
+    // When loading complete - open modal
+    return changeModalState(true)
+  }, [changeModalState])
+
+
+  const handleCloseModal = () => changeModalState(false)
 
   return (
     <section id="education" className='index__education section education'>
@@ -54,12 +68,29 @@ export const IndexEducation: NextPage = () => {
           <div className="education__courses typeLearning">
             <EducationCircles
               width={circleSizes.width}
-              height={circleSizes.height * 1.5}
+              height={circleSizes.width}
               skillList={skillList}
+              onCourseClick={onCourseClick}
             />
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={handleCloseModal}
+        contentLabel="Example Modal"
+      >
+        <h2>Hello</h2>
+        <div>I am a modal</div>
+        <form>
+          <input />
+          <button>tab navigation</button>
+          <button>stays</button>
+          <button>inside</button>
+          <button>the modal</button>
+        </form>
+      </Modal>
     </section>
   )
 }

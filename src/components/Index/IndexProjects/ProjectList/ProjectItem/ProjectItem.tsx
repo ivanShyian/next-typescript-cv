@@ -6,10 +6,11 @@ import avatar from '@/public/assets/Avatar.png'
 import FindIcon from '@/public/icons/find.svg'
 
 interface Props {
-  project: Project
+  project: Project,
+  onClick: (id: number | string) => void
 }
 
-export const ProjectItem: FC<Props> = ({project}) => {
+export const ProjectItem: FC<Props> = ({project, onClick}) => {
   return (
     <div className="card project-item">
       <div className="project-item__wrapper project-wrapper">
@@ -18,7 +19,7 @@ export const ProjectItem: FC<Props> = ({project}) => {
             <p className="project-content__title">{project.name}</p>
             <p className="project-content__subtitle">{project.subtitle}</p>
           </div>
-          <div className="project-content__button">
+          <div className="project-content__button" onClick={() => onClick(project.id)}>
             <FindIcon />
           </div>
         </div>
