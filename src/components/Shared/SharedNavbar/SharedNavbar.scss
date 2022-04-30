@@ -39,6 +39,9 @@
         top: -2px;
         fill: $c-secondary-lighten !important;
         margin-right: 1rem;
+        @include minWidth1824 {
+          transform: scale(1.7);
+        }
       }
       svg, span {
         pointer-events: none;

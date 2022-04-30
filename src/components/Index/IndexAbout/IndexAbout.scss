@@ -19,10 +19,16 @@
   &__image {
     margin-right: 2rem;
     flex: 0 0 20%;
-    @include maxWidth767 {
-    }
     > span {
       border-radius: 50%;
+    }
+    @include minWidth1824 {
+      width: 275px;
+      height: 275px;
+      span {
+        width: 100% !important;
+        height: 100% !important;
+      }
     }
     @include maxWidth1170 {
       display: flex;

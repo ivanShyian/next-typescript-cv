@@ -24,6 +24,9 @@
 
   &__card {
     width: 350px;
+    @include minWidth1824 {
+      width: 450px;
+    }
     @include maxWidth1170 {
       width: 100%;
       margin: 0 0 2rem 0;

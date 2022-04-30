@@ -8,6 +8,14 @@
     }
     &_img {
       flex: 0 0 20%;
+      height: 165px;
+      > span {
+        height: 100% !important;
+        width: 100% !important;
+      }
+      @include minWidth1824 {
+        height: 200px;
+      }
       @include maxWidth1170 {
         display: none;
       }

@@ -3,6 +3,9 @@
 
 html {
   font-size: 15px;
+  @include minWidth1824 {
+    font-size: 24px;
+  }
 }
 
 // Scrollbar styles
@@ -44,12 +47,18 @@ li {
 .container {
   margin: 0 auto;
   max-width: 1140px;
+  @include minWidth1824 {
+    max-width: 1400px;
+  }
 }
 
 .section {
   box-sizing: border-box;
   padding: 40px 20px 40px;
   width: 100%;
+  @include minWidth1824 {
+    padding: 70px 20px 70px;
+  }
   @include maxWidth767 {
     padding: 20px 20px 20px;
   }

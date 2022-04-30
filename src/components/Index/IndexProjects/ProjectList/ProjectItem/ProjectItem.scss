@@ -13,6 +13,9 @@
       margin-right: 0;
     }
   }
+  @include minWidth1824 {
+    min-height: calc((1170px / 2.5) - 3rem);
+  }
   @include maxWidth1170 {
     flex-basis: calc(50% - 1rem);
     min-height: calc((900px / 2) - 2rem);

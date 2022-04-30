@@ -25,6 +25,14 @@
     &_img {
       border-radius: 50%;
     }
+    @include minWidth1824 {
+      width: 300px;
+      height: 300px;
+      span {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
   }
   &__name {
     margin-bottom: 1rem;

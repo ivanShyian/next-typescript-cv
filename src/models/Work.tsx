@@ -1,7 +1,9 @@
+import {StaticImageData} from 'next/image'
+
 export interface WorkItem {
   id: number
   name: string
-  workLogo: string
+  workLogo: StaticImageData
   subtitle: string
   description: string
   position: string

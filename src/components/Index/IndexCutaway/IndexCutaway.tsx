@@ -2,7 +2,7 @@ import {NextPage} from 'next'
 import Image from 'next/image'
 import './IndexCutaway.scss'
 
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useRef} from 'react'
 import {useScroll} from '@/use/useScroll'
 
 import image from '@/public/assets/Avatar.png'
@@ -27,11 +27,19 @@ export const IndexCutaway: NextPage = () => {
   const [transformValue, changeTransformValue] = useState(0)
   const [negativeOrder, changeOrderBool] = useState(false)
   const [scrollTo] = useScroll()
+  const listItem = useRef(null)
 
   useEffect(() => {
+    let LINE_HEIGHT: number
+    if (listItem && listItem.current) {
+      const fontSize = window.getComputedStyle(listItem.current, null).getPropertyValue('font-size')
+      LINE_HEIGHT = parseInt(fontSize) * 2
+    } else {
+      LINE_HEIGHT = 19.5 * 2
+    }
+
     const interval = setInterval(() => {
       changeTransformValue((value) => {
-        const LINE_HEIGHT = 19.5 * 2
         const maxTransformValue = LINE_HEIGHT * (subtitleList.length -1)
         if (value === maxTransformValue) {
           changeOrderBool(true)
@@ -72,6 +80,7 @@ export const IndexCutaway: NextPage = () => {
           >
             {subtitleList.map((text: string, idx: number) => (
               <li
+                ref={listItem}
                 className="cutaway__subtitle_item"
                 key={idx}
               >

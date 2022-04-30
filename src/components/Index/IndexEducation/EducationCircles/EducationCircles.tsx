@@ -22,8 +22,9 @@ export const EducationCircles: FC<Props> = ({width, height, skillList}: Props) =
   })
 
   const draw = () => {
-    const isDesktop = document.documentElement.clientWidth > 767
-    const margin = 80
+    const clientWidth = document.documentElement.clientWidth
+    const r = clientWidth > 1824 ? 70 : clientWidth > 767 ? 45 : 30
+    const margin = (r * 2) / 1.5
     const w = width - margin
     const h = height - margin
 
@@ -149,7 +150,7 @@ export const EducationCircles: FC<Props> = ({width, height, skillList}: Props) =
     }
 
     for(let i = 0; i < skillList.length - 1; i++) {
-      const cRadius = (isDesktop ? 45 : 30) + i
+      const cRadius = r + i
       createPathCircle(datasets[i], cRadius, i)
     }
     for(let i = 0; i < skillList.length - 1; i++) {

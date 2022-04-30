@@ -1,7 +1,6 @@
 import {FC} from 'react'
 import './WorkItem.scss'
-import FreshDes from '@/public/icons/work-icons/coloredFresh.svg'
-import Inrating from '@/public/icons/work-icons/coloredInr.svg'
+import Image from 'next/image'
 import Nuxt from '@/public/icons/nuxtjs.svg'
 import Vue from '@/public/icons/vuejs.svg'
 import {WorkItem as WorkInterface} from '@/models/Work'
@@ -13,13 +12,12 @@ interface Props {
 export const WorkItem: FC<Props> = ({item}: Props) => {
 
   const teches = item.tech.map((tech: string, idx: number) => item.tech.length - 1 === idx ? tech : `${tech}, `)
-  const companyLogo = item.workLogo === 'fresh' ? <FreshDes /> : <Inrating />
   const positionLogo = item.positionLogo === 'nuxt' ? <Nuxt /> : <Vue />
 
   return (
     <li className="work__item">
       <div className="work__item_img">
-        {companyLogo}
+        <Image src={item.workLogo} alt="work logo" objectFit={"contain"} />
       </div>
       <div className="work__item_card card work-card">
         <div className="work-card__content">

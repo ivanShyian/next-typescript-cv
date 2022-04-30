@@ -4,6 +4,9 @@
 
 .main {
   margin-left: 250px;
+  @include minWidth1824 {
+    margin-left: 350px;
+  }
   @include maxWidth1170 {
     margin-left: 200px;
   }
