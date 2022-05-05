@@ -4,7 +4,7 @@ import './SharedButton.scss'
 interface Props {
   children?: ReactChild | string
   type?: 'button' | 'submit'
-  onClick: () => any
+  onClick?: () => any
 }
 
 export const SharedButton: FC<Props> = ({children, type = 'button', onClick} : Props) => {

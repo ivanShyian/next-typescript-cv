@@ -1,20 +1,16 @@
 import {NextPage} from 'next'
-import Image from 'next/image'
 import './IndexCutaway.scss'
 
+import Image from 'next/image'
 import {useEffect, useState, useRef} from 'react'
 import {useScroll} from '@/use/useScroll'
 
 import image from '@/public/assets/Avatar.png'
-import FacebookIcon from '@/public/icons/social-icons/facebook.svg'
-import TelegramIcon from '@/public/icons/social-icons/telegram.svg'
-import InstagramIcon from '@/public/icons/social-icons/instagram.svg'
-import LinkedinIcon from '@/public/icons/social-icons/linkedin.svg'
-import GithubIcon from '@/public/icons/social-icons/github.svg'
 import DoubleDown from '@/public/icons/double-down.svg'
 
 import SharedButton from '@/components/Shared/SharedButton'
 import CutawayParallax from '@/components/Index/IndexCutaway/CutawayParallax'
+import CutawaySocial from '@/components/Index/IndexCutaway/CutawaySocial'
 
 const subtitleList = [
   'Frontend developer',
@@ -89,35 +85,7 @@ export const IndexCutaway: NextPage = () => {
             ))}
           </ul>
         </div>
-        <div className="cutaway__social">
-          <ul className="cutaway__social_list">
-            <li className="cutaway__social_link">
-              <a href="https://www.facebook.com" rel="noreferrer" target="_blank">
-                <FacebookIcon />
-              </a>
-            </li>
-            <li className="cutaway__social_link">
-              <a href="https://t.me/vanjke" rel="noreferrer" target="_blank">
-                <TelegramIcon />
-              </a>
-            </li>
-            <li className="cutaway__social_link">
-              <a href="https://www.linkedin.com/in/ivan-shyian" rel="noreferrer" target="_blank">
-                <LinkedinIcon />
-              </a>
-            </li>
-            <li className="cutaway__social_link">
-              <a href="https://www.instagram.com/vanjkes" rel="noreferrer" target="_blank">
-                <InstagramIcon />
-              </a>
-            </li>
-            <li className="cutaway__social_link">
-              <a href="https://github.com/ivanShyian" rel="noreferrer" target="_blank">
-                <GithubIcon />
-              </a>
-            </li>
-          </ul>
-        </div>
+        <CutawaySocial />
         <div className="cutaway__hire">
           <SharedButton onClick={() => scrollTo('.index__contact', 1200)}>Hire me</SharedButton>
         </div>

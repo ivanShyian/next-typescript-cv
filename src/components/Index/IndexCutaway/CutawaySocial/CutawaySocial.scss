@@ -1,0 +1,17 @@
+.cutaway-social {
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  &__list {
+    display: flex;
+  }
+  &__link {
+    margin: 0 10px;
+    svg {
+      fill: $c-white;
+      width: 38px;
+    }
+    &:hover {
+      animation: .5s bounce;
+    }
+  }
+}

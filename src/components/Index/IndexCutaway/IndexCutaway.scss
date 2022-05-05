@@ -69,23 +69,6 @@
       }
     }
   }
-  &__social {
-    margin-bottom: 1.5rem;
-    cursor: pointer;
-    &_list {
-      display: flex;
-    }
-    &_link {
-      margin: 0 10px;
-      svg {
-        fill: $c-white;
-        width: 38px;
-      }
-      &:hover {
-        animation: .5s bounce;
-      }
-    }
-  }
   &__hire {
     display: flex;
     justify-content: center;

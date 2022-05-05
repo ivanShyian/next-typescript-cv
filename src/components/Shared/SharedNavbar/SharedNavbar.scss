@@ -1,12 +1,10 @@
 .navigation {
-  width: calc(100% - 59px);
   height: calc(100% - 135.2px);
-  margin: 20px 20px 20px 40px;
+  padding: 20px 20px 20px 40px;
   @include maxWidth1170 {
-    margin-left: 30px;
+    padding-left: 30px;
   }
   @include maxWidth767 {
-    width: 100%;
     height: 100%;
     margin: 0;
   }
@@ -25,18 +23,23 @@
       display: flex;
       align-items: center;
       cursor: pointer;
-      font-family: 'Josefin Sans', 'sans-serif';
+      font-family: 'Rubik', 'sans-serif';
       font-size: 1.3rem;
       list-style: none;
       font-weight: 700;
       color: $c-white;
       margin-bottom: 1.5rem;
+      transition: all .2s ease-out;
       &:last-child {
         margin-bottom: 0;
       }
+      &:hover {
+        transition: all .2s ease-out;
+        transform: translateX(5px);
+        color: $c-secondary-lighten;
+      }
       svg {
         position: relative;
-        top: -2px;
         fill: $c-secondary-lighten !important;
         margin-right: 1rem;
         @include minWidth1824 {
