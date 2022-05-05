@@ -5,11 +5,12 @@ import BrainIcon from '@/public/icons/education-icons/brain.svg'
 import {Work, Graduation} from '@/models/Experience'
 
 interface Props {
-  item: Work | Graduation,
+  item: Work | Graduation
   type: 'educ' | 'learn'
+  isAdmin: boolean
 }
 
-export const EducationItem: FC<Props> = ({item, type}: Props) => {
+export const EducationItem: FC<Props> = ({item, type, isAdmin}: Props) => {
   return (
     <li className="education-item">
       <div className="education-item__icon">
@@ -20,6 +21,12 @@ export const EducationItem: FC<Props> = ({item, type}: Props) => {
         <p className="education-item__title">{item.title}</p>
         <p className="education-item__text">{item.text}</p>
       </div>
+      {isAdmin && (
+        <div className="education-item__admin education-admin">
+          <span className="education-admin__edit admin-circle-button edit">e</span>
+          <span className="education-admin__remove admin-circle-button remove">d</span>
+        </div>
+      )}
     </li>
   )
 }

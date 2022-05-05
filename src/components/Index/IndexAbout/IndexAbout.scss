@@ -49,7 +49,8 @@
       margin: 0 0 1.5rem 0;
     }
   }
-  &__button {
+  &__button,
+  &__admin {
     display: none;
     @include maxWidth1170 {
       display: flex;
@@ -69,9 +70,20 @@
   &__text {
     margin-bottom: 2rem;
   }
-  &__button {
+  &__button-wrapper {
+    width: 100%;
+    display: flex;
+  }
+  &__button,
+  &__admin {
     @include maxWidth1170 {
       display: none;
+    }
+  }
+  &__admin {
+    margin-left: .75rem;
+    .shared-button {
+      background-color: $c-primary !important;
     }
   }
 }

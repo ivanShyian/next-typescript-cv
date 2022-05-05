@@ -6,6 +6,7 @@ import IndexAboutTech from '@/components/Index/IndexAbout/IndexAboutTech'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 
 import avatar from '@/public/assets/Avatar.png'
+import {useAuthContext} from '../../../context/auth'
 
 const techs = [
   {id: 0, key: 'Javascript, Typescript', value: 85, color: 'darkorange'},
@@ -17,6 +18,8 @@ const techs = [
 ]
 
 export const IndexAbout: NextPage = () => {
+  const {isAdmin} = useAuthContext()
+
   return (
     <section id="about" className="index__about section about">
       <div className="about__wrapper container">
@@ -29,8 +32,15 @@ export const IndexAbout: NextPage = () => {
             <div className="about-skills__card_triangle about-triangle" />
             <div className="about-skills__card_resume about-resume">
               <p className="about-resume__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, aspernatur at autem consequatur culpa cum debitis dicta dolor dolorem ea esse facilis fugit illo ipsum laboriosam libero magni maiores molestiae necessitatibus pariatur provident quam sit vel. Alias animi consectetur eaque excepturi, iste maxime molestiae nam quo recusandae soluta? Atque cupiditate exercitationem, id laboriosam magni molestiae molestias necessitatibus placeat quia quo recusandae repudiandae sint ullam vel vero! Alias autem beatae culpa dolorem eaque eligendi eos eum illum ipsam iusto labore magni, obcaecati possimus qui, quo, rerum ullam vero voluptatibus. Ad adipisci facere libero nemo numquam reiciendis saepe? Esse fuga numquam unde?</p>
-              <div className="about-resume__button">
-                <SharedButton>Download CV</SharedButton>
+              <div className="about-resume__button-wrapper">
+                <div className="about-resume__button">
+                  <SharedButton>Download CV</SharedButton>
+                </div>
+                {isAdmin && (
+                  <div className="about-resume__admin">
+                    <SharedButton>Edit</SharedButton>
+                  </div>
+                )}
               </div>
             </div>
             <div className="about-skills__tech">
@@ -39,6 +49,11 @@ export const IndexAbout: NextPage = () => {
             <div className="about-skills__button">
               <SharedButton>Download CV</SharedButton>
             </div>
+            {isAdmin && (
+              <div className="about-skills__admin">
+                <SharedButton>Edit</SharedButton>
+              </div>
+            )}
           </div>
         </div>
       </div>

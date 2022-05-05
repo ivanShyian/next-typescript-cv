@@ -1,10 +1,10 @@
 import Modal from 'react-modal'
 import './AdminConfig.scss'
-import { FC } from 'react'
 import Image from 'next/image'
 import Avatar from '@/public/assets/Avatar.png'
-import { useState, useEffect, FC, MutableRefObject, Fragment } from 'react'
+import {useState, useEffect, FC, MutableRefObject, Fragment, SetStateAction, Dispatch} from 'react'
 import SharedButton from '@/components/Shared/SharedButton'
+import {ConfigType, useConfigContext} from '../../../context/config'
 
 interface Props {
   childFunction: MutableRefObject<any>
@@ -22,16 +22,20 @@ const pseudoList = [
 export const AdminConfig: FC<Props> = ({ childFunction }) => {
   const [isModalOpen, changeModalVisibility] = useState(false)
   const [activeTab, changeActiveTab] = useState(0)
-  const [statusList, changeStatusList] = useState([
-    { id: 0, name: 'Node' },
-    { id: 1, name: 'React' },
-    { id: 2, name: 'Vue' }
-  ])
+  const {
+    config,
+    setConfig
+  }: {config: ConfigType, setConfig: (config: ConfigType) => void} = useConfigContext()
+
+  const changeStatusList = (newStatusList: any) => {
+    setConfig({...config, status: newStatusList})
+    // @TODO PUT API HERE
+  }
 
   const tabList = [
-    { id: 0, name: 'General', component: <ModalGeneralTab statusList={statusList} changeStatusList={changeStatusList}/> },
-    { id: 1, name: 'Social', component: <ModalSocialTab /> },
-    { id: 2, name: 'Email', component: <ModalEmailTab /> }
+    { id: 0, name: 'General', component: <ModalGeneralTab statusList={config.status} changeStatusList={changeStatusList}/> },
+    { id: 1, name: 'Social', component: <ModalSocialTab linksList={config.links}/> },
+    { id: 2, name: 'Email', component: <ModalEmailTab emailReceiver={config.emailReceiver}/> }
   ]
 
   useEffect(() => {
@@ -64,47 +68,45 @@ export const AdminConfig: FC<Props> = ({ childFunction }) => {
   )
 }
 
-function ModalGeneralTab({statusList, changeStatusList}: {statusList: any[], changeStatusList: (item: any) => {}}) {
+type StatusListItem = {en: string, uk: string}
+type ChangeStatusType  = Dispatch<SetStateAction<StatusListItem[]>>
+
+function ModalGeneralTab({statusList, changeStatusList}: {statusList: StatusListItem[], changeStatusList: ChangeStatusType}) {
   const [statusValue, changeStatusValue] = useState('')
   
   const appendStatus = (e: any) => {
     e.preventDefault()
-    if (statusValue.length === 0) {
-      return
-    }
-    changeStatusList((state: any) => {
-      const newArr = [...state]
-      newArr.push({id: newArr.length, name: statusValue})
-      return newArr
-    })
+    if (statusValue.length === 0) return
+    //@TODO ADD LANG HERE
+    changeStatusList([...statusList, {en: statusValue, uk: statusValue}])
     changeStatusValue('')
   }
 
-  const removeItem = (id: number) => {
-    changeStatusList((state: any) => {{
-      const newState = [...state]
-      return newState.filter((item: any) => item.id !== id)
-    }})
+  const removeItem = (val: {en: string, uk: string}) => {
+    let copyOfStatusList = [...statusList]
+    const elementIndex = copyOfStatusList.findIndex((el: {en: string, uk: string}) => el === val)
+    copyOfStatusList.splice(elementIndex, 1)
+    changeStatusList(copyOfStatusList)
   }
-  
+
   return (
     <div className="modal-general">
       <p className="modal__title">General</p>
       <div className="modal-general__image modal-image">
         <form className="modal-image__wrapper">
           <Image src={Avatar} objectFit="contain" alt="avatar" />
+          {/*@TODO ADD FILE READER HERE*/}
           {/* <input type="file" /> */}
         </form>
       </div>
       <div className="modal-general__status modal-status">
         <p className="modal__title">Skill list</p>
         <ul className="modal-status__list">
-          {statusList.map((item, id) => {
+          {statusList.map((value: {en: string, uk: string}, id) => {
             return (
               <li className="modal-status__item" key={id}>
-                <div>
-                  <p><span onClick={() => removeItem(item.id)}>{id + 1}. {item.name}</span></p>
-                </div>
+                {/*@TODO ADD LANG HERE*/}
+                <p onClick={() => removeItem(value)}>{id + 1}. {value.en}</p>
               </li>
             )
           })}
@@ -117,23 +119,20 @@ function ModalGeneralTab({statusList, changeStatusList}: {statusList: any[], cha
             value={statusValue}
             onChange={(e) => changeStatusValue(e.target.value)}
           />
-          <div className="form-control__button">
-            <SharedButton type="submit">Append</SharedButton>
-          </div>
         </form>
       </div>
     </div>
   )
 }
 
-function ModalSocialTab() {
-  const listItems = pseudoList.map((item, id) => {
+function ModalSocialTab({linksList}: {linksList: any[]}) {
+  const listItems = linksList.map((item, id) => {
     return (
       <li className="modal-list__item form-control" key={id}>
         <div className="form-control__heading">
-          <label htmlFor="">{item.name}</label>
+          <label htmlFor="">{item.en.name}</label>
         </div>
-        <input className="form-control__input" type="text" />
+        <input className="form-control__input" type="text" readOnly={false} placeholder={item.en.value} />
       </li>
     )
   })
@@ -149,7 +148,7 @@ function ModalSocialTab() {
   )
 }
 
-function ModalEmailTab() {
+function ModalEmailTab({emailReceiver}: {emailReceiver: string}) {
   return (
     <div className="modal__content_mail modal-mail">
       <p className="modal__title">Email Settings</p>
@@ -157,7 +156,7 @@ function ModalEmailTab() {
         <div className="form-control__heading">
           <label htmlFor="">Email receiver</label>
         </div>
-        <input className="form-control__input" type="text" />
+        <input className="form-control__input" type="text" placeholder={emailReceiver} />
       </div>
     </div>
   )

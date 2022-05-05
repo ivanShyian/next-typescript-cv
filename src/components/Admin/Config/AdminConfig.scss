@@ -26,6 +26,10 @@
   display: flex;
   flex-direction: column;
   height: calc(100% - 20px);
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
   .modal-list {
     display: flex;
     flex-wrap: wrap;
@@ -34,6 +38,11 @@
       margin-right: 2rem;
       &:nth-child(2n+2) {
         margin-right: 0 !important;
+      }
+      @include maxWidth767 {
+        flex-direction: column;
+        flex: 100%;
+        margin-right: 0;
       }
     }
   }
@@ -113,19 +122,6 @@
   .form-control_inside {
     position: relative;
     width: 75%;
-    margin: 0 auto;
-    .form-control__button {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      .shared-button {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        &:hover {
-          transform: unset !important;
-        }
-      }
-    }
+    margin: 0 auto 2rem;
   }
 }

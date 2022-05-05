@@ -33,7 +33,8 @@
     }
     &.typeEducation {
       position: relative;
-      &:after {
+      &:before {
+        pointer-events: none;
         position: absolute;
         inset: 0;
         content: "";
@@ -51,7 +52,7 @@
         }
       }
     }
-    &.typeEducation:after {
+    &.typeEducation:before {
       background-image: url("/icons/education-icons/education.svg");
     }
     &.typeLearning:after {

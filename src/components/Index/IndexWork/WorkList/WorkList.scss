@@ -1,0 +1,22 @@
+.work__item_admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 2rem;
+  font-family: 'Oswald', 'sans-serif';
+  &.card {
+    cursor: pointer;
+    padding: 5rem 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: 3px solid $adminColor;
+    color: $adminColor;
+    transition: all .15s linear;
+    &:hover {
+      border: 3px solid $c-primary;
+      color: $c-primary;
+      transition: all .15s linear;
+    }
+  }
+}

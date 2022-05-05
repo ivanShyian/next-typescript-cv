@@ -5,6 +5,7 @@ import { schemeTableau10 } from 'd3-scale-chromatic'
 import { transition } from 'd3-transition'
 import { line, curveCardinalClosed } from 'd3-shape'
 import './EducationCircles.scss'
+import {useAuthContext} from '../../../../context/auth'
 
 select.prototype.transition = transition
 
@@ -16,6 +17,8 @@ interface Props {
 }
 
 const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: Props) => {
+  const {isAdmin} = useAuthContext()
+
   useEffect(() => {
     draw()
   })
@@ -94,41 +97,45 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
             .style('opacity', 0.7)
             .style('z-index', 1)
 
-          const n = this.className.baseVal.split('_')[1]
-          const transform = this.getAttribute('transform')
-          const [all, x, y] = transform!.match(/\((.*?),(.*?)\)/)!
+          const mouseLeaveTransition = () => {
+            const n = this.className.baseVal.split('_')[1]
+            const transform = this.getAttribute('transform')
+            const [all, x, y] = transform!.match(/\((.*?),(.*?)\)/)!
 
-          const newDataset = {x: +x, y: +y}
-          const foundDatasetIndex = datasets.findIndex(d => d === dataset)
-          datasets[foundDatasetIndex][0] = newDataset
+            const newDataset = {x: +x, y: +y}
+            const foundDatasetIndex = datasets.findIndex(d => d === dataset)
+            datasets[foundDatasetIndex][0] = newDataset
 
-          const pathEl = selectionList[n].path.node().getAttribute('d')
-          let result = pathEl.split(/(?=[LMC])/)
+            const pathEl = selectionList[n].path.node().getAttribute('d')
+            let result = pathEl.split(/(?=[LMC])/)
 
-          const fCoordinates = result[0].split(',')
-          const lCoordinates = result[result.length -1].split(',')
+            const fCoordinates = result[0].split(',')
+            const lCoordinates = result[result.length -1].split(',')
 
-          fCoordinates[0] = `M${x}`
-          fCoordinates[1] = y
+            fCoordinates[0] = `M${x}`
+            fCoordinates[1] = y
 
-          lCoordinates[lCoordinates.length - 2] = x
-          lCoordinates[lCoordinates.length - 1] = y
+            lCoordinates[lCoordinates.length - 2] = x
+            lCoordinates[lCoordinates.length - 1] = y
 
-          result[0] = fCoordinates.join()
-          result[result.length -1] = lCoordinates.join()
-          result = result.join('')
+            result[0] = fCoordinates.join()
+            result[result.length -1] = lCoordinates.join()
+            result = result.join('')
 
-          select(`path_${n}`).remove()
+            select(`path_${n}`).remove()
 
-          selectionList[n].path = svg.append("path")
-            .datum(datasets[foundDatasetIndex])
-            .attr("d", result)
-            .attr("stroke", "black")
-            .attr("stroke-width", 1)
-            .attr("fill", "none")
-            .attr("class", `path_${idx}`)
+            selectionList[n].path = svg.append("path")
+              .datum(datasets[foundDatasetIndex])
+              .attr("d", result)
+              .attr("stroke", "black")
+              .attr("stroke-width", 1)
+              .attr("fill", "none")
+              .attr("class", `path_${idx}`)
 
-          transition(n)
+            transition(n)
+          }
+
+          !isAdmin && mouseLeaveTransition()
         })
 
 
@@ -151,12 +158,17 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
         .on("end", () => transition(n))
     }
 
+    const adminTransition = (n: number) => {
+      selectionList[n].group.transition()
+        .attrTween("transform", translateAlong(selectionList[n].path.node()))
+    }
+
     for(let i = 0; i < skillList.length - 1; i++) {
       const cRadius = r + i
       createPathCircle(datasets[i], cRadius, i)
     }
     for(let i = 0; i < skillList.length - 1; i++) {
-      transition(i)
+      isAdmin ? adminTransition(i) : transition(i)
     }
 
     function translateAlong(path: any) {

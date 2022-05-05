@@ -39,7 +39,7 @@ const Home: FC<Props> = ({config, authCookie}: Props) => {
 
 export const getServerSideProps = async({req, res}: {req: any, res: any}) => {
   const api = new Api()
-  const config = await api.getConfig()
+  const {config} = await api.getConfig()
   const authCookie = getCookie('auth', {req, res})
   return {
     props: {

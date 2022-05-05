@@ -8,11 +8,11 @@ import {ConfigWrapper} from '../context/config'
 export default function MyApp({Component, pageProps}: AppProps) {
   return (
     <AuthWrapper>
-      <Layout>
-        <ConfigWrapper>
+      <ConfigWrapper>
+        <Layout>
           <Component {...pageProps} />
-        </ConfigWrapper>
-      </Layout>
+        </Layout>
+      </ConfigWrapper>
     </AuthWrapper>
   )
 }

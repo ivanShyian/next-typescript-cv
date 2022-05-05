@@ -7,9 +7,10 @@ import {WorkItem as WorkInterface} from '@/models/Work'
 
 interface Props {
   item: WorkInterface
+  isAdmin: boolean
 }
 
-export const WorkItem: FC<Props> = ({item}: Props) => {
+export const WorkItem: FC<Props> = ({item, isAdmin}: Props) => {
 
   const teches = item.tech.map((tech: string, idx: number) => item.tech.length - 1 === idx ? tech : `${tech}, `)
   const positionLogo = item.positionLogo === 'nuxt' ? <Nuxt /> : <Vue />
@@ -52,6 +53,16 @@ export const WorkItem: FC<Props> = ({item}: Props) => {
         </div>
         <div className="work-card__background">{item.duration}</div>
       </div>
+      {isAdmin && (
+        <div className="work__item_admin work-admin">
+          <div className="work-admin__edit admin-circle-button">
+            <span>e</span>
+          </div>
+          <div className="work-admin__remove admin-circle-button remove">
+            <span>d</span>
+          </div>
+        </div>
+      )}
     </li>
   )
 }

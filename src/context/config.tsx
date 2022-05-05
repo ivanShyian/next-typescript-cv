@@ -5,21 +5,34 @@ interface Props {
   children: ReactChild
 }
 
-interface Config {
+interface NameValue {
+  name: string
+  value: string
+}
+
+interface ConfigInterface {
   links: [{
-    name: string
-    value: string
-  }]
+    en: NameValue,
+    uk: NameValue
+  }],
+  status: [{
+    en: string,
+    uk: string
+  }],
+  avatar: string,
+  _id: string,
   emailReceiver: string
 }
 
+export type ConfigType = ConfigInterface
+
 const AppContext = createContext({
-  config: {},
-  setConfig: (config: Config) => {}
+  config: {} as ConfigType,
+  setConfig: (config: ConfigType): void => {}
 })
 
 export function ConfigWrapper({ children }: Props) {
-  const [config, setConfig] = useState({})
+  const [config, setConfig] = useState<ConfigType>({} as ConfigType)
 
   return (
     <AppContext.Provider value={{config, setConfig}}>

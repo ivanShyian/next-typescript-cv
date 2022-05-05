@@ -35,7 +35,6 @@ export function AuthWrapper({ children }: Props) {
     }
     // Request login with userId to check that id exists
     setIsAdmin(true)
-    // return router.push('/config')
   }
 
   const login = async(data: LoginInterface) => {
@@ -53,6 +52,7 @@ export function AuthWrapper({ children }: Props) {
         sameSite: true,
       })
       setIsAdmin(true)
+      return router.push('/')
     }
     // set axios interceptor
   }

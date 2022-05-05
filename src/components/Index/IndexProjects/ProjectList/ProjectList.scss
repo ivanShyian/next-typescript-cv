@@ -7,3 +7,22 @@
     align-items: center;
   }
 }
+
+.project-item__admin {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  font-family: 'Oswald', 'sans-serif';
+  font-size: 1.7rem;
+  background-color: transparent;
+  border: 3px solid $adminColor;
+  color: $adminColor;
+  transition: all .15s linear;
+  &:hover {
+    border: 3px solid $c-primary;
+    color: $c-primary;
+    transition: all .15s linear;
+  }
+}
