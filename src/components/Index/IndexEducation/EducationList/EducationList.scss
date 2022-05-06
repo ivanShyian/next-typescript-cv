@@ -10,6 +10,7 @@
   color: $adminColor;
   border: 3px solid $adminColor;
   transition: all .15s linear;
+  border-radius: 1.2rem;
   &:hover {
     transition: all .15s linear;
     color: $c-primary;

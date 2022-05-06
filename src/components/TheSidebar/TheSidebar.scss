@@ -104,12 +104,13 @@
       &:before,
       &:after {
         content: "";
-        transition: top .35s cubic-bezier(.23,1,.32,1),transform .35s cubic-bezier(.23,1,.32,1);
+        transition: top .35s cubic-bezier(.23,1,.32,1),transform .35s cubic-bezier(.23,1,.32,1), background-color .25s linear;
       }
 
       span {
         top: 40%;
         transform: translateY(-50%);
+        transition: background-color .25s linear;
       }
       &:before {
         top: 0;
@@ -120,11 +121,11 @@
     }
 
     &.darken {
-      .aside__burger_button {
+      .aside__burger_button:not(.active) {
         span,
         &:before,
         &:after {
-          background-color: $c-primary !important;
+          background-color: $c-primary;
         }
       }
     }

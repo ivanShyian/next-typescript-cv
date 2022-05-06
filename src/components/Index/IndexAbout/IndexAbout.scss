@@ -49,12 +49,35 @@
       margin: 0 0 1.5rem 0;
     }
   }
+  &__button-wrapper {
+    @include maxWidth1170 {
+      display: flex;
+    }
+  }
   &__button,
   &__admin {
     display: none;
     @include maxWidth1170 {
       display: flex;
       justify-content: center;
+    }
+    @include maxWidth450 {
+      .shared-button {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        font-size: 1rem;
+      }
+    }
+  }
+  &__admin {
+    .shared-button {
+      background-color: $c-primary !important;
+    }
+    @include maxWidth1170 {
+      margin-left: 1rem;
+    }
+    @include maxWidth450 {
+      margin-left: .5rem;
     }
   }
 }

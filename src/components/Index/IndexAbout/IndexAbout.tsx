@@ -46,14 +46,16 @@ export const IndexAbout: NextPage = () => {
             <div className="about-skills__tech">
               <IndexAboutTech techs={techs} />
             </div>
-            <div className="about-skills__button">
-              <SharedButton>Download CV</SharedButton>
-            </div>
-            {isAdmin && (
-              <div className="about-skills__admin">
-                <SharedButton>Edit</SharedButton>
+            <div className="about-skills__button-wrapper">
+              <div className="about-skills__button">
+                <SharedButton>Download CV</SharedButton>
               </div>
-            )}
+              {isAdmin && (
+                <div className="about-skills__admin">
+                  <SharedButton>Edit</SharedButton>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -2,22 +2,17 @@ import Modal from 'react-modal'
 import './AdminConfig.scss'
 import Image from 'next/image'
 import Avatar from '@/public/assets/Avatar.png'
-import {useState, useEffect, FC, MutableRefObject, Fragment, SetStateAction, Dispatch} from 'react'
+import {useState, useEffect, FC, MutableRefObject, Fragment, SetStateAction, Dispatch, useRef} from 'react'
 import SharedButton from '@/components/Shared/SharedButton'
 import {ConfigType, useConfigContext} from '../../../context/config'
 
 interface Props {
   childFunction: MutableRefObject<any>
 }
+type StatusListItem = {en: string, uk: string}
+type ChangeStatusType  = Dispatch<SetStateAction<StatusListItem[]>>
 
 Modal.setAppElement('#__next')
-
-const pseudoList = [
-  { id: 0, name: 'Instagram' },
-  { id: 1, name: 'Twitter' },
-  { id: 2, name: 'Telegram' },
-  { id: 3, name: 'Facebook' },
-]
 
 export const AdminConfig: FC<Props> = ({ childFunction }) => {
   const [isModalOpen, changeModalVisibility] = useState(false)
@@ -68,11 +63,10 @@ export const AdminConfig: FC<Props> = ({ childFunction }) => {
   )
 }
 
-type StatusListItem = {en: string, uk: string}
-type ChangeStatusType  = Dispatch<SetStateAction<StatusListItem[]>>
-
 function ModalGeneralTab({statusList, changeStatusList}: {statusList: StatusListItem[], changeStatusList: ChangeStatusType}) {
   const [statusValue, changeStatusValue] = useState('')
+  const [image, changeImage] = useState(Avatar)
+  const fileInput = useRef<HTMLInputElement>(null)
   
   const appendStatus = (e: any) => {
     e.preventDefault()
@@ -89,14 +83,31 @@ function ModalGeneralTab({statusList, changeStatusList}: {statusList: StatusList
     changeStatusList(copyOfStatusList)
   }
 
+  const openFileInput = () => {
+    if (fileInput.current) {
+      fileInput.current.click()
+    }
+  }
+
+  const onHandleChangeImage = (files: FileList | null) => {
+    const fileToLoad = files && files[0]
+    if (fileToLoad) {
+      const fileReader = new FileReader()
+      fileReader.onload = function(loadedEvent) {
+        const srcData = loadedEvent.target!.result
+        changeImage(srcData as any)
+      }
+      fileReader.readAsDataURL(fileToLoad)
+    }
+  }
+
   return (
     <div className="modal-general">
       <p className="modal__title">General</p>
       <div className="modal-general__image modal-image">
-        <form className="modal-image__wrapper">
-          <Image src={Avatar} objectFit="contain" alt="avatar" />
-          {/*@TODO ADD FILE READER HERE*/}
-          {/* <input type="file" /> */}
+        <form className="modal-image__wrapper" onClick={openFileInput}>
+          <Image src={image} objectFit="cover" layout="fill" alt="avatar"/>
+          <input className="modal-image__input" type="file" ref={fileInput} onChange={(e) => onHandleChangeImage(e.target.files)}/>
         </form>
       </div>
       <div className="modal-general__status modal-status">
