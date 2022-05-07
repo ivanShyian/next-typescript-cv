@@ -6,7 +6,7 @@ import IndexAboutTech from '@/components/Index/IndexAbout/IndexAboutTech'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 
 import avatar from '@/public/assets/Avatar.png'
-import {useAuthContext} from '../../../context/auth'
+import {useAuthContext} from '@/ctx/auth'
 
 const techs = [
   {id: 0, key: 'Javascript, Typescript', value: 85, color: 'darkorange'},

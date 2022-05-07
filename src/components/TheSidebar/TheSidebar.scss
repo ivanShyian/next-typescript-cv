@@ -2,22 +2,22 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  min-width: 250px;
+  width: 250px;
   align-items: center;
   height: 100vh;
   background-color: $c-primary;
   @include minWidth1824 {
-    min-width: 350px;
+    width: 350px;
   }
   @include maxWidth1170 {
-    min-width: 200px;
+    width: 200px;
   }
   @include maxWidth767 {
     position: fixed;
     z-index: 100;
     left: 200%;
     order: 1;
-    min-width: auto;
+    //min-width: auto;
     width: 70%;
     flex: 0 1 0%;
     transition: all 1s ease-in-out;

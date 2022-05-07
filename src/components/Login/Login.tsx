@@ -4,7 +4,7 @@ import SharedButton from '@/components/Shared/SharedButton'
 import * as yup from 'yup'
 import {FieldValues, useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
-import {useAuthContext, LoginInterface} from '../../context/auth'
+import {useAuthContext, LoginInterface} from '@/ctx/auth'
 import {FC, useEffect} from 'react'
 
 const schema = yup.object({

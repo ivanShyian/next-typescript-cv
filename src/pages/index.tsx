@@ -6,11 +6,11 @@ import IndexEducation from '@/components/Index/IndexEducation'
 import IndexWork from '@/components/Index/IndexWork'
 import IndexProjects from '@/components/Index/IndexProjects'
 import IndexContactMe from '@/components/Index/IndexContactMe'
-import Api from '../api/Api'
-import {useAuthContext} from '../context/auth'
+import Api from '@/api/Api'
+import {useAuthContext} from '@/ctx/auth'
 import {getCookie} from 'cookies-next'
-import {setConfig} from '../redux/actions/config'
-import {wrapper} from '../redux/store'
+import {setConfig} from '@/redux/actions/config'
+import {wrapper} from '@/redux/store'
 
 
 interface Props {

@@ -2,7 +2,7 @@ import {FC} from 'react'
 import './EducationList.scss'
 import EducationItem from '@/components/Index/IndexEducation/EducationList/EducationItem'
 import {Work, Graduation} from '@/models/Experience'
-import {useAuthContext} from '../../../../context/auth'
+import {useAuthContext} from '@/ctx/auth'
 
 interface Props {
   list: Work[] | Graduation[],

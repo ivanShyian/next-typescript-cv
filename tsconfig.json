@@ -19,7 +19,10 @@
       "@/components/*": ["src/components/*"],
       "@/models/*": ["src/models/*"],
       "@/public/*": ["public/*"],
-      "@/use/*": ["src/use/*"]
+      "@/use/*": ["src/use/*"],
+      "@/redux/*": ["src/redux/*"],
+      "@/ctx/*": ["src/context/*"],
+      "@/api/*": ["src/api/*"]
     }
   },
   "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx","**/*.ts", "**/*.tsx"],

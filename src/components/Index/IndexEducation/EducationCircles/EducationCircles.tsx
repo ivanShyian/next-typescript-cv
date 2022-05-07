@@ -5,7 +5,7 @@ import { schemeTableau10 } from 'd3-scale-chromatic'
 import { transition } from 'd3-transition'
 import { line, curveCardinalClosed } from 'd3-shape'
 import './EducationCircles.scss'
-import {useAuthContext} from '../../../../context/auth'
+import {useAuthContext} from '@/ctx/auth'
 
 select.prototype.transition = transition
 

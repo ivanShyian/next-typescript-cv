@@ -3,7 +3,7 @@ import 'normalize.css/normalize.css'
 import type {AppProps} from 'next/app'
 import Layout from '../layouts/Core/Core'
 import {AuthWrapper} from '../context/auth'
-import {wrapper} from '../redux/store'
+import {wrapper} from '@/redux/store'
 
 const MyApp = ({Component, pageProps}: AppProps) => {
   return (

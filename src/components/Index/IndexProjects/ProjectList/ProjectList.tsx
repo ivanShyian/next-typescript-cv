@@ -2,7 +2,7 @@ import {FC} from 'react'
 import {Project} from '@/models/Project'
 import './ProjectList.scss'
 import ProjectItem from '@/components/Index/IndexProjects/ProjectList/ProjectItem'
-import {useAuthContext} from '../../../../context/auth'
+import {useAuthContext} from '@/ctx/auth'
 
 
 interface Props {

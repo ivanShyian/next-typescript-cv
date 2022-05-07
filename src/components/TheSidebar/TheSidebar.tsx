@@ -18,9 +18,7 @@ export const TheSidebar: NextPage = () => {
   }, '.index__cutaway') as [RefObject<HTMLDivElement> | null, boolean]
 
   const onBurgerClick = () => {
-    changeNavState((state: boolean) => {
-      return !state
-    })
+    changeNavState((state: boolean) => !state)
   }
 
   const burgerClass = isVisible ? 'aside__burger' : 'aside__burger darken'

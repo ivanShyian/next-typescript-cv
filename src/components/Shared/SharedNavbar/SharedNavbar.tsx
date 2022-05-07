@@ -8,10 +8,10 @@ import Gear from '@/public/icons/navigation-icons/gear.svg'
 
 import {useScroll} from '@/use/useScroll'
 import './SharedNavbar.scss'
-import {MutableRefObject, ReactElement, useRef} from 'react'
+import {MutableRefObject, ReactElement, useRef, useState} from 'react'
 import {NextPage} from 'next'
 import {useRouter} from 'next/router'
-import {useAuthContext} from '../../../context/auth'
+import {useAuthContext} from '@/ctx/auth'
 import AdminConfig from '@/components/Admin/Config'
 
 interface ListItem {
@@ -29,7 +29,7 @@ const navList: ListItem[] = [
   {id: 3, name: 'Work', iconComponent: <Briefcase />, className: '.index__work'},
   {id: 4, name: 'Projects', iconComponent: <Workflow />, className: '.index__projects'},
   {id: 5, name: 'Contact me', iconComponent: <IdBadge />, className: '.index__contact'},
-  {id: 6, name: 'Configuration', iconComponent: <Gear />, className: 'gear', isAdmin: true}
+  {id: 6, name: 'Config', iconComponent: <Gear />, className: 'gear', isAdmin: true}
 ]
 
 export const SharedNavbar:  NextPage = () => {
@@ -38,9 +38,12 @@ export const SharedNavbar:  NextPage = () => {
   const [scrollTo] = useScroll()
   const {isAdmin} = useAuthContext()
 
+  const [shouldMount, changeMountStatus] = useState(false)
+
 
   const handleClick = async(className: string, adminRoute?: boolean) => {
     if (adminRoute) {
+      await changeMountStatus(true)
       return (modalRef as any).current(true)
     }
     if (router.route === '/login') {
@@ -68,7 +71,7 @@ export const SharedNavbar:  NextPage = () => {
           {navList.map(listItem)}
         </ul>
       </nav>
-      <AdminConfig childFunction={modalRef}/>
+      {shouldMount && <AdminConfig childFunction={modalRef} onUnmounted={() => changeMountStatus(false)}/>}
     </div>
   )
 }
