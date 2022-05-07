@@ -7,23 +7,23 @@ import IndexWork from '@/components/Index/IndexWork'
 import IndexProjects from '@/components/Index/IndexProjects'
 import IndexContactMe from '@/components/Index/IndexContactMe'
 import Api from '../api/Api'
-import {useConfigContext} from '../context/config'
-import {getCookie} from 'cookies-next'
 import {useAuthContext} from '../context/auth'
+import {getCookie} from 'cookies-next'
+import {setConfig} from '../redux/actions/config'
+import {wrapper} from '../redux/store'
+
 
 interface Props {
   config: any
   authCookie: any
 }
 
-const Home: FC<Props> = ({config, authCookie}: Props) => {
-  const {setConfig} = useConfigContext()
+const Home: FC<Props> = ({authCookie}: Props) => {
   const {autoLogin} = useAuthContext()
 
   useEffect(() => {
-    setConfig(config)
     autoLogin(authCookie)
-  }, [config, setConfig, autoLogin, authCookie])
+  }, [autoLogin, authCookie])
 
   return (
     <Fragment>
@@ -37,17 +37,16 @@ const Home: FC<Props> = ({config, authCookie}: Props) => {
   )
 }
 
-export const getServerSideProps = async({req, res}: {req: any, res: any}) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async({req, res}: {req: any, res: any}) => {
   const api = new Api()
   const {config} = await api.getConfig()
+  store.dispatch(setConfig(config))
   const authCookie = getCookie('auth', {req, res})
   return {
     props: {
-      config,
       authCookie: authCookie ? JSON.parse(authCookie as string) : {}
     }
   }
-}
-
+})
 
 export default Home

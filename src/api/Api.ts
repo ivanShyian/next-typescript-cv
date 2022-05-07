@@ -45,7 +45,6 @@ export default class Api {
 
   async getConfig(): Promise<any> {
     const {data} = await this.init().get('/config')
-    console.log({data})
     return data
   }
   //

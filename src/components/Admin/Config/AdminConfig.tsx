@@ -4,26 +4,47 @@ import Image from 'next/image'
 import Avatar from '@/public/assets/Avatar.png'
 import {useState, useEffect, FC, MutableRefObject, Fragment, SetStateAction, Dispatch, useRef} from 'react'
 import SharedButton from '@/components/Shared/SharedButton'
-import {ConfigType, useConfigContext} from '../../../context/config'
+import {connect} from 'react-redux'
+import {setConfig} from '../../../redux/actions/config'
+import {bindActionCreators} from 'redux'
+
+interface NameValue {
+  name: string
+  value: string
+}
+
+interface ConfigInterface {
+  links: [{
+    en: NameValue,
+    uk: NameValue
+  }],
+  status: [{
+    en: string,
+    uk: string
+  }],
+  avatar: string,
+  _id: string,
+  emailReceiver: string
+}
 
 interface Props {
   childFunction: MutableRefObject<any>
+  config: ConfigType
+  setConfig: any
 }
+
+type ConfigType = ConfigInterface
 type StatusListItem = {en: string, uk: string}
 type ChangeStatusType  = Dispatch<SetStateAction<StatusListItem[]>>
 
 Modal.setAppElement('#__next')
 
-export const AdminConfig: FC<Props> = ({ childFunction }) => {
+const AdminConfig: FC<Props> = ({ config, setConfig, childFunction }) => {
   const [isModalOpen, changeModalVisibility] = useState(false)
   const [activeTab, changeActiveTab] = useState(0)
-  const {
-    config,
-    setConfig
-  }: {config: ConfigType, setConfig: (config: ConfigType) => void} = useConfigContext()
 
   const changeStatusList = (newStatusList: any) => {
-    setConfig({...config, status: newStatusList})
+    setConfig(({...config, status: newStatusList}))
     // @TODO PUT API HERE
   }
 
@@ -172,3 +193,15 @@ function ModalEmailTab({emailReceiver}: {emailReceiver: string}) {
     </div>
   )
 }
+
+const mapStateToProps = (state: any) => ({
+  config: state.config.config
+})
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    setConfig: bindActionCreators(setConfig, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminConfig)
