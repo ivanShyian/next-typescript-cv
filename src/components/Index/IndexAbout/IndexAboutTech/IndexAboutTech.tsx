@@ -1,9 +1,11 @@
 import {FC} from 'react'
 import './IndexAboutTech.scss'
 import IndexAboutTechItem from '@/components/Index/IndexAbout/IndexAboutTech/IndexAboutTechItem'
-import {Techs, Tech} from '@/models/Techs'
+import {Tech} from '@/models/About'
 
-interface Props extends Techs {}
+interface Props {
+  techs: [Tech]
+}
 
 export const IndexAboutTech: FC<Props> = ({techs}: Props) => {
   return (

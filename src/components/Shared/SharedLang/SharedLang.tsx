@@ -1,13 +1,14 @@
 import {NextPage} from 'next'
 import './SharedLang.scss'
 import {useRouter} from 'next/router'
+import setLanguage from 'next-translate/setLanguage'
 
 export const SharedLang: NextPage = () => {
   const router = useRouter()
 
   const changeLocale = (e: any) => {
     const lang = router.locale === 'en' ? 'uk' : 'en'
-    return router.push('/',  '/', {locale: lang})
+    return setLanguage(lang, false)
   }
 
   return (

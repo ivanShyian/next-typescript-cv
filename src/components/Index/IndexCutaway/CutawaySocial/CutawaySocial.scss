@@ -15,3 +15,21 @@
     }
   }
 }
+
+@keyframes bounce {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  30% {
+    transform: scale(1, .8);
+  }
+
+  75% {
+    transform: scale(1, 1.1);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}

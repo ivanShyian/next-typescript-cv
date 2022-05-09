@@ -1,4 +1,5 @@
 const path = require('path')
+const nextTranslate = require('next-translate')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -21,15 +22,9 @@ const nextConfig = {
 
     return config;
   },
-  i18n: {
-    // providing the locales supported by your application
-    locales: ["en", "uk"],
-    //  default locale used when the non-locale paths are visited
-    defaultLocale: "en",
-  },
   images: {
     domains: ['localhost', ""]
   }
 }
 
-module.exports = nextConfig
+module.exports = nextTranslate(nextConfig)

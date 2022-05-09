@@ -1,0 +1,11 @@
+{
+  "navigation": {
+    "home": "Головна",
+    "about": "Про мене",
+    "education": "Освіта",
+    "work": "Досвід",
+    "projects": "Проекти",
+    "contactMe": "Зв'язатись",
+    "config": "Конфіг"
+  }
+}

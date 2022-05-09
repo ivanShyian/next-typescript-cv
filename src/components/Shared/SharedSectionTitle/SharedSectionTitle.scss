@@ -15,4 +15,9 @@
       fill: #000;
     }
   }
+  &.uk {
+    .shared-section-title__text {
+      font-family: 'Rubik', 'sans-serif';
+    }
+  }
 }

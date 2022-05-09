@@ -36,6 +36,13 @@ div {
   font-family: 'Fira Sans', sans-serif;
 }
 
+//html[lang="uk"] {
+//  font-family: 'Rubik', 'sans-serif';
+//  body, div {
+//    font-family: 'Rubik', 'sans-serif';
+//  }
+//}
+
 body, html {
   background-color: $c-white-darken-1;
 }
@@ -92,6 +99,9 @@ li {
     }
     @include maxWidth767 {
       inset: 5% !important;
+    }
+    @include minWidth1824 {
+      inset: 15% 25% !important;
     }
   }
   &__Body--open {

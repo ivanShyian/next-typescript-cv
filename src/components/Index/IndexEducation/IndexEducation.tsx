@@ -6,6 +6,7 @@ import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import EducationList from '@/components/Index/IndexEducation/EducationList'
 import {useEffect, useRef, useState, useCallback} from 'react'
 import Modal from 'react-modal'
+import useTranslation from 'next-translate/useTranslation'
 const EducationCircles = dynamic(() => import('@/components/Index/IndexEducation/EducationCircles'), {ssr: false})
 
 const educationGraduation = [
@@ -28,6 +29,7 @@ const skillList = [
 export const IndexEducation: NextPage = () => {
   const [circleSizes, changeCircleSizes] = useState({width: 0, height: 0})
   const [isModalOpen, changeModalState] = useState(false)
+  const {t, lang} = useTranslation('index')
 
   const cardRef = useRef<HTMLDivElement>(null)
   const educationRef = useRef<HTMLDivElement>(null)
@@ -48,25 +50,25 @@ export const IndexEducation: NextPage = () => {
   }, [cardRef, educationRef])
 
   const onCourseClick = useCallback((id: string | number) => {
-    console.log(id)
-    // Start loader
-    // When loading complete - open modal
+    // open modal
     return changeModalState(true)
   }, [changeModalState])
 
 
   const handleCloseModal = () => changeModalState(false)
 
+
   return (
     <section id="education" className='index__education section education'>
       <div className="education__wrapper container" ref={educationRef}>
-        <SharedSectionTitle>Education</SharedSectionTitle>
+        <SharedSectionTitle>{t('educationTitle')}</SharedSectionTitle>
         <div className="education__content">
           <div ref={cardRef} className="card education__card education__degree typeEducation">
             <EducationList list={educationGraduation} type="educ" />
           </div>
           <div className="education__courses typeLearning">
             <EducationCircles
+              key={lang}
               width={circleSizes.width}
               height={circleSizes.height}
               skillList={skillList}

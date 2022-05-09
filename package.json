@@ -26,6 +26,7 @@
     "d3-transition": "^3.0.1",
     "next": "12.1.5",
     "next-redux-wrapper": "^7.0.5",
+    "next-translate": "^1.4.0",
     "normalize-scss": "^7.0.1",
     "normalize.css": "^8.0.1",
     "react": "18.0.0",

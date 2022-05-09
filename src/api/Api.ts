@@ -2,6 +2,7 @@ import {AxiosInstance, AxiosRequestHeaders} from 'axios'
 import axios from 'axios'
 import {getCookie} from 'cookies-next'
 import FormData from 'form-data'
+import {AboutInterface} from '@/models/About'
 
 export default class Api {
   api_token: null | string
@@ -11,7 +12,6 @@ export default class Api {
     this.api_token = null
     this.client = null
     this.api_url = (typeof window === 'undefined' ? process.env.API_ENDPOINT : process.env.NEXT_PUBLIC_API_ENDPOINT)!
-    console.log('emd', process.env.API_ENDPOINT)
   }
 
   init(): AxiosInstance {
@@ -39,13 +39,20 @@ export default class Api {
     return data
   }
 
-  async getCutaway(): Promise<any> {
-    const {data} = await this.init().get('/about')
+  async getConfig(): Promise<any> {
+    const {data} = await this.init().get('/config')
     return data
   }
 
-  async getConfig(): Promise<any> {
-    const {data} = await this.init().get('/config')
+  async getAbout(): Promise<any> {
+    const {data} = await this.init().get('/about')
+    console.log({data})
+    return data
+  }
+
+  async getEducation(): Promise<any> {
+    const {data} = await this.init().get('/education')
+    console.log({data})
     return data
   }
 
@@ -56,6 +63,10 @@ export default class Api {
         'Accept': 'multipart/form-data',
       }
     })
+  }
+
+  async changeAbout(preparedData: AboutInterface): Promise<void> {
+    const {data} = await this.init().put('/admin/about', preparedData)
   }
   //
   // async getConfig(): Promise<any> {

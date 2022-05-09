@@ -2,7 +2,7 @@ import './AdminConfig.scss'
 
 import {useState, useEffect, FC, MutableRefObject, Fragment, useRef} from 'react'
 import {connect} from 'react-redux'
-import {setConfig} from '@/redux/actions/config'
+import {setConfig} from '@/redux/actions'
 import {bindActionCreators, Dispatch} from 'redux'
 import Api from '@/api/Api'
 
@@ -77,7 +77,7 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
   ]
 
   useEffect(() => {
-    childFunction.current = changeModalVisibility
+    childFunction.current = {changeModalVisibility}
   }, [childFunction])
 
   return (
@@ -85,7 +85,7 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
       isOpen={isModalOpen}
       shouldCloseOnOverlayClick={true}
       onRequestClose={handleCloseModal}
-      contentLabel="Example Modal"
+      contentLabel="Admin config"
     >
       <Fragment>
         <div className="modal__tab">

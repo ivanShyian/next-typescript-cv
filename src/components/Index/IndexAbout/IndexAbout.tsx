@@ -1,64 +1,90 @@
-import {NextPage} from 'next'
 import Image from 'next/image'
 import './IndexAbout.scss'
 import SharedButton from '@/components/Shared/SharedButton'
 import IndexAboutTech from '@/components/Index/IndexAbout/IndexAboutTech'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 
-import avatar from '@/public/assets/Avatar.png'
 import {useAuthContext} from '@/ctx/auth'
+import {connect} from 'react-redux'
+import {FC, MutableRefObject, useRef} from 'react'
+import AdminAbout from '@/components/Admin/About'
+import {StateInterface} from '@/models/index'
+import useTranslation from 'next-translate/useTranslation'
+import {bindActionCreators, Dispatch} from 'redux'
+import {setAbout} from '@/redux/actions'
+import {AboutInterface} from '@/models/About'
 
-const techs = [
-  {id: 0, key: 'Javascript, Typescript', value: 85, color: 'darkorange'},
-  {id: 0, key: 'Vue, Nuxt', value: 80, color: 'aqua'},
-  {id: 0, key: 'React, Next', value: 60, color: 'FD6060FF'},
-  {id: 0, key: 'Node, Express', value: 70, color: 'silver'},
-  {id: 0, key: 'Mongo, Mongoose, Firebase', value: 75, color: 'red'},
-  {id: 0, key: 'Tailwind, Bootstrap', value: 85, color: ''},
-]
+interface Props {
+  about: any
+  avatar: string
+  setAbout: (about: AboutInterface) => void
+}
 
-export const IndexAbout: NextPage = () => {
+const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
+  const modalRef = useRef<MutableRefObject<any>>(null)
   const {isAdmin} = useAuthContext()
+  const {t, lang} = useTranslation('index')
+
+  const handleEditClick = () => {
+    if (modalRef.current) {
+      console.log(modalRef.current)
+      return (modalRef as any).current.changeModalVisibility(true)
+    }
+  }
 
   return (
     <section id="about" className="index__about section about">
       <div className="about__wrapper container">
-        <SharedSectionTitle>About Me</SharedSectionTitle>
+        <SharedSectionTitle>{t('aboutTitle')}</SharedSectionTitle>
         <div className="about__skills about-skills">
           <div className="about-skills__image">
-            <Image src={avatar} width={200} height={200} alt="Avatar"/>
+            <Image src={`http://localhost:8080/${avatar}`} width={200} height={200} alt="Avatar"/>
           </div>
           <div className="card about-skills__card">
             <div className="about-skills__card_triangle about-triangle" />
             <div className="about-skills__card_resume about-resume">
-              <p className="about-resume__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, aspernatur at autem consequatur culpa cum debitis dicta dolor dolorem ea esse facilis fugit illo ipsum laboriosam libero magni maiores molestiae necessitatibus pariatur provident quam sit vel. Alias animi consectetur eaque excepturi, iste maxime molestiae nam quo recusandae soluta? Atque cupiditate exercitationem, id laboriosam magni molestiae molestias necessitatibus placeat quia quo recusandae repudiandae sint ullam vel vero! Alias autem beatae culpa dolorem eaque eligendi eos eum illum ipsam iusto labore magni, obcaecati possimus qui, quo, rerum ullam vero voluptatibus. Ad adipisci facere libero nemo numquam reiciendis saepe? Esse fuga numquam unde?</p>
+              <p className="about-resume__text">{about.text[lang]}</p>
               <div className="about-resume__button-wrapper">
                 <div className="about-resume__button">
-                  <SharedButton>Download CV</SharedButton>
+                  <SharedButton>{t('downloadCV')}</SharedButton>
                 </div>
                 {isAdmin && (
                   <div className="about-resume__admin">
-                    <SharedButton>Edit</SharedButton>
+                    <SharedButton onClick={handleEditClick}>{t('edit')}</SharedButton>
                   </div>
                 )}
               </div>
             </div>
             <div className="about-skills__tech">
-              <IndexAboutTech techs={techs} />
+              <IndexAboutTech techs={about.techs} />
             </div>
             <div className="about-skills__button-wrapper">
               <div className="about-skills__button">
-                <SharedButton>Download CV</SharedButton>
+                <SharedButton>{t('downloadCV')}</SharedButton>
               </div>
               {isAdmin && (
                 <div className="about-skills__admin">
-                  <SharedButton>Edit</SharedButton>
+                  <SharedButton onClick={handleEditClick}>{t('edit')}</SharedButton>
                 </div>
               )}
             </div>
           </div>
         </div>
+        {isAdmin && (
+          <AdminAbout childFunction={modalRef} about={about} setAbout={setAbout}/>
+        )}
       </div>
     </section>
   )
 }
+
+const mapStateToProps = (state: StateInterface) => ({
+  about: state.about.about,
+  avatar: state.config.config.avatar
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setAbout: bindActionCreators(setAbout, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndexAbout)

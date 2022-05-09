@@ -1,24 +1,24 @@
 import './IndexCutaway.scss'
+import {ConfigInterface} from '@/models/Config'
 
 import Image from 'next/image'
 import {useEffect, useState, useRef, FC} from 'react'
 import {useScroll} from '@/use/useScroll'
-
-import DoubleDown from '@/public/icons/double-down.svg'
+import useTranslation from 'next-translate/useTranslation'
 import {connect} from 'react-redux'
 
 import SharedButton from '@/components/Shared/SharedButton'
 import CutawayParallax from '@/components/Index/IndexCutaway/CutawayParallax'
 import CutawaySocial from '@/components/Index/IndexCutaway/CutawaySocial'
-import {ConfigInterface} from '@/models/Config'
-import {useRouter} from 'next/router'
+import {Translate} from 'next-translate'
+import {StateInterface} from '@/models/index'
+
 
 const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, name, avatar}}) => {
   const [transformValue, changeTransformValue] = useState(0)
   const [negativeOrder, changeOrderBool] = useState(false)
   const [scrollTo] = useScroll()
-  const router = useRouter()
-  const locale = router.locale as 'en' | 'uk'
+  const {t, lang} = useTranslation('index') as {t: Translate, lang: 'uk' | 'en'}
   const listItem = useRef(null)
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
         className="cutaway__subtitle_item"
         key={idx}
       >
-        {item[locale]}
+        {item[lang]}
       </li>
     )
   })
@@ -77,11 +77,11 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
             alt="avatar"
           />
         </div>
-        <div className={`cutaway__name ${locale}`}>
+        <div className={`cutaway__name ${lang}`}>
           {/*@TODO SET LANG*/}
-          <h2>{name[locale]}</h2>
+          <h2>{name[lang]}</h2>
         </div>
-        <div className={`cutaway__subtitle ${locale}`}>
+        <div className={`cutaway__subtitle ${lang}`}>
           <ul
             style={{transform: `translateY(-${transformValue}px)`}}
             className="cutaway__subtitle_list"
@@ -91,7 +91,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
         </div>
         <CutawaySocial links={links}/>
         <div className="cutaway__hire">
-          <SharedButton onClick={() => scrollTo('.index__contact', 1200)}>Hire me</SharedButton>
+          <SharedButton onClick={() => scrollTo('.index__contact', 1200)}>{t('hire')}</SharedButton>
         </div>
         <div className="cutaway__scroll" onClick={() => scrollTo('.index__about', 600)}>
           <div className="field">
@@ -104,8 +104,8 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
   )
 }
 
-const mapStateToProps = (state: { config: any }) => ({
+const mapStateToProps = (state: StateInterface) => ({
   config: state.config.config as ConfigInterface
 })
 
-export default connect(mapStateToProps, null)(IndexCutaway)
+export default connect(mapStateToProps, () => {})(IndexCutaway)

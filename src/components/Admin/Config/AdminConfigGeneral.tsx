@@ -13,12 +13,12 @@ interface Props {
 
 const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValue, childFunction}) => {
   const [statusValue, changeStatusValue] = useState('')
-  const [nameVal, changeNameVal] = useState('')
   const [editIndex, changeIndex] = useState(-1)
   const [image, changeImage] = useState(`http://localhost:8080/${avatar}`)
   const router = useRouter()
   const fileInput = useRef<HTMLInputElement>(null)
   const locale = router.locale as 'en' | 'uk'
+  const [nameVal, changeNameVal] = useState(nameValue[locale])
 
   const onHandleSubmitStatus = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -82,28 +82,29 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
 
   return (
     <div className="modal-general">
-      <p className="modal__title">General</p>
-      <div className="modal-general__image modal-image">
-        <form className="modal-image__wrapper" onClick={openFileInput}>
-          <NextImage src={image} objectFit="cover" layout="fill" alt="avatar"/>
-          <input
-            className="modal-image__input"
-            type="file"
-            ref={fileInput}
-            onChange={(e) => onHandleChangeImage(e.target.files)}
-          />
-        </form>
-      </div>
-      <div className="modal-general__name modal-name">
-        <form className="modal-name__wrapper" onSubmit={changeName}>
-          <input
-            className="form-control__input modal-name__input"
-            type="text"
-            value={nameVal}
-            placeholder={nameValue[locale]}
-            onChange={(e) => changeNameVal(e.target.value)}
-          />
-        </form>
+      <p className="modal-general__title modal__title">General</p>
+      <div className="modal-general__upper">
+        <div className="modal-general__image modal-image">
+          <form className="modal-image__wrapper" onClick={openFileInput}>
+            <NextImage src={image} objectFit="cover" layout="fill" alt="avatar"/>
+            <input
+              className="modal-image__input"
+              type="file"
+              ref={fileInput}
+              onChange={(e) => onHandleChangeImage(e.target.files)}
+            />
+          </form>
+        </div>
+        <div className="modal-general__name modal-name">
+          <form className="modal-name__wrapper" onSubmit={changeName}>
+            <input
+              className="modal-name__input"
+              type="text"
+              value={nameVal}
+              onChange={(e) => changeNameVal(e.target.value)}
+            />
+          </form>
+        </div>
       </div>
       <div className="modal-general__status modal-status">
         <p className="modal__title">Skill list</p>
@@ -120,7 +121,7 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
             )
           })}
         </ul>
-        <form className="form-control form-control_inside" onSubmit={onHandleSubmitStatus}>
+        <form className="form-control modal-status__input" onSubmit={onHandleSubmitStatus}>
           <input
             placeholder="Type new status here..."
             className="form-control__input"
