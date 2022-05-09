@@ -1,3 +1,3 @@
-import {IndexCutaway} from '@/components/Index/IndexCutaway/IndexCutaway'
+import IndexCutaway from '@/components/Index/IndexCutaway/IndexCutaway'
 
 export default IndexCutaway

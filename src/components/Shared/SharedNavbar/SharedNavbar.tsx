@@ -16,20 +16,23 @@ import AdminConfig from '@/components/Admin/Config'
 
 interface ListItem {
   id: number
-  name: string
+  name: {
+    en: string
+    uk: string
+  }
   iconComponent: ReactElement
   className?: string
   isAdmin?: boolean
 }
 
 const navList: ListItem[] = [
-  {id: 0, name: 'Home', iconComponent: <Home />, className: '.index__cutaway'},
-  {id: 1, name: 'About', iconComponent: <Person />, className: '.index__about'},
-  {id: 2, name: 'Education', iconComponent: <Book />, className: '.index__education'},
-  {id: 3, name: 'Work', iconComponent: <Briefcase />, className: '.index__work'},
-  {id: 4, name: 'Projects', iconComponent: <Workflow />, className: '.index__projects'},
-  {id: 5, name: 'Contact me', iconComponent: <IdBadge />, className: '.index__contact'},
-  {id: 6, name: 'Config', iconComponent: <Gear />, className: 'gear', isAdmin: true}
+  {id: 0, name: {en: 'Home', uk: 'Головна'}, iconComponent: <Home />, className: '.index__cutaway'},
+  {id: 1, name: {en: 'About', uk: 'Про мене'}, iconComponent: <Person />, className: '.index__about'},
+  {id: 2, name: {en: 'Education', uk: 'Освіта'}, iconComponent: <Book />, className: '.index__education'},
+  {id: 3, name: {en: 'Work', uk: 'Досвід'}, iconComponent: <Briefcase />, className: '.index__work'},
+  {id: 4, name: {en: 'Projects', uk: 'Проекти'}, iconComponent: <Workflow />, className: '.index__projects'},
+  {id: 5, name: {en: 'Contact me', uk: 'Зв\'язатись'}, iconComponent: <IdBadge />, className: '.index__contact'},
+  {id: 6, name: {en: 'Config', uk: 'Конфіг'}, iconComponent: <Gear />, className: 'gear', isAdmin: true}
 ]
 
 export const SharedNavbar:  NextPage = () => {
@@ -37,6 +40,7 @@ export const SharedNavbar:  NextPage = () => {
   const router = useRouter()
   const [scrollTo] = useScroll()
   const {isAdmin} = useAuthContext()
+  const locale = router.locale as 'uk' | 'en'
 
   const [shouldMount, changeMountStatus] = useState(false)
 
@@ -59,7 +63,7 @@ export const SharedNavbar:  NextPage = () => {
     return (
       <li className="nav__item" key={item.id} onClick={() => handleClick(item.className!, item.isAdmin)}>
         {item.iconComponent}
-        <span>{item.name}</span>
+        <span>{item.name[locale]}</span>
       </li>
     )
   }

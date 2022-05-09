@@ -1,30 +1,62 @@
-import {FC, MutableRefObject, useEffect, useRef, useState} from 'react'
+import {FC, FormEvent, MutableRefObject, useRef, useState} from 'react'
 import NextImage from 'next/image'
 import {StatusListItem, FieldsList} from '@/models/Config'
+import {useRouter} from 'next/router'
 
 interface Props {
   avatar: string
   statusList: StatusListItem[]
+  nameValue: {en: string, uk: string}
   changeGeneral: (field: FieldsList, newValues: any) => void
   childFunction: MutableRefObject<any>
 }
 
-const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, childFunction}) => {
+const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValue, childFunction}) => {
   const [statusValue, changeStatusValue] = useState('')
+  const [nameVal, changeNameVal] = useState('')
+  const [editIndex, changeIndex] = useState(-1)
   const [image, changeImage] = useState(`http://localhost:8080/${avatar}`)
+  const router = useRouter()
   const fileInput = useRef<HTMLInputElement>(null)
+  const locale = router.locale as 'en' | 'uk'
 
-  const appendStatus = (e: any) => {
+  const onHandleSubmitStatus = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (statusValue.length === 0) return
-    //@TODO ADD LANG HERE
-    changeGeneral('status', [...statusList, {en: statusValue, uk: statusValue}])
+    const oppositeLang = locale === 'en' ? 'uk' : 'en' as 'en' | 'uk'
+    let data: StatusListItem[]
+    if (editIndex !== -1) {
+      let statusListCopy = [...statusList]
+      statusListCopy[editIndex][locale] = statusValue
+      data = statusListCopy
+      changeIndex(-1)
+    } else {
+      if (statusValue.length === 0) return
+      data = [...statusList, {[locale]: statusValue, [oppositeLang]: ''} as StatusListItem]
+    }
+    changeGeneral('status', data)
     changeStatusValue('')
   }
 
-  const removeItem = (val: {en: string, uk: string}) => {
+  const changeName = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (nameVal.length === 0) return
+    changeGeneral('name', {
+      ...nameValue,
+      [locale]: nameVal
+    })
+    changeNameVal('')
+  }
+
+  const onHandleEdit = (val: StatusListItem) => {
     let copyOfStatusList = [...statusList]
-    const elementIndex = copyOfStatusList.findIndex((el: {en: string, uk: string}) => el === val)
+    const elementIndex = copyOfStatusList.findIndex((el: StatusListItem) => el === val)
+    changeIndex(elementIndex)
+    changeStatusValue(copyOfStatusList[elementIndex][locale])
+  }
+
+  const removeItem = (val: StatusListItem) => {
+    let copyOfStatusList = [...statusList]
+    const elementIndex = copyOfStatusList.findIndex((el: StatusListItem) => el === val)
     copyOfStatusList.splice(elementIndex, 1)
     changeGeneral('status', copyOfStatusList)
   }
@@ -35,52 +67,18 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, childFun
     }
   }
 
-  useEffect(() => {
-    console.log(avatar)
-  }, [avatar])
-
   const onHandleChangeImage = (files: FileList | null) => {
     childFunction.current = files
-
     const fileToLoad = files && files[0]
     if (fileToLoad) {
       const fileReader = new FileReader()
       fileReader.onload = function(loadedEvent) {
         const srcData = loadedEvent.target!.result
         changeImage(srcData as any)
-        // changeGeneral('avatar', srcData)
       }
       fileReader.readAsDataURL(fileToLoad)
     }
   }
-
-  // const onHandleChangeImage = (files: FileList | null) => {
-  //   const img = new Image()
-  //   img.setAttribute('crossOrigin', 'anonymous')
-  //   img.onload = function() {
-  //     return imageToBase64(this as HTMLImageElement)
-  //   }
-  //   img.src = url
-  // }
-  //
-  // const imageToBase64 = (img: HTMLImageElement) => {
-  //   // Create an empty canvas element
-  //   const canvas = document.createElement('canvas') as HTMLCanvasElement
-  //   canvas.width = img.width
-  //   canvas.height = img.height
-  //
-  //   // Copy the image contents to the canvas
-  //   const ctx = canvas.getContext('2d')
-  //   ctx!.drawImage(img, 0, 0)
-  //
-  //   // Get the data-URL formatted image
-  //   // Firefox supports PNG and JPEG. You could check img.src to
-  //   // guess the original format, but be aware the using "image/jpg"
-  //   // will re-encode the image.
-  //   const dataURL = canvas.toDataURL('image/png')
-  //
-  //   return dataURL.replace(/^data:image\/(png|jpg);base64,/, "")
-  // }
 
   return (
     <div className="modal-general">
@@ -88,7 +86,23 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, childFun
       <div className="modal-general__image modal-image">
         <form className="modal-image__wrapper" onClick={openFileInput}>
           <NextImage src={image} objectFit="cover" layout="fill" alt="avatar"/>
-          <input className="modal-image__input" type="file" ref={fileInput} onChange={(e) => onHandleChangeImage(e.target.files)}/>
+          <input
+            className="modal-image__input"
+            type="file"
+            ref={fileInput}
+            onChange={(e) => onHandleChangeImage(e.target.files)}
+          />
+        </form>
+      </div>
+      <div className="modal-general__name modal-name">
+        <form className="modal-name__wrapper" onSubmit={changeName}>
+          <input
+            className="form-control__input modal-name__input"
+            type="text"
+            value={nameVal}
+            placeholder={nameValue[locale]}
+            onChange={(e) => changeNameVal(e.target.value)}
+          />
         </form>
       </div>
       <div className="modal-general__status modal-status">
@@ -97,13 +111,16 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, childFun
           {statusList.map((value: {en: string, uk: string}, id) => {
             return (
               <li className="modal-status__item" key={id}>
-                {/*@TODO ADD LANG HERE*/}
-                <p onClick={() => removeItem(value)}>{id + 1}. {value.en}</p>
+                <p>{id + 1}. {value[locale]}</p>
+                <div className="modal-status__item_edit">
+                  <span className="admin-circle-button edit" onClick={() => onHandleEdit(value)}>e</span>
+                  <span className="admin-circle-button remove" onClick={() => removeItem(value)}>d</span>
+                </div>
               </li>
             )
           })}
         </ul>
-        <form className="form-control form-control_inside" onSubmit={appendStatus}>
+        <form className="form-control form-control_inside" onSubmit={onHandleSubmitStatus}>
           <input
             placeholder="Type new status here..."
             className="form-control__input"

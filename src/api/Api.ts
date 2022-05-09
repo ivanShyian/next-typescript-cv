@@ -1,7 +1,6 @@
 import {AxiosInstance, AxiosRequestHeaders} from 'axios'
 import axios from 'axios'
 import {getCookie} from 'cookies-next'
-import {ConfigInterface} from '@/models/Config'
 import FormData from 'form-data'
 
 export default class Api {
@@ -50,12 +49,7 @@ export default class Api {
     return data
   }
 
-  async changeConfig(config: ConfigInterface): Promise<void> {
-    const formData = new FormData()
-    formData.append('status', JSON.stringify(config.status))
-    formData.append('links', JSON.stringify(config.links))
-    formData.append('emailReceiver', config.emailReceiver)
-    formData.append('image', config.avatar)
+  async changeConfig(formData: FormData): Promise<void> {
     const {data} = await this.init().put('/admin/config', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

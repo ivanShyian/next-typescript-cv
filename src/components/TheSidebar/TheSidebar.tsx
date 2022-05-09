@@ -4,6 +4,7 @@ import './TheSidebar.scss'
 import SharedNavbar from '@/components/Shared/SharedNavbar'
 import SharedLogo from '@/components/Shared/SharedLogo'
 import {useElementOnScreen} from '@/use/useElementOnScreen'
+import SharedLang from '@/components/Shared/SharedLang'
 
 export const TheSidebar: NextPage = () => {
   const [isNavOpened, changeNavState] = useState(false)
@@ -29,7 +30,12 @@ export const TheSidebar: NextPage = () => {
         <div className="aside__logo">
           <SharedLogo />
         </div>
-        <SharedNavbar />
+        <div className="aside__navbar">
+          <SharedNavbar />
+        </div>
+        <div className="aside__lang">
+          <SharedLang />
+        </div>
       </div>
       <div className={burgerClass}>
         <div

@@ -2,8 +2,9 @@ import {NextPage} from 'next'
 import {Html, Head, Main, NextScript} from 'next/document'
 
 const Document: NextPage = () => {
+
   return (
-    <Html lang="en">
+    <Html>
       <Head>
         <title>ivanShyian</title>
         <meta name="description" content="Ivan Shyian Portfolio" />

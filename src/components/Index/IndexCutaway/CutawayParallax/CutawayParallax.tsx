@@ -29,10 +29,10 @@ export const CutawayParallax: NextPage = () => {
       document.querySelectorAll<HTMLElement>('.parallax-icon').forEach((el) => {
         const target = e.target as HTMLDivElement
         if ([
-          'cutaway-parallax', 'cutaway__wrapper container', 'cutaway__scroll', 'cutaway__social_link', 'cutaway__social_list',
+          'cutaway-parallax', 'cutaway__wrapper container', 'cutaway__scroll', 'cutaway-social__link', 'cutaway-social__list',
           'aside__wrapper',
           'navigation__nav nav', 'nav__list', 'nav__item',
-          'logo', 'shared-button'
+          'logo', 'shared-button', 'cutaway__hire'
           ].includes(target.className)
         ) {
           const speed = el.getAttribute('data-speed')

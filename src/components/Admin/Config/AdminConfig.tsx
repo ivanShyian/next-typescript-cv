@@ -12,6 +12,7 @@ import ModalGeneralTab from '@/components/Admin/Config/AdminConfigGeneral'
 import ModalSocialTab from '@/components/Admin/Config/AdminConfigSocial'
 import ModalEmailTab from '@/components/Admin/Config/AdminConfigEmail'
 import {ConfigInterface, FieldsList} from '@/models/Config'
+import FormData from 'form-data'
 
 Modal.setAppElement('#__next')
 const api = new Api()
@@ -28,19 +29,39 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
   const [activeTab, changeActiveTab] = useState(0)
   const [configCopy, changeConfigCopy] = useState(config)
   const fileInputRef = useRef<MutableRefObject<any>>(null)
+  const socialInputRef = useRef<MutableRefObject<any>>(null)
+  const emailInputRef = useRef<MutableRefObject<any>>(null)
 
   const changeLocalConfig = (field: FieldsList, newValues: any) => {
     changeConfigCopy({...configCopy, [field]: newValues})
+    console.log(configCopy)
   }
 
   const onSave = async() => {
     let data = configCopy
-    setConfig(data)
     if (fileInputRef.current) {
       const fileArray = fileInputRef.current as any
       data = {...configCopy, avatar: fileArray[0]}
     }
-    await api.changeConfig(data)
+    if (socialInputRef.current) {
+      const input = socialInputRef.current as any
+      data = {...configCopy, links: input.getValues()}
+    }
+    if (emailInputRef.current) {
+      const input = emailInputRef.current as any
+      data = {...configCopy, emailReceiver: input.getValue()}
+    }
+
+    setConfig(data)
+
+    const formData = new FormData()
+    formData.append('status', JSON.stringify(data.status))
+    formData.append('links', JSON.stringify(data.links))
+    formData.append('emailReceiver', data.emailReceiver)
+    formData.append('image', data.avatar)
+    formData.append('name', JSON.stringify(data.name))
+
+    await api.changeConfig(formData)
     handleCloseModal()
   }
 
@@ -50,9 +71,9 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
   }
 
   const tabList = [
-    { id: 0, name: 'General', component: <ModalGeneralTab childFunction={fileInputRef} avatar={configCopy.avatar} statusList={configCopy.status} changeGeneral={changeLocalConfig}/> },
-    { id: 1, name: 'Social', component: <ModalSocialTab linksList={configCopy.links}/> },
-    { id: 2, name: 'Email', component: <ModalEmailTab emailReceiver={configCopy.emailReceiver}/> }
+    { id: 0, name: 'General', component: <ModalGeneralTab childFunction={fileInputRef} avatar={configCopy.avatar} nameValue={configCopy.name} statusList={configCopy.status} changeGeneral={changeLocalConfig}/> },
+    { id: 1, name: 'Social', component: <ModalSocialTab childFunction={socialInputRef} linksMap={configCopy.links} changeSocial={changeLocalConfig}/> },
+    { id: 2, name: 'Email', component: <ModalEmailTab childValue={emailInputRef} emailReceiver={configCopy.emailReceiver}/> }
   ]
 
   useEffect(() => {
