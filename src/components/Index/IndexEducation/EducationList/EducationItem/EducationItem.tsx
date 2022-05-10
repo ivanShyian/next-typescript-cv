@@ -1,15 +1,16 @@
-import {FC} from 'react'
+import {Dispatch, FC, SetStateAction} from 'react'
 import './EducationItem.scss'
 import DegreeIcon from '@/public/icons/education-icons/graduation.svg'
-import {School} from '@/models/Experience'
+import {School} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
 
 interface Props {
   item: School
   isAdmin: boolean
+  handleEdit: (item: School) => void
 }
 
-export const EducationItem: FC<Props> = ({item, isAdmin}) => {
+export const EducationItem: FC<Props> = ({item, isAdmin, handleEdit}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
 
   return (
@@ -27,7 +28,7 @@ export const EducationItem: FC<Props> = ({item, isAdmin}) => {
       </div>
       {isAdmin && (
         <div className="education-item__admin education-admin">
-          <span className="education-admin__edit admin-circle-button edit">e</span>
+          <span className="education-admin__edit admin-circle-button edit" onClick={() => handleEdit(item)}>e</span>
           <span className="education-admin__remove admin-circle-button remove">d</span>
         </div>
       )}

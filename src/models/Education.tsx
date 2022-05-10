@@ -5,14 +5,16 @@ export interface School {
   description: EnUkStringInterface
   degree: EnUkStringInterface
   term: string
+  _id?: string
 }
 
 export interface Course {
   name: string
   description: EnUkStringInterface
-  totalTime: number
+  totalTime?: number
   learnPeriod?: string
   teacher?: string
+  _id?: string
 }
 
 export interface Techs {

@@ -16,9 +16,10 @@ interface Props {
     name: string
     [key: string]: any
   }[]
+  beforeClose?: (item?: any) => any
 }
 
-export const SharedAdminModal: FC<Props> = ({children, onSave, tabList, childFunction}: Props) => {
+export const SharedAdminModal: FC<Props> = ({children, onSave, tabList, childFunction, beforeClose}: Props) => {
   const [isModalOpen, changeModalVisibility] = useState(false)
   const [activeTab, changeActiveTab] = useState(0)
 
@@ -27,6 +28,7 @@ export const SharedAdminModal: FC<Props> = ({children, onSave, tabList, childFun
   }, [childFunction])
 
   const handleCloseModal = () => {
+    if (beforeClose) beforeClose()
     changeModalVisibility(false)
   }
 

@@ -94,7 +94,7 @@ li {
     inset: 15% !important;
     border-radius: 2rem !important;
     padding: 40px !important;
-    &::-webkit-scrollbar { 
+    &::-webkit-scrollbar {
       display: none;  /* Safari and Chrome */
     }
     @include maxWidth767 {

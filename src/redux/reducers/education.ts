@@ -1,5 +1,5 @@
 import * as type from '../types'
-import {Techs} from '@/models/Experience'
+import {Techs} from '@/models/Education'
 
 const initialState = {
   education: {},

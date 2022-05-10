@@ -17,7 +17,7 @@ interface Props {
 export const AdminAbout: FC<Props> = ({childFunction, about, setAbout}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
   const [text, changeText] = useState(about.text[lang])
-  const [aboutCopy, changeCopy] = useState(about)
+  const [aboutCopy, changeCopy] = useState({...about})
   const [newTech, changeNewTech] = useState('')
   const [newTechValue, changeNewTechValue] = useState('')
 
@@ -72,7 +72,10 @@ export const AdminAbout: FC<Props> = ({childFunction, about, setAbout}) => {
   }
 
   return (
-    <SharedAdminModal onSave={saveToApi} childFunction={childFunction}>
+    <SharedAdminModal
+      onSave={saveToApi}
+      childFunction={childFunction}
+    >
        <div className="modal-about__content modal-about">
          <div className="modal-about__textarea">
            <textarea value={text} onChange={(e) => changeText(e.target.value)}/>

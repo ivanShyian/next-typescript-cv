@@ -6,7 +6,7 @@ import { transition } from 'd3-transition'
 import { line, curveCardinalClosed } from 'd3-shape'
 import './EducationCircles.scss'
 import {useAuthContext} from '@/ctx/auth'
-import {Techs} from '@/models/Experience'
+import {Techs} from '@/models/Education'
 
 select.prototype.transition = transition
 

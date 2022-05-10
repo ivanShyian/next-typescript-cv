@@ -1,6 +1,6 @@
 import {ConfigInterface} from '@/models/Config'
 import {AboutInterface} from '@/models/About'
-import {EducationInterface, Techs} from '@/models/Experience'
+import {EducationInterface, Techs} from '@/models/Education'
 
 export interface StateInterface {
   config: {

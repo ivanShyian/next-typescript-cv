@@ -1,9 +1,8 @@
 .modal-about {
   display: flex;
   flex-direction: column;
+  flex: 1;
   width: 100%;
-  height: calc(100% - 60px);
-
   &__textarea {
     width: calc(100% - 20px);
     margin-bottom: 1.5rem;

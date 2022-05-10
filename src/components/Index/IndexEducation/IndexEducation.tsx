@@ -12,7 +12,7 @@ import EducationList from '@/components/Index/IndexEducation/EducationList'
 const EducationCircles = dynamic(() => import('@/components/Index/IndexEducation/EducationCircles'), {ssr: false})
 
 import {StateInterface} from '@/models/index'
-import {Course, EducationInterface, Techs} from '@/models/Experience'
+import {Course, EducationInterface, Techs} from '@/models/Education'
 import {setEducation} from '@/redux/actions'
 import {useAuthContext} from '@/ctx/auth'
 import AdminEducation from '@/components/Admin/Education'
@@ -41,10 +41,11 @@ interface Props {
   setEducation: (education: EducationInterface) => void
 }
 
-const IndexEducation: FC<Props> = ({education, techList}) => {
+const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
   const [circleSizes, changeCircleSizes] = useState({width: 0, height: 0})
   const [isModalOpen, changeModalState] = useState(false) // user modal
-  const [educationCopy, changeEducationCopy] = useState(education)
+  const [editIndex, changeEditIndex] = useState<number>(-1) // for admin
+
   const {isAdmin} = useAuthContext()
   const {t, lang} = useTranslation('index')
 
@@ -78,6 +79,15 @@ const IndexEducation: FC<Props> = ({education, techList}) => {
     }
   }
 
+  const handleChangeEditIndex = (value: number) => {
+    onOpenAdminModal()
+    changeEditIndex(value)
+  }
+
+  const beforeAdminModalClose = () => {
+    changeEditIndex(-1)
+  }
+
   const handleCloseModal = () => changeModalState(false)
 
   return (
@@ -86,7 +96,7 @@ const IndexEducation: FC<Props> = ({education, techList}) => {
         <SharedSectionTitle>{t('educationTitle')}</SharedSectionTitle>
         <div className="education__content">
           <div ref={cardRef} className="card education__card education__degree typeEducation">
-            <EducationList list={educationCopy.school} openModal={onOpenAdminModal} />
+            <EducationList list={education.school} openModal={onOpenAdminModal} changeEditIndex={handleChangeEditIndex}/>
           </div>
           <div className="education__courses typeLearning">
             <EducationCircles
@@ -108,7 +118,13 @@ const IndexEducation: FC<Props> = ({education, techList}) => {
         modal
       </Modal>
       {isAdmin && (
-        <AdminEducation  childFunction={adminModalRef} />
+        <AdminEducation
+          childFunction={adminModalRef}
+          education={education}
+          setEducation={setEducation}
+          editIndex={editIndex}
+          beforeClose={beforeAdminModalClose}
+        />
       )}
     </section>
   )

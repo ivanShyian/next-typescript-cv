@@ -1,0 +1,137 @@
+.modal-learn-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &__title {
+    margin-bottom: 1.5rem !important;
+  }
+  &__list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+  }
+  &__item {
+    cursor: pointer;
+    box-sizing: border-box;
+    flex: 0 1 calc(25% - .375rem);
+    font-family: 'Rubik', 'sans-serif';
+    font-size: 1.1rem;
+    text-align: center;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    border-radius: .5rem;
+    color: $c-white-darken-1;
+    padding: 6px;
+    background-color: lighten($c-secondary-lighten, 10%);
+    &:nth-child(4n+4) {
+      margin-right: 0;
+    }
+    &_new {
+      color: $c-primary;
+      background-color: $adminColor;
+      transition: all .15s linear;
+      &:hover {
+        background-color: $c-primary;
+        color: $adminColor;
+        transition: all .15s linear;
+      }
+    }
+  }
+}
+
+.modal-learn-courses {
+  display: flex;
+  margin-bottom: 1rem;
+  &__list {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  &__item {
+    background-color: lighten($c-secondary-lighten, 32%);
+    border-radius: .5rem;
+    padding: 15px;
+    box-sizing: border-box;
+    flex: 0 1 calc(50% - .25rem);
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    &:nth-child(2n+2) {
+      margin-right: 0;
+    }
+    @include maxWidth1170 {
+      flex: 100%;
+      margin-right: 0;
+    }
+  }
+  &__no-item {
+    margin: auto;
+    font-family: Rubik, sans-serif;
+    font-size: 1.5rem;
+    color: $c-primary;
+    font-weight: 600;
+  }
+}
+
+.learn-item {
+  &__add-new {
+    background-color: lighten($c-secondary-lighten, 34%);
+    display: flex;
+    transition: all .15s linear;
+    cursor: pointer;
+    > p {
+      padding: .66rem 1rem;
+      border-radius: 1rem;
+      color: $adminColor;
+      border: 2px solid $adminColor;
+      font-family: Oswald, sans-serif;
+      margin: auto;
+      transition: all .15s linear;
+    }
+    &:hover {
+      background-color: lighten($c-secondary-lighten, 32%);
+      transition: all .15s linear;
+      > p {
+        color: $c-primary;
+        border-color: $c-primary;
+        transition: all .15s linear;
+      }
+    }
+  }
+  &__form {
+    display: flex;
+    align-items: center;
+    margin-bottom: .25rem;
+    border-radius: 1rem;
+    background-color: lighten(#6c66a2, 30%);
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &__label {
+    flex: 1;
+    display: block;
+    font-size: .9rem;
+    font-weight: 600;
+    font-family: 'Oswald', 'sans-serif';
+    padding: 0 0 0 1rem;
+  }
+  &__input {
+    flex: 3;
+    border-radius: 1rem;
+    padding: .33rem 1rem;
+    background-color: white;
+    outline: none;
+    border: none;
+    @include maxWidth1170 {
+      flex: 5;
+    }
+  }
+  textarea.learn-item__input {
+    resize: none;
+    height: 65px;
+  }
+}

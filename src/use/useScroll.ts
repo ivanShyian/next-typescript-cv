@@ -1,6 +1,6 @@
 type Options = (selector: string, duration?: number) => void
 
-export const useScroll = () => {
+export const useScroll = (): [Options] => {
   const scrollTo: Options = (selector, duration = 600) => {
     const scrolled = document.documentElement.scrollTop
     const offsetHeight = (document.querySelector(selector) as HTMLDivElement).getBoundingClientRect()

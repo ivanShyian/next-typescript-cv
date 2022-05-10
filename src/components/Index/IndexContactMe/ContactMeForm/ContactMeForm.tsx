@@ -71,7 +71,7 @@ export const ContactMeForm: NextPage = () => {
           </div>
           <textarea
             {...register("message")}
-            className={`form-control__input${errors.message ? '_error' : ''}`}
+            className={`form-control__input${errors.message ? '_error' : ''} form-control__textarea`}
             id="contactText"
             rows={5}
             placeholder="Your message..."

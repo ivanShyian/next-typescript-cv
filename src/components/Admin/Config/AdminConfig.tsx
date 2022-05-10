@@ -25,7 +25,7 @@ interface Props {
 }
 
 const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction }) => {
-  const [configCopy, changeConfigCopy] = useState(config)
+  const [configCopy, changeConfigCopy] = useState({...config})
   const fileInputRef = useRef<MutableRefObject<any>>(null)
   const socialInputRef = useRef<MutableRefObject<any>>(null)
   const emailInputRef = useRef<MutableRefObject<any>>(null)
@@ -76,7 +76,10 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
   ]
 
   return (
-    <SharedAdminModal onSave={onSave} childFunction={childFunction} tabList={tabList}>
+    <SharedAdminModal
+      onSave={onSave}
+      childFunction={childFunction}
+      tabList={tabList}>
       {tabList}
     </SharedAdminModal>
   )
