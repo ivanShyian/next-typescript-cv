@@ -108,4 +108,4 @@ const mapStateToProps = (state: StateInterface) => ({
   config: state.config.config as ConfigInterface
 })
 
-export default connect(mapStateToProps, () => {})(IndexCutaway)
+export default connect(mapStateToProps, {})(IndexCutaway)

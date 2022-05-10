@@ -1,0 +1,32 @@
+.modal__tab {
+  margin: -40px -40px 0px;
+  background-color: $c-primary;
+  &_list {
+    display: flex;
+  }
+  &_item {
+    color: $c-white-darken-1;
+    font-size: 1.15rem;
+    font-family: "League Spartan", "sans-serif";
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 200px;
+    cursor: pointer;
+    &-active {
+      @extend .modal__tab_item;
+      color: $c-primary;
+      background-color: $c-white;
+    }
+  }
+}
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+}

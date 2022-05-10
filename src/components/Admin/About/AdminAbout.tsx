@@ -1,11 +1,10 @@
-import Modal from 'react-modal'
 import './AdminAbout.scss'
-import {FC, FormEvent, MutableRefObject, useEffect, useState} from 'react'
+import {FC, FormEvent, MutableRefObject, useState} from 'react'
 import {AboutInterface, Tech} from '@/models/About'
 import useTranslation from 'next-translate/useTranslation'
-import SharedButton from '@/components/Shared/SharedButton'
 import {AdminAboutTech} from '@/components/Admin/About/AdminAboutTech'
 import Api from '@/api/Api'
+import SharedAdminModal from '@/components/Shared/SharedAdminModal'
 
 const api = new Api()
 
@@ -18,18 +17,15 @@ interface Props {
 export const AdminAbout: FC<Props> = ({childFunction, about, setAbout}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
   const [text, changeText] = useState(about.text[lang])
-  const [isModalOpen, changeModalVisibility] = useState(false)
   const [aboutCopy, changeCopy] = useState(about)
   const [newTech, changeNewTech] = useState('')
   const [newTechValue, changeNewTechValue] = useState('')
 
   const handleCloseModal = () => {
-    changeModalVisibility(false)
+    if (childFunction?.current) {
+      childFunction.current.changeModalVisibility(false)
+    }
   }
-
-  useEffect(() => {
-    childFunction.current = {changeModalVisibility}
-  }, [childFunction])
 
   const handleRemove = (tech: Tech) => {
     changeCopy((prevState) => {
@@ -76,32 +72,24 @@ export const AdminAbout: FC<Props> = ({childFunction, about, setAbout}) => {
   }
 
   return (
-    <Modal
-      isOpen={isModalOpen}
-      shouldCloseOnOverlayClick={true}
-      onRequestClose={handleCloseModal}
-      contentLabel="Admin about"
-    >
-      <div className="modal-about__content modal-about">
-        <div className="modal-about__textarea">
-          <textarea value={text} onChange={(e) => changeText(e.target.value)}/>
+    <SharedAdminModal onSave={saveToApi} childFunction={childFunction}>
+       <div className="modal-about__content modal-about">
+         <div className="modal-about__textarea">
+           <textarea value={text} onChange={(e) => changeText(e.target.value)}/>
+          </div>
+         <div className="modal-about__techs">
+           <ul className="modal-about__techs_list">
+             {aboutCopy.techs.map((tech, idx) => (
+               <AdminAboutTech tech={tech} key={idx} idx={idx} onTechRemove={handleRemove} onTechSubmit={handleEdit}/>
+              ))}
+            </ul>
+            <form onSubmit={handleSave} className="modal-about__techs_input form-control">
+              <input value={newTech} onChange={(e) => changeNewTech(e.target.value)} className="form-control__input" type="text" placeholder="Add tech..."/>
+              <input value={newTechValue} onChange={(e) => changeNewTechValue(e.target.value)} className="form-control__input value" type="text" placeholder="Value..."/>
+               <button className="modal-about__techs_input-btn" type="submit" />
+            </form>
+          </div>
         </div>
-        <div className="modal-about__techs">
-          <ul className="modal-about__techs_list">
-            {aboutCopy.techs.map((tech, idx) => (
-              <AdminAboutTech tech={tech} key={idx} idx={idx} onTechRemove={handleRemove} onTechSubmit={handleEdit}/>
-            ))}
-          </ul>
-          <form onSubmit={handleSave} className="modal-about__techs_input form-control">
-            <input value={newTech} onChange={(e) => changeNewTech(e.target.value)} className="form-control__input" type="text" placeholder="Add tech..."/>
-            <input value={newTechValue} onChange={(e) => changeNewTechValue(e.target.value)} className="form-control__input value" type="text" placeholder="Value..."/>
-            <button className="modal-about__techs_input-btn" type="submit" />
-          </form>
-        </div>
-      </div>
-      <div className="modal-about__button">
-        <SharedButton onClick={saveToApi}>Save</SharedButton>
-      </div>
-    </Modal>
+    </SharedAdminModal>
   )
 }

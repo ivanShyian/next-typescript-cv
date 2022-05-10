@@ -10,8 +10,9 @@ const ModalEmailTab: FC<Props> = ({emailReceiver, childValue}) => {
 
   const getValue = useCallback(() => {
     const email = emailRef.current
-    return email!.value || email!.placeholder
-  }, [emailRef])
+    if (email) return email.value || email.placeholder
+    return emailReceiver
+  }, [emailRef, emailReceiver])
 
   useEffect(() => {
     childValue.current = {getValue}

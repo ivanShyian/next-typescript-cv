@@ -1,7 +1,9 @@
 import * as type from '../types'
+import {Techs} from '@/models/Experience'
 
 const initialState = {
-  education: {}
+  education: {},
+  techList: []
 }
 
 const updateConfig = (state = initialState, action: {type: string, payload?: any}) => {
@@ -11,7 +13,15 @@ const updateConfig = (state = initialState, action: {type: string, payload?: any
         ...state,
         education: action.payload
       }
-    default:
+    case type.SET_COURSE_NAMES:
+      return {
+        ...state,
+        techList: action.payload.techs.map((tech: Techs) => ({
+          name: tech.name,
+          id: tech._id
+        }))
+      }
+      default:
       return state
   }
 }

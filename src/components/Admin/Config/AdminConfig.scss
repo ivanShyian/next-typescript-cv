@@ -1,49 +1,16 @@
-.modal__tab {
-  margin: -40px -40px 0px;
-  background-color: $c-primary;
-  &_list {
-    display: flex;
-  }
-  &_item {
-    color: $c-white-darken-1;
-    font-size: 1.15rem;
-    font-family: "League Spartan", "sans-serif";
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    width: 200px;
-    cursor: pointer;
-    &-active {
-      @extend .modal__tab_item;
-      color: $c-primary;
-      background-color: $c-white;
-    }
-  }
-}
-.modal__content {
+.modal-list {
   display: flex;
-  flex-direction: column;
-  //height: calc(100% - 20px);
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
-  }
-  .modal-list {
-    display: flex;
-    flex-wrap: wrap;
-    &__item {
-      flex: 0 1 calc(50% - 1rem);
-      margin-right: 2rem;
-      &:nth-child(2n+2) {
-        margin-right: 0 !important;
-      }
-      @include maxWidth767 {
-        flex-direction: column;
-        flex: 100%;
-        margin-right: 0;
-      }
+  flex-wrap: wrap;
+  &__item {
+    flex: 0 1 calc(50% - 1rem);
+    margin-right: 2rem;
+    &:nth-child(2n+2) {
+      margin-right: 0 !important;
+    }
+    @include maxWidth767 {
+      flex-direction: column;
+      flex: 100%;
+      margin-right: 0;
     }
   }
 }

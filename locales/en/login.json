@@ -1,1 +1,7 @@
-{}
+{
+  "adminHeadTitle": "Admin Login!",
+  "helloAdmin": "Hello, admin!",
+  "email": "Email",
+  "password": "Password",
+  "login": "Enter"
+}

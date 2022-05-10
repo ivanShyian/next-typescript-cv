@@ -44,12 +44,25 @@
     text-transform: uppercase;
   }
   &__title {
+    display: flex;
     color: $c-primary;
     font-size: 1.2rem;
     letter-spacing: .8px;
     font-family: 'Rubik', 'sans-serif';
     font-weight: 700;
     margin-bottom: .5rem;
+    white-space: nowrap;
+    span {
+      display: block;
+    }
+    span:first-child {
+      margin-right: 5px;
+    }
+    &.uk {
+      span {
+        font-size: 1.1rem !important;
+      }
+    }
   }
   &__text {
     color: #666666;

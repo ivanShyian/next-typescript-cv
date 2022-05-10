@@ -6,13 +6,14 @@ import { transition } from 'd3-transition'
 import { line, curveCardinalClosed } from 'd3-shape'
 import './EducationCircles.scss'
 import {useAuthContext} from '@/ctx/auth'
+import {Techs} from '@/models/Experience'
 
 select.prototype.transition = transition
 
 interface Props {
   width: number
   height: number
-  skillList: {name: string}[]
+  skillList: Techs[]
   onCourseClick: (id: number | string) => void
 }
 
@@ -20,6 +21,7 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
   const {isAdmin} = useAuthContext()
 
   useEffect(() => {
+    console.log({skillList})
     draw()
   })
 
@@ -34,7 +36,7 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
     const selectionList: any[] = []
 
     const createDatasets = (iterations: number) => {
-      for (let i = 0; i < iterations; i++) {
+      for (let i = 0; i <= iterations; i++) {
         for (let j = 0; j < 4; j++) {
           const x = Math.floor((Math.random() * w) + 1)
           const y = Math.floor((Math.random() * h) + 1)
@@ -163,11 +165,11 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
         .attrTween("transform", translateAlong(selectionList[n].path.node()))
     }
 
-    for(let i = 0; i < skillList.length - 1; i++) {
+    for(let i = 0; i <= skillList.length - 1; i++) {
       const cRadius = r + i
       createPathCircle(datasets[i], cRadius, i)
     }
-    for(let i = 0; i < skillList.length - 1; i++) {
+    for(let i = 0; i <= skillList.length - 1; i++) {
       isAdmin ? adminTransition(i) : transition(i)
     }
 
