@@ -22,7 +22,8 @@
       "@/use/*": ["src/use/*"],
       "@/redux/*": ["src/redux/*"],
       "@/ctx/*": ["src/context/*"],
-      "@/api/*": ["src/api/*"]
+      "@/api/*": ["src/api/*"],
+      "@/utils/*": ["src/utils/*"]
     }
   },
   "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx","**/*.ts", "**/*.tsx"],

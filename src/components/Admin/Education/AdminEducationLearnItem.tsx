@@ -1,12 +1,16 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, MutableRefObject, useEffect, useState} from 'react'
 import {Course} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
+import SharedButton from '@/components/Shared/SharedButton'
 
 interface Props {
-  course: Course
+  techMeta: {name: string, _id: string | undefined}
+  onTechExtend: (techMeta: {name: string, _id: string | undefined}, course: any) => void
+  onCourseRemove: (techMeta: {name: string, _id: string | undefined}, course: any) => void
+  course?: Course
 }
 
-const AdminEducationLearnItem: FC<Props> = ({course}) => {
+const AdminEducationLearnItem: FC<Props> = ({course, onTechExtend, onCourseRemove, techMeta}) => {
   const [courseCopy, changeCourseCopy] = useState({
     name: '',
     description: '',
@@ -80,6 +84,10 @@ const AdminEducationLearnItem: FC<Props> = ({course}) => {
           value={courseCopy.totalTime}
           onChange={(e) => handleChange('totalTime', e.target.value)}
         />
+      </div>
+      <div className="learn-item__button">
+        <span className="learn-item__button_ok" onClick={() => onTechExtend(techMeta, courseCopy)}>&#10004;</span>
+        <span className="learn-item__button_remove" onClick={() => onCourseRemove(techMeta, courseCopy)}>&#10006;</span>
       </div>
     </li>
   )

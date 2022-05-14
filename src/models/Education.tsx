@@ -11,20 +11,20 @@ export interface School {
 export interface Course {
   name: string
   description: EnUkStringInterface
-  totalTime?: number
   learnPeriod?: string
   teacher?: string
   _id?: string
+  totalTime?: number
 }
 
 export interface Techs {
   name: string
-  _id: string
-  courses?: [Course]
+  courses: Course[]
+  _id?: string
 }
 
 
 export interface EducationInterface {
-  school: [School]
-  techs: [Techs]
+  school: School[]
+  techs: Techs[]
 }

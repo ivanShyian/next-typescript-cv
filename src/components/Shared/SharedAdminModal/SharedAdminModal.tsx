@@ -24,12 +24,16 @@ export const SharedAdminModal: FC<Props> = ({children, onSave, tabList, childFun
   const [activeTab, changeActiveTab] = useState(0)
 
   useEffect(() => {
-    if (childFunction) childFunction.current = {changeModalVisibility}
-  }, [childFunction])
+    if (childFunction) childFunction.current = {
+      changeModalVisibility,
+      getActiveTab: activeTab
+    }
+  }, [childFunction, activeTab])
 
   const handleCloseModal = () => {
     if (beforeClose) beforeClose()
     changeModalVisibility(false)
+    changeActiveTab(0)
   }
 
   return (

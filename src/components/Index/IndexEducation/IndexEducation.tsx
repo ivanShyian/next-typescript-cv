@@ -12,10 +12,13 @@ import EducationList from '@/components/Index/IndexEducation/EducationList'
 const EducationCircles = dynamic(() => import('@/components/Index/IndexEducation/EducationCircles'), {ssr: false})
 
 import {StateInterface} from '@/models/index'
-import {Course, EducationInterface, Techs} from '@/models/Education'
+import {EducationInterface, School, Techs} from '@/models/Education'
 import {setEducation} from '@/redux/actions'
 import {useAuthContext} from '@/ctx/auth'
 import AdminEducation from '@/components/Admin/Education'
+
+import Api from '@/api/Api'
+const api = new Api()
 
 //
 // const educationGraduation = [
@@ -42,9 +45,10 @@ interface Props {
 }
 
 const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
-  const [circleSizes, changeCircleSizes] = useState({width: 0, height: 0})
-  const [isModalOpen, changeModalState] = useState(false) // user modal
+  const [circleSizes, changeCircleSizes] = useState<{width: number, height: number}>({width: 0, height: 0})
+  const [isModalOpen, changeModalState] = useState<boolean>(false) // user modal
   const [editIndex, changeEditIndex] = useState<number>(-1) // for admin
+  const [shouldMount, changeMountValue] = useState<boolean>(false)
 
   const {isAdmin} = useAuthContext()
   const {t, lang} = useTranslation('index')
@@ -73,19 +77,27 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
     return changeModalState(true)
   }, [changeModalState])
 
-  const onOpenAdminModal = () => {
-    if (adminModalRef.current) {
-      (adminModalRef.current as any).changeModalVisibility(true)
-    }
+  const onOpenAdminModal = async() => {
+    await changeMountValue(true);
+    (adminModalRef.current as any).changeModalVisibility(true)
   }
 
   const handleChangeEditIndex = (value: number) => {
-    onOpenAdminModal()
     changeEditIndex(value)
+    return onOpenAdminModal()
   }
 
   const beforeAdminModalClose = () => {
     changeEditIndex(-1)
+    changeMountValue(false)
+  }
+
+  const deleteItem = async(item: School) => {
+    setEducation({
+      ...education,
+      school: education.school.filter((el: School) => el !== item)
+    })
+    if (item._id) return api.removeSchool(item._id)
   }
 
   const handleCloseModal = () => changeModalState(false)
@@ -96,11 +108,16 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
         <SharedSectionTitle>{t('educationTitle')}</SharedSectionTitle>
         <div className="education__content">
           <div ref={cardRef} className="card education__card education__degree typeEducation">
-            <EducationList list={education.school} openModal={onOpenAdminModal} changeEditIndex={handleChangeEditIndex}/>
+            <EducationList
+              list={education.school}
+              openModal={onOpenAdminModal}
+              changeEditIndex={handleChangeEditIndex}
+              deleteItem={deleteItem}
+            />
           </div>
           <div className="education__courses typeLearning">
             <EducationCircles
-              key={lang}
+              key={`lang_${techList.length || 0}`}
               width={circleSizes.width}
               height={circleSizes.height}
               skillList={techList}
@@ -117,7 +134,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
       >
         modal
       </Modal>
-      {isAdmin && (
+      {shouldMount && (
         <AdminEducation
           childFunction={adminModalRef}
           education={education}

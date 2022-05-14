@@ -14,6 +14,7 @@ import {useAuthContext} from '@/ctx/auth'
 import AdminConfig from '@/components/Admin/Config'
 import useTranslation from 'next-translate/useTranslation'
 import {useRouter} from 'next/router'
+import {useElementOnScreen} from '@/use/useElementOnScreen'
 
 interface ListItem {
   id: number
@@ -27,6 +28,7 @@ export const SharedNavbar:  NextPage = () => {
   const modalRef = useRef<MutableRefObject<any>>(null)
   const [shouldMount, changeMountStatus] = useState(false)
   const {t} = useTranslation('common') as {t: any, lang: 'uk' | 'en'}
+  // const [] = useElementOnScreen({})
   const router = useRouter()
   const [scrollTo] = useScroll()
   const {isAdmin} = useAuthContext()

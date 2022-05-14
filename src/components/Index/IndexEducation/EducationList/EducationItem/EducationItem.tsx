@@ -8,9 +8,10 @@ interface Props {
   item: School
   isAdmin: boolean
   handleEdit: (item: School) => void
+  deleteItem: (school: School) => void
 }
 
-export const EducationItem: FC<Props> = ({item, isAdmin, handleEdit}) => {
+export const EducationItem: FC<Props> = ({item, isAdmin, handleEdit, deleteItem}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
 
   return (
@@ -29,7 +30,7 @@ export const EducationItem: FC<Props> = ({item, isAdmin, handleEdit}) => {
       {isAdmin && (
         <div className="education-item__admin education-admin">
           <span className="education-admin__edit admin-circle-button edit" onClick={() => handleEdit(item)}>e</span>
-          <span className="education-admin__remove admin-circle-button remove">d</span>
+          <span className="education-admin__remove admin-circle-button remove" onClick={() => deleteItem(item)}>d</span>
         </div>
       )}
     </li>

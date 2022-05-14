@@ -23,9 +23,9 @@ const AdminEducationSchool: FC<Props> = ({newSchoolRef, schoolList, editIndex}) 
       const neededSchool: School = schoolList[editIndex]
       changeSchool({
         ...neededSchool,
-        name: neededSchool.name[lang],
-        degree: neededSchool.degree[lang],
-        description: neededSchool.description[lang],
+        name: neededSchool.name[lang] || '',
+        degree: neededSchool.degree[lang] || '',
+        description: neededSchool.description[lang] || '',
       })
     }
   }, [editIndex, schoolList, lang])

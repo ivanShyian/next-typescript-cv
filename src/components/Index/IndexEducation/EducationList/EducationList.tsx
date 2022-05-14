@@ -6,12 +6,13 @@ import {School} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
 
 interface Props {
-  list: [School]
+  list: School[]
   changeEditIndex: (value: number) => void
+  deleteItem: (school: School) => void
   openModal: () => void
 }
 
-export const EducationList: FC<Props> = ({list, openModal, changeEditIndex}) => {
+export const EducationList: FC<Props> = ({list, openModal, changeEditIndex, deleteItem}) => {
   const {t} = useTranslation('index')
   const {isAdmin} = useAuthContext()
 
@@ -24,7 +25,13 @@ export const EducationList: FC<Props> = ({list, openModal, changeEditIndex}) => 
     <div className="education-list">
       <ul className="education-list__list">
         {list.map((item, idx: number) => (
-          <EducationItem isAdmin={isAdmin} key={idx} item={item} handleEdit={handleEdit}/>
+          <EducationItem
+            isAdmin={isAdmin}
+            key={idx}
+            item={item}
+            handleEdit={handleEdit}
+            deleteItem={deleteItem}
+          />
         ))}
         {isAdmin && (
           <div className="education-list__admin" onClick={openModal}>
