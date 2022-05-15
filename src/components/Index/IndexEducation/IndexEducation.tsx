@@ -11,10 +11,9 @@ import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import EducationList from '@/components/Index/IndexEducation/EducationList'
 const EducationCircles = dynamic(() => import('@/components/Index/IndexEducation/EducationCircles'), {ssr: false})
 
-import {StateInterface} from '@/models/index'
+import {RefModal, StateInterface} from '@/models/index'
 import {EducationInterface, School, Techs} from '@/models/Education'
 import {setEducation} from '@/redux/actions'
-import {useAuthContext} from '@/ctx/auth'
 import AdminEducation from '@/components/Admin/Education'
 
 import Api from '@/api/Api'
@@ -50,12 +49,11 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
   const [editIndex, changeEditIndex] = useState<number>(-1) // for admin
   const [shouldMount, changeMountValue] = useState<boolean>(false)
 
-  const {isAdmin} = useAuthContext()
   const {t, lang} = useTranslation('index')
 
   const cardRef = useRef<HTMLDivElement>(null)
   const educationRef = useRef<HTMLDivElement>(null)
-  const adminModalRef = useRef(null) // admin ref modal
+  const adminModalRef = useRef<RefModal>(null) // admin ref modal
 
   useEffect(() => {
     const cardCurrent = cardRef.current
@@ -79,7 +77,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
 
   const onOpenAdminModal = async() => {
     await changeMountValue(true);
-    (adminModalRef.current as any).changeModalVisibility(true)
+    adminModalRef.current?.changeModalVisibility(true)
   }
 
   const handleChangeEditIndex = (value: number) => {
@@ -117,7 +115,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
           </div>
           <div className="education__courses typeLearning">
             <EducationCircles
-              key={`lang_${techList.length || 0}`}
+              key={`educationCircles_${techList.length || 0}_${lang}`}
               width={circleSizes.width}
               height={circleSizes.height}
               skillList={techList}

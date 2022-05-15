@@ -4,7 +4,7 @@ const initialState = {
   about: {}
 }
 
-const updateConfig = (state = initialState, action: {type: string, payload?: any}) => {
+const updateAbout = (state = initialState, action: {type: string, payload?: any}) => {
   switch (action.type) {
     case type.SET_ABOUT:
       return {
@@ -16,4 +16,4 @@ const updateConfig = (state = initialState, action: {type: string, payload?: any
   }
 }
 
-export default updateConfig
+export default updateAbout

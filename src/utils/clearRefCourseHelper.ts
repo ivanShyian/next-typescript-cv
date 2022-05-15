@@ -1,5 +1,5 @@
-import {Course, Techs} from '@/models/Education'
-export default function clearRefCourseHelper(array: Techs[], compareArrayName: string, compareCourse: Course, type?: 'extend' | 'add'): {
+import {Course, SimplifiedCourse, Techs} from '@/models/Education'
+export default function clearRefCourseHelper(array: Techs[], compareArrayName: string, compareCourse: SimplifiedCourse, type?: 'extend' | 'add'): {
   array: Techs[],
   isModified: boolean
 } {

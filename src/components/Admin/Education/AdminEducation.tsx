@@ -3,17 +3,18 @@ import {FC, MutableRefObject, useRef} from 'react'
 import SharedAdminModal from '@/components/Shared/SharedAdminModal'
 import AdminEducationLearn from '@/components/Admin/Education/AdminEducationLearn'
 import AdminEducationSchool from '@/components/Admin/Education/AdminEducationSchool'
-import {Course, EducationInterface, School, Techs} from '@/models/Education'
+import {Course, EducationInterface, School, SimplifiedCourse, SimplifiedSchool, Techs} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
 import transformCourseHelper from '@/utils/transformCourseHelper'
 import clearRefCourseHelper from '@/utils/clearRefCourseHelper'
 import Api from '@/api/Api'
+import {EnUkStringInterface, RefModal} from '@/models/index'
 
 
 const api = new Api()
 
 interface Props {
-  childFunction: MutableRefObject<any>
+  childFunction: MutableRefObject<RefModal>
   education: EducationInterface
   setEducation: (education: EducationInterface) => void
   editIndex: number
@@ -22,7 +23,7 @@ interface Props {
 
 export const AdminEducation: FC<Props> = ({setEducation, childFunction, education, editIndex, beforeClose}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
-  const newSchoolRef = useRef(null)
+  const newSchoolRef = useRef<{getValues: SimplifiedSchool} | null>(null)
   const newTechRef = useRef(null)
 
   const tabList = [
@@ -33,28 +34,25 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
   const tabsToShow = editIndex === -1 ? tabList : [tabList[0]]
 
   const saveToApi = async(): Promise<void> => {
-    const schoolRefCurrent = newSchoolRef.current as any
-    const techRefCurrent = (newTechRef.current as any)
-    if (schoolRefCurrent && childFunction.current.getActiveTab === 0) {
+    const techRefCurrent = newTechRef.current as any
+    if (newSchoolRef.current && childFunction.current?.getActiveTab === 0) {
       const oppositeLang = lang === 'en' ? 'uk' : 'en'
-      const values = schoolRefCurrent.getValues
-      if (!Object.keys(values).some(v => values[v] === '' || values[v] === undefined)) {
+      const values = newSchoolRef.current.getValues
+      if (!Object.keys(values).some((v) => values[v as keyof SimplifiedSchool] === '' || values[v as keyof SimplifiedSchool] === undefined)) {
         const id = values._id || null
         const type = id ? 'edit' : 'add'
         let data = id ? {...education.school.find((s: School) => s._id === id)} : values
         for (let val in data) {
           if (['description', 'degree', 'name'].includes(val)) {
-            const valueToSet = type === 'add'
-              ? {[lang]: data[val], [oppositeLang]: ''}
-              : {...data[val], [lang]: values[val]}
-
-            data = {...data, [val]: valueToSet}
+            const emptyOppositeLang = {[lang]: data[val as keyof School], [oppositeLang]: ''}
+            const filledOppositeLang = {...(data[val as keyof School] as EnUkStringInterface), [lang]: values[val as keyof SimplifiedSchool]}
+            data = {...data, [val]: type === 'add' ? emptyOppositeLang : filledOppositeLang}
           }
         }
-        const response = await api.addNewSchool({data, type})
+        const response = await api.addNewSchool({data: data as School, type})
         setEducation(response)
       }
-    } else if (techRefCurrent && childFunction.current.getActiveTab === 1) {
+    } else if (techRefCurrent && childFunction.current?.getActiveTab === 1) {
       if (techRefCurrent.techToAdd.length) {
         await api.addTechs(techRefCurrent.techToAdd)
       }
@@ -115,7 +113,7 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
     }
   }
 
-  function removeCourse(techMeta: {name: string, _id: string | undefined}, course: Course) {
+  function removeCourse(techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) {
     const techsCopy = [...education.techs]
     const foundTechIndex = techsCopy.findIndex((tech: Techs) => tech.name === techMeta.name)
     techsCopy[foundTechIndex].courses = techsCopy[foundTechIndex].courses.filter((c: Course) => {
@@ -129,7 +127,7 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
     clearRefCourse(techMeta, course)
   }
 
-  function clearRefCourse(techMeta: {name: string, _id: string | undefined}, course: Course) {
+  function clearRefCourse(techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) {
     let isChanged: boolean = false
     if ((newTechRef.current as any).techToExtend.length) {
       const {array, isModified} = clearRefCourseHelper((newTechRef.current as any).techToExtend, techMeta.name, course, 'extend');
@@ -140,7 +138,6 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
       (newTechRef.current as any).techToAdd = array
       isChanged = isModified
     }
-    console.log({isChanged})
     if (!isChanged) {
       const foundIndex = (newTechRef.current as any).courseToRemove.findIndex((tech: Techs) => tech.name === techMeta.name)
       if (foundIndex !== -1) {

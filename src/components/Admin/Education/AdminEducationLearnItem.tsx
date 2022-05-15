@@ -1,17 +1,16 @@
-import {FC, MutableRefObject, useEffect, useState} from 'react'
-import {Course} from '@/models/Education'
+import {FC, useEffect, useState} from 'react'
+import {Course, SimplifiedCourse} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
-import SharedButton from '@/components/Shared/SharedButton'
 
 interface Props {
   techMeta: {name: string, _id: string | undefined}
-  onTechExtend: (techMeta: {name: string, _id: string | undefined}, course: any) => void
-  onCourseRemove: (techMeta: {name: string, _id: string | undefined}, course: any) => void
+  onTechExtend: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
+  onCourseRemove: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
   course?: Course
 }
 
 const AdminEducationLearnItem: FC<Props> = ({course, onTechExtend, onCourseRemove, techMeta}) => {
-  const [courseCopy, changeCourseCopy] = useState({
+  const [courseCopy, changeCourseCopy] = useState<SimplifiedCourse>({
     name: '',
     description: '',
     learnPeriod: '',

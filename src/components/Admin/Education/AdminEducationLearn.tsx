@@ -1,5 +1,5 @@
 import {FC, FormEvent, MutableRefObject, useEffect, useRef} from 'react'
-import {Course, Techs} from '@/models/Education'
+import {SimplifiedCourse, Techs} from '@/models/Education'
 import {useState} from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import AdminEducationLearnItem from '@/components/Admin/Education/AdminEducationLearnItem'
@@ -9,8 +9,8 @@ interface Props {
   newTechRef: MutableRefObject<any>
   postTech: (tech: Techs) => void
   removeTech: (tech: Techs) => void
-  addCourse: (techMeta: {name: string, _id: string | undefined}, course: Course) => void
-  onCourseRemove: (techName: {name: string, _id: string | undefined}, course: Course) => void
+  addCourse: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
+  onCourseRemove: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
 }
 
 const AdminEducationLearn: FC<Props> = ({learnList, newTechRef, postTech, removeTech, addCourse, onCourseRemove}) => {

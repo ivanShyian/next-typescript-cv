@@ -1,23 +1,24 @@
 import {FC} from 'react'
 import './WorkList.scss'
 import WorkItem from '@/components/Index/IndexWork/WorkList/WorkItem'
-import {WorkItem as WorkInterface} from '@/models/Work'
+import {WorkInterface} from '@/models/Work'
 import { useAuthContext } from 'src/context/auth'
 
 interface Props {
-  list: WorkInterface[]
+  workList: WorkInterface[]
+  openAddModal: (editId?: number) => void
 }
 
-export const WorkList: FC<Props> = ({list}: Props) => {
+export const WorkList: FC<Props> = ({workList, openAddModal}) => {
   const {isAdmin} = useAuthContext()
 
   return (
     <ul className="work__list">
-      {list.map((item: WorkInterface, idx: number) => (
-        <WorkItem item={item} key={idx} isAdmin={isAdmin} />
+      {workList.map((item: WorkInterface, idx: number) => (
+        <WorkItem workItem={item} key={idx} index={idx} isAdmin={isAdmin} openEditModal={openAddModal} />
       ))}
       {isAdmin && (
-        <li className="work__item_admin card">
+        <li className="work__item_admin card" onClick={() => openAddModal()}>
           <span>Add work item</span>
         </li>
       )}

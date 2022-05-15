@@ -2,12 +2,14 @@ import {combineReducers} from 'redux'
 import config from './config'
 import about from './about'
 import education from './education'
+import work from './work'
 import {HYDRATE} from 'next-redux-wrapper'
 
 const combinedReducer = combineReducers({
   config,
   about,
-  education
+  education,
+  work
 })
 
 const reducer = (state: any, action: {type: string, payload?: any}) => {

@@ -1,15 +1,15 @@
-import {FC, MutableRefObject, useEffect, useState, useTransition} from 'react'
-import {School} from '@/models/Education'
+import {FC, MutableRefObject, useEffect, useState} from 'react'
+import {School, SimplifiedSchool} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
 
 interface Props {
-  newSchoolRef: MutableRefObject<any>
+  newSchoolRef: MutableRefObject<{getValues: SimplifiedSchool} | null>
   schoolList: School[]
   editIndex: number
 }
 
 const AdminEducationSchool: FC<Props> = ({newSchoolRef, schoolList, editIndex}) => {
-  const [newSchool, changeSchool] = useState({
+  const [newSchool, changeSchool] = useState<SimplifiedSchool>({
     name: '',
     description: '',
     degree: '',
@@ -30,16 +30,16 @@ const AdminEducationSchool: FC<Props> = ({newSchoolRef, schoolList, editIndex}) 
     }
   }, [editIndex, schoolList, lang])
 
+  useEffect(() => {
+    newSchoolRef.current = {getValues: newSchool}
+  }, [newSchoolRef, newSchool])
+
   const handleSchoolChange = (field: string, value = '') => {
     changeSchool((prevState) => ({
       ...prevState,
       [field]: value
     }))
   }
-
-  useEffect(() => {
-    newSchoolRef.current = {getValues: newSchool}
-  }, [newSchoolRef, newSchool])
 
   return (
     <div className="modal-education-content">
@@ -61,9 +61,8 @@ const AdminEducationSchool: FC<Props> = ({newSchoolRef, schoolList, editIndex}) 
           <div className="form-control__heading">
             <label htmlFor="">Description</label>
           </div>
-          <input
-            type="text"
-            className="form-control__input"
+          <textarea
+            className="form-control__input_textarea"
             placeholder="Couple words about..."
             value={newSchool.description}
             onChange={(e) => handleSchoolChange('description', e.target.value)}

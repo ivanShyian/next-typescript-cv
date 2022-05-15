@@ -1,3 +1,3 @@
-import {IndexWork} from '@/components/Index/IndexWork/IndexWork'
+import IndexWork from '@/components/Index/IndexWork/IndexWork'
 
 export default IndexWork

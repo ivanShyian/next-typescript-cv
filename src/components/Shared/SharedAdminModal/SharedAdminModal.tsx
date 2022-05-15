@@ -2,6 +2,7 @@ import {FC, Fragment, MutableRefObject, ReactChild, ReactElement, useEffect, use
 import './SharedAdminModal.scss'
 import SharedButton from '../SharedButton'
 import Modal from 'react-modal'
+import {RefModal} from '@/models/index'
 
 interface Props {
   children: ReactChild | {
@@ -10,7 +11,7 @@ interface Props {
     component: ReactElement
   }[]
   onSave: () => void
-  childFunction?: MutableRefObject<any>
+  childFunction?: MutableRefObject<RefModal>
   c?: () => void
   tabList?: {
     name: string
@@ -24,9 +25,11 @@ export const SharedAdminModal: FC<Props> = ({children, onSave, tabList, childFun
   const [activeTab, changeActiveTab] = useState(0)
 
   useEffect(() => {
-    if (childFunction) childFunction.current = {
-      changeModalVisibility,
-      getActiveTab: activeTab
+    if (childFunction) {
+      childFunction.current = {
+        changeModalVisibility,
+        getActiveTab: activeTab
+      }
     }
   }, [childFunction, activeTab])
 

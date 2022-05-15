@@ -1,6 +1,7 @@
-import {Course, Techs} from '@/models/Education'
+import {Course, SimplifiedCourse, Techs} from '@/models/Education'
+import {EnUkStringInterface} from '@/models/index'
 
-export default function transformCourseHelper(course: any, techName: string, techs: Techs[], lang: 'uk' | 'en'): {
+export default function transformCourseHelper(course: SimplifiedCourse, techName: string, techs: Techs[], lang: 'uk' | 'en'): {
   transformedCourse: Course,
   injection: {techIdx: number, courseIdx: number}
 } {
@@ -21,7 +22,7 @@ export default function transformCourseHelper(course: any, techName: string, tec
       description: {
         [lang]: description,
         [oppositeLang]: techsCopy[techIndex].courses[courseIndex].description[oppositeLang] || ''
-      }
+      } as unknown as EnUkStringInterface
     }
   } else {
     courseCopy = {
@@ -29,7 +30,7 @@ export default function transformCourseHelper(course: any, techName: string, tec
       description: {
         [lang]: description,
         [oppositeLang]: ''
-      }
+      }  as unknown as EnUkStringInterface
     }
   }
   return {

@@ -8,6 +8,12 @@ export interface School {
   _id?: string
 }
 
+export interface SimplifiedSchool extends Omit<School, 'description' | 'degree' | 'name'> {
+  name: string
+  description: string
+  degree: string
+}
+
 export interface Course {
   name: string
   description: EnUkStringInterface
@@ -27,4 +33,8 @@ export interface Techs {
 export interface EducationInterface {
   school: School[]
   techs: Techs[]
+}
+
+export interface SimplifiedCourse extends Omit<Course, 'description'> {
+  description: string
 }

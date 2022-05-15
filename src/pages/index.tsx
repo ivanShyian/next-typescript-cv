@@ -9,7 +9,7 @@ import IndexContactMe from '@/components/Index/IndexContactMe'
 import Api from '@/api/Api'
 import {useAuthContext} from '@/ctx/auth'
 import {getCookie} from 'cookies-next'
-import {setAbout, setConfig, setEducation} from '@/redux/actions'
+import {setAbout, setConfig, setEducation, setWork} from '@/redux/actions'
 import {wrapper} from '@/redux/store'
 
 
@@ -42,9 +42,11 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async({r
   const {config} = await api.getConfig()
   const {about} = await api.getAbout()
   const {education} = await api.getEducation()
+  const {work} = await api.getWork()
   store.dispatch(setConfig(config))
   store.dispatch(setAbout(about))
   store.dispatch(setEducation(education))
+  store.dispatch(setWork(work))
   const authCookie = getCookie('auth', {req, res})
   return {
     props: {

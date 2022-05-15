@@ -2,6 +2,7 @@ import {FC, FormEvent, MutableRefObject, useRef, useState} from 'react'
 import NextImage from 'next/image'
 import {StatusListItem, FieldsList} from '@/models/Config'
 import {useRouter} from 'next/router'
+import readAsDataURL from '@/utils/readAsDataURL'
 
 interface Props {
   avatar: string
@@ -71,12 +72,9 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
     childFunction.current = files
     const fileToLoad = files && files[0]
     if (fileToLoad) {
-      const fileReader = new FileReader()
-      fileReader.onload = function(loadedEvent) {
-        const srcData = loadedEvent.target!.result
+      readAsDataURL(fileToLoad, (srcData) => {
         changeImage(srcData as any)
-      }
-      fileReader.readAsDataURL(fileToLoad)
+      })
     }
   }
 

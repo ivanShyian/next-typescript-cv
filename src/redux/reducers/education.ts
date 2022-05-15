@@ -6,7 +6,7 @@ const initialState = {
   techList: []
 }
 
-const updateConfig = (state = initialState, action: {type: string, payload?: any}) => {
+const updateEducation = (state = initialState, action: {type: string, payload?: any}) => {
   switch (action.type) {
     case type.SET_EDUCATION:
       return {
@@ -26,4 +26,4 @@ const updateConfig = (state = initialState, action: {type: string, payload?: any
   }
 }
 
-export default updateConfig
+export default updateEducation

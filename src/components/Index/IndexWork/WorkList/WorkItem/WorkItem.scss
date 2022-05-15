@@ -69,13 +69,27 @@
         font-size: .8rem;
       }
       svg {
+        width: 23px;
+        height: 23px;
         margin-right: .5rem;
+        > g {
+          transform: none !important;
+        }
+        &.next {
+          width: 35px;
+          height: 35px;
+          > path, g {
+            fill: #000000 !important;
+          }
+        }
         @include maxWidth1170 {
           width: 20px;
+          height: 20px;
           margin-right: .25rem;
         }
         @include maxWidth767 {
           width: 18px;
+          height: 18px;
         }
       }
       &.nuxt svg {
@@ -92,6 +106,7 @@
     }
     &__description {
       display: flex;
+      width: 100%;
       flex-direction: column;
       justify-content: space-between;
       margin-right: 2rem;

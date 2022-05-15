@@ -1,46 +1,67 @@
-import {NextPage} from 'next'
 import './IndexWork.scss'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import WorkList from '@/components/Index/IndexWork/WorkList'
-import FreshDes from '@/public/assets/coloredFresh.png'
-import Inrating from '@/public/assets/coloredInr.png'
+import useTranslation from 'next-translate/useTranslation'
+import {RefModal, StateInterface} from '@/models/index'
+import {bindActionCreators, Dispatch} from 'redux'
+import {setWork} from '@/redux/actions'
+import {connect} from 'react-redux'
+import {FC, useRef, useState} from 'react'
+import {WorkInterface} from '@/models/Work'
+import AdminWork from '@/components/Admin/Work'
 
-const list = [
-  {
-    id: 0,
-    name: 'Inrating',
-    workLogo: Inrating, //must be src
-    subtitle: 'Social Network with own TV Channel',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ex ipsum non! Ab doloribus dolorum esse fugit, harum placeat quis sapiente similique suscipit veniam veritatis?',
-    position: 'VueJS Developer',
-    positionLogo: 'vue', //must be src
-    respons: ['Building UI\'s', 'Templates', 'UI Logic', 'Clean coding', 'Refactoring'],
-    tech: ['Typescript', 'Javascript', 'VueJS', 'NuxtJS'],
-    duration: '2021-2021'
-  },
-  {
-    id: 1,
-    name: 'Freshdesign',
-    workLogo: FreshDes, //must be src
-    subtitle: 'Outsource company',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ex ipsum non! Ab doloribus dolorum esse fugit, harum placeat quis sapiente similique suscipit veniam veritatis?',
-    position: 'NuxtJS Developer',
-    positionLogo: 'nuxt', //must be src
-    respons: ['Building UI\'s', 'Templates', 'UI Logic', 'Clean coding', 'Refactoring'],
-    tech: ['Typescript', 'Javascript', 'VueJS', 'NuxtJS'],
-    duration: '2021-2022'
+interface Props {
+  work: WorkInterface[],
+  setWork: (work: WorkInterface[]) => void
+}
+
+const IndexWork: FC<Props> = ({work}) => {
+  const [shouldMount, changeMountState] = useState(false)
+  const [editIndex, changeEditIndex] = useState<number>(-1)
+  const adminModal = useRef<RefModal>(null)
+  const {t} = useTranslation('index')
+
+  const onOpenModal = async(editId?: number) => {
+    if (typeof editId === "number") {
+      await changeEditIndex(editId)
+    }
+    await changeMountState(true);
+    adminModal.current?.changeModalVisibility(true)
   }
-]
 
-export const IndexWork: NextPage = () => {
+  const onModalClose = () => {
+    changeEditIndex(-1)
+    changeMountState(false)
+  }
+
   return (
     <section id="work" className="index__work section work">
       <div className="work__wrapper container">
-        <SharedSectionTitle>Work</SharedSectionTitle>
+        <SharedSectionTitle>{t('workTitle')}</SharedSectionTitle>
         <div className="work__content">
-          <WorkList list={list} />
+          <WorkList workList={work} openAddModal={onOpenModal} />
         </div>
+        {shouldMount && (
+          <AdminWork
+            setWork={setWork}
+            work={work}
+            beforeClose={onModalClose}
+            childFunction={adminModal}
+            editIndex={editIndex}
+            workList={work}
+          />
+        )}
       </div>
     </section>
   )
 }
+
+const mapStateToProps = (state: StateInterface) => ({
+  work: state.work.work
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setWork: bindActionCreators(setWork, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndexWork)
