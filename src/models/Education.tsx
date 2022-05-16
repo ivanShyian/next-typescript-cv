@@ -29,6 +29,11 @@ export interface Techs {
   _id?: string
 }
 
+export interface MetaTech {
+  name: string,
+  _id: string | undefined
+}
+
 
 export interface EducationInterface {
   school: School[]
@@ -38,3 +43,12 @@ export interface EducationInterface {
 export interface SimplifiedCourse extends Omit<Course, 'description'> {
   description: string
 }
+
+export interface TechReference {
+  techToAdd: Techs[]
+  techToExtend: Techs[]
+  techToRemove: string[]
+  courseToRemove: Techs[]
+}
+
+export type TechRef = TechReference | null

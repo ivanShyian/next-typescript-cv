@@ -3,7 +3,7 @@ import axios from 'axios'
 import {getCookie} from 'cookies-next'
 import FormData from 'form-data'
 import {AboutInterface} from '@/models/About'
-import {Course, School, Techs} from '@/models/Education'
+import {School, Techs} from '@/models/Education'
 
 export default class Api {
   api_token: null | string
@@ -111,7 +111,7 @@ export default class Api {
     }
   }
 
-  async extendTechs(techs: {_id: string, courses: Course[]}) {
+  async extendTechs(techs: Techs[]) {
     try {
       const {data} = await this.init().put('/admin/education/techs', {techs})
     } catch (e:any) {

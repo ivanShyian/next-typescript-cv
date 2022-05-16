@@ -1,7 +1,7 @@
 import {FC, MutableRefObject, useCallback, useEffect, useRef} from 'react'
 
 interface Props {
-  childValue: MutableRefObject<any>
+  childValue: MutableRefObject<{getValue: () => string} | null>
   emailReceiver: string
 }
 

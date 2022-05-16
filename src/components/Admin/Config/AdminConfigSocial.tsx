@@ -3,7 +3,7 @@ import {FieldsList} from '@/models/Config'
 
 interface Props {
   linksMap: { [key: string]: string }
-  childFunction: MutableRefObject<any>
+  childFunction: MutableRefObject<{getValues: () => {[key: string]: string}} | null>
   changeSocial: (field: FieldsList, newValues: any) => void
 }
 

@@ -5,11 +5,12 @@ import useTranslation from 'next-translate/useTranslation'
 import {AdminAboutTech} from '@/components/Admin/About/AdminAboutTech'
 import Api from '@/api/Api'
 import SharedAdminModal from '@/components/Shared/SharedAdminModal'
+import {RefModal} from '@/models/index'
 
 const api = new Api()
 
 interface Props {
-  childFunction: MutableRefObject<any>
+  childFunction: MutableRefObject<RefModal>
   setAbout: (about: AboutInterface) => void
   about: AboutInterface
 }
@@ -22,7 +23,7 @@ export const AdminAbout: FC<Props> = ({childFunction, about, setAbout}) => {
   const [newTechValue, changeNewTechValue] = useState('')
 
   const handleCloseModal = () => {
-    if (childFunction?.current) {
+    if (childFunction.current) {
       childFunction.current.changeModalVisibility(false)
     }
   }

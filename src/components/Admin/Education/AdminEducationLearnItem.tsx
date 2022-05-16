@@ -1,11 +1,11 @@
 import {FC, useEffect, useState} from 'react'
-import {Course, SimplifiedCourse} from '@/models/Education'
+import {Course, MetaTech, SimplifiedCourse} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
 
 interface Props {
-  techMeta: {name: string, _id: string | undefined}
-  onTechExtend: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
-  onCourseRemove: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
+  techMeta: MetaTech
+  onTechExtend: (techMeta: MetaTech, course: SimplifiedCourse) => void
+  onCourseRemove: (techMeta: MetaTech, course: SimplifiedCourse) => void
   course?: Course
 }
 

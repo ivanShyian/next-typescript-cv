@@ -5,11 +5,11 @@ import {useRouter} from 'next/router'
 import readAsDataURL from '@/utils/readAsDataURL'
 
 interface Props {
-  avatar: string
+  avatar: File | string
   statusList: StatusListItem[]
   nameValue: {en: string, uk: string}
   changeGeneral: (field: FieldsList, newValues: any) => void
-  childFunction: MutableRefObject<any>
+  childFunction: MutableRefObject<FileList | null>
 }
 
 const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValue, childFunction}) => {

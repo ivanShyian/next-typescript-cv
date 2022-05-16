@@ -1,16 +1,16 @@
 import {FC, FormEvent, MutableRefObject, useEffect, useRef} from 'react'
-import {SimplifiedCourse, Techs} from '@/models/Education'
+import {Course, MetaTech, SimplifiedCourse, TechRef, Techs} from '@/models/Education'
 import {useState} from 'react'
 import useTranslation from 'next-translate/useTranslation'
 import AdminEducationLearnItem from '@/components/Admin/Education/AdminEducationLearnItem'
 
 interface Props {
   learnList: Techs[]
-  newTechRef: MutableRefObject<any>
+  newTechRef: MutableRefObject<TechRef>
   postTech: (tech: Techs) => void
   removeTech: (tech: Techs) => void
-  addCourse: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
-  onCourseRemove: (techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) => void
+  addCourse: (techMeta: MetaTech, course: SimplifiedCourse) => void
+  onCourseRemove: (techMeta: MetaTech, course: SimplifiedCourse) => void
 }
 
 const AdminEducationLearn: FC<Props> = ({learnList, newTechRef, postTech, removeTech, addCourse, onCourseRemove}) => {
@@ -19,7 +19,6 @@ const AdminEducationLearn: FC<Props> = ({learnList, newTechRef, postTech, remove
   const [addNewCourse, changeAddNewCourse] = useState<boolean>(false)
   const techInput = useRef<HTMLInputElement>(null)
   const [newTech, changeNewTech] = useState<string>('')
-  const {lang} = useTranslation() as { lang: 'uk' | 'en' }
 
   const isActive = activeIndex !== -1
   const activeCourses = isActive ? learnList[activeIndex].courses : []
@@ -45,7 +44,7 @@ const AdminEducationLearn: FC<Props> = ({learnList, newTechRef, postTech, remove
     e.preventDefault()
     if (newTech.length && !Object.keys(learnList).some((val: any) => learnList[val].name === newTech)) {
       const tech = {name: newTech, courses: []}
-      newTechRef.current.techToAdd.push(tech)
+      newTechRef.current?.techToAdd.push(tech)
       postTech(tech)
       changeNewTech('')
       changeAddNewTechValue(false)
@@ -55,16 +54,17 @@ const AdminEducationLearn: FC<Props> = ({learnList, newTechRef, postTech, remove
   const handleRemove = (e: MouseEvent, itemToRemove: Techs) => {
     e.stopPropagation()
     changeActiveIndex(-1)
-    const foundIndex = newTechRef.current.techToAdd.findIndex((tech: Techs) => tech === itemToRemove)
+    const foundIndex = newTechRef.current?.techToAdd.findIndex((tech: Techs) => tech === itemToRemove)
+    if (!newTechRef.current) return
     if (foundIndex !== -1) {
       newTechRef.current.techToAdd = newTechRef.current.techToAdd.filter((tech: Techs) => tech !== itemToRemove)
-    } else {
+    } else if (itemToRemove._id) {
       newTechRef.current.techToRemove.push(itemToRemove._id)
     }
     removeTech(itemToRemove)
   }
 
-  const onTechExtend = (techMeta: {name: string, _id: string | undefined}, course: any) => {
+  const onTechExtend = (techMeta: MetaTech, course: any) => {
     addCourse(techMeta, {...course})
     if (addNewCourse) changeAddNewCourse(false)
   }

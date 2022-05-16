@@ -8,7 +8,7 @@ export interface ConfigInterface {
     [key: string]: string
   },
   status: [StatusListItem],
-  avatar: string,
+  avatar: File | string,
   _id: string,
   emailReceiver: string
 }

@@ -1,15 +1,24 @@
 import './AdminEducation.scss'
-import {FC, MutableRefObject, useRef} from 'react'
+import {FC, MutableRefObject, useMemo, useRef} from 'react'
 import SharedAdminModal from '@/components/Shared/SharedAdminModal'
-import AdminEducationLearn from '@/components/Admin/Education/AdminEducationLearn'
-import AdminEducationSchool from '@/components/Admin/Education/AdminEducationSchool'
-import {Course, EducationInterface, School, SimplifiedCourse, SimplifiedSchool, Techs} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
 import transformCourseHelper from '@/utils/transformCourseHelper'
 import clearRefCourseHelper from '@/utils/clearRefCourseHelper'
 import Api from '@/api/Api'
 import {EnUkStringInterface, RefModal} from '@/models/index'
-
+import {
+  Course,
+  EducationInterface,
+  MetaTech,
+  School,
+  SimplifiedCourse,
+  SimplifiedSchool,
+  TechRef,
+  Techs
+} from '@/models/Education'
+import dynamic from 'next/dynamic'
+const AdminEducationLearn = dynamic(() => import('@/components/Admin/Education/AdminEducationLearn'))
+const AdminEducationSchool = dynamic(() => import('@/components/Admin/Education/AdminEducationSchool'))
 
 const api = new Api()
 
@@ -24,17 +33,25 @@ interface Props {
 export const AdminEducation: FC<Props> = ({setEducation, childFunction, education, editIndex, beforeClose}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
   const newSchoolRef = useRef<{getValues: SimplifiedSchool} | null>(null)
-  const newTechRef = useRef(null)
+  const newTechRef = useRef<TechRef>(null)
 
-  const tabList = [
+  const tabList = useMemo(() => ([
     {id: 0, name: 'School', component: <AdminEducationSchool newSchoolRef={newSchoolRef} schoolList={education.school} editIndex={editIndex} />},
     {id: 1, name: 'Courses', component: <AdminEducationLearn newTechRef={newTechRef} postTech={addNewTech} learnList={education.techs} removeTech={removeTech} addCourse={addCourse} onCourseRemove={removeCourse} />}
-  ]
+  ]), [
+    newSchoolRef,
+    newTechRef,
+    education,
+    editIndex,
+    addNewTech,
+    removeTech,
+    addCourse,
+    removeCourse
+  ])
 
   const tabsToShow = editIndex === -1 ? tabList : [tabList[0]]
 
   const saveToApi = async(): Promise<void> => {
-    const techRefCurrent = newTechRef.current as any
     if (newSchoolRef.current && childFunction.current?.getActiveTab === 0) {
       const oppositeLang = lang === 'en' ? 'uk' : 'en'
       const values = newSchoolRef.current.getValues
@@ -52,18 +69,18 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
         const response = await api.addNewSchool({data: data as School, type})
         setEducation(response)
       }
-    } else if (techRefCurrent && childFunction.current?.getActiveTab === 1) {
-      if (techRefCurrent.techToAdd.length) {
-        await api.addTechs(techRefCurrent.techToAdd)
+    } else if (newTechRef.current && childFunction.current?.getActiveTab === 1) {
+      if (newTechRef.current.techToAdd.length) {
+        await api.addTechs(newTechRef.current.techToAdd)
       }
-      if (techRefCurrent.techToExtend.length) {
-        await api.extendTechs(techRefCurrent.techToExtend)
+      if (newTechRef.current.techToExtend.length) {
+        await api.extendTechs(newTechRef.current.techToExtend)
       }
-      if (techRefCurrent.techToRemove.length) {
-        await api.removeTech(techRefCurrent.techToRemove.join(';'))
+      if (newTechRef.current.techToRemove.length) {
+        await api.removeTech(newTechRef.current.techToRemove.join(';'))
       }
-      if (techRefCurrent.courseToRemove.length) {
-        const query = techRefCurrent.courseToRemove.map((tech: Techs) => {
+      if (newTechRef.current.courseToRemove.length) {
+        const query = newTechRef.current.courseToRemove.map((tech: Techs) => {
           const value = tech.courses.map((c: Course, idx, array) => array.length === idx+1 ? c._id : `${c._id};`).join('')
           return `${tech._id}=${value}`
         }).join('&')
@@ -81,14 +98,13 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
 
 
   function addNewTech(tech: Techs) {
-    // const response = await api.addNewTech(tech)
     setEducation({
       ...education,
       techs: [...education.techs, tech]
     })
   }
 
-  function addCourse(techMeta: {name: string, _id: string | undefined}, course: any) {
+  function addCourse(techMeta: MetaTech, course: any) {
     const {transformedCourse, injection: {techIdx, courseIdx}} = transformCourseHelper(course, techMeta.name, [...education.techs], lang)
     let techsCopy = [...education.techs]
     techsCopy[techIdx].courses = [...techsCopy[techIdx].courses, transformedCourse]
@@ -100,20 +116,25 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
     extendTechRef(techMeta, transformedCourse)
   }
 
-  function extendTechRef(techMeta: {name: string, _id: string | undefined}, course: Course) {
-    const foundAddIndex = (newTechRef.current as any).techToAdd.findIndex((el: Techs) => el.name === techMeta.name)
+  function extendTechRef(techMeta: MetaTech, course: Course) {
+    const foundAddIndex = newTechRef.current?.techToAdd.findIndex((el: Techs) => el.name === techMeta.name)
     if (foundAddIndex !== -1) {
       return
     }
-    const foundIndex = (newTechRef.current as any).techToExtend.findIndex((el: Techs) => el.name === techMeta.name)
+    const foundIndex = newTechRef.current?.techToExtend.findIndex((el) => el._id === techMeta._id)
     if (foundIndex !== -1) {
-      (newTechRef.current as any).techToExtend[foundIndex].courses.push(course)
+      newTechRef.current?.techToExtend[foundIndex as number].courses.push(course)
     } else {
-      (newTechRef.current as any).techToExtend.push({_id: techMeta._id, courses: [course]})
+      const data: Techs = {
+        name: techMeta.name,
+        courses: [course]
+      }
+      if (techMeta._id) data._id = techMeta._id
+      newTechRef.current?.techToExtend.push(data)
     }
   }
 
-  function removeCourse(techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) {
+  function removeCourse(techMeta: MetaTech, course: SimplifiedCourse) {
     const techsCopy = [...education.techs]
     const foundTechIndex = techsCopy.findIndex((tech: Techs) => tech.name === techMeta.name)
     techsCopy[foundTechIndex].courses = techsCopy[foundTechIndex].courses.filter((c: Course) => {
@@ -127,31 +148,35 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
     clearRefCourse(techMeta, course)
   }
 
-  function clearRefCourse(techMeta: {name: string, _id: string | undefined}, course: SimplifiedCourse) {
+  function clearRefCourse(techMeta: MetaTech, course: SimplifiedCourse) {
     let isChanged: boolean = false
-    if ((newTechRef.current as any).techToExtend.length) {
-      const {array, isModified} = clearRefCourseHelper((newTechRef.current as any).techToExtend, techMeta.name, course, 'extend');
-      (newTechRef.current as any).techToExtend = array
+    if (newTechRef.current?.techToExtend.length) {
+      const {array, isModified} = clearRefCourseHelper(newTechRef.current?.techToExtend, techMeta.name, course, 'extend')
+      newTechRef.current.techToExtend = array
       isChanged = isModified
-    } else if ((newTechRef.current as any).techToAdd.length) {
-      const {array, isModified} = clearRefCourseHelper((newTechRef.current as any).techToAdd, techMeta.name, course);
-      (newTechRef.current as any).techToAdd = array
+    } else if (newTechRef.current?.techToAdd.length) {
+      const {array, isModified} = clearRefCourseHelper(newTechRef.current.techToAdd, techMeta.name, course)
+      newTechRef.current.techToAdd = array
       isChanged = isModified
     }
     if (!isChanged) {
-      const foundIndex = (newTechRef.current as any).courseToRemove.findIndex((tech: Techs) => tech.name === techMeta.name)
+      const foundIndex = newTechRef.current?.courseToRemove.findIndex((tech: Techs) => tech.name === techMeta.name)
       if (foundIndex !== -1) {
-        let courseToRemoveCopy = [...(newTechRef.current as any).courseToRemove]
-        courseToRemoveCopy[foundIndex].courses = [
-          ...courseToRemoveCopy[foundIndex].courses,
+        let courseToRemoveCopy = [...newTechRef.current!.courseToRemove]
+        courseToRemoveCopy[foundIndex as number].courses = [
+          ...courseToRemoveCopy[foundIndex as number].courses,
           course
-        ];
-        (newTechRef.current as any).courseToRemove = courseToRemoveCopy
-      } else {
-        (newTechRef.current as any).courseToRemove = [
-          ...(newTechRef.current as any).courseToRemove,
-          {name: techMeta.name, _id: techMeta._id, courses: [course]}
-        ]
+        ] as Course[]
+        newTechRef.current!.courseToRemove = courseToRemoveCopy
+      } else if (newTechRef.current) {
+        newTechRef.current.courseToRemove = [
+          ...newTechRef.current.courseToRemove,
+          {
+            name: techMeta.name,
+            _id: techMeta._id,
+            courses: [course]
+          }
+        ] as Techs[]
       }
     }
   }
