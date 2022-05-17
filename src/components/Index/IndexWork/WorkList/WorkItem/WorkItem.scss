@@ -8,8 +8,10 @@
       margin-bottom: 0;
     }
     &_img {
+      position: relative;
       flex: 0 0 20%;
       height: 165px;
+      margin-right: 1rem;
       > span {
         height: 100% !important;
         width: 100% !important;

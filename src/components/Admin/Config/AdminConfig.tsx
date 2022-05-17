@@ -15,7 +15,6 @@ import {bindActionCreators, Dispatch} from 'redux'
 import Api from '@/api/Api'
 import Modal from 'react-modal'
 import {ConfigInterface, FieldsList} from '@/models/Config'
-import FormData from 'form-data'
 import SharedAdminModal from '@/components/Shared/SharedAdminModal'
 
 const ModalGeneralTab = dynamic(() => import('@/components/Admin/Config/AdminConfigGeneral'))
@@ -47,17 +46,9 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
     if (fileInputRef.current && Array.isArray(fileInputRef.current)) data = {...data, avatar: fileInputRef.current[0]}
     if (socialInputRef.current) data = {...data, links: socialInputRef.current.getValues()}
     if (emailInputRef.current) data = {...data, emailReceiver: emailInputRef.current.getValue()}
-
     setConfig(data)
-
-    const formData = new FormData()
-    formData.append('status', JSON.stringify(data.status))
-    formData.append('links', JSON.stringify(data.links))
-    formData.append('emailReceiver', data.emailReceiver)
-    formData.append('image', data.avatar)
-    formData.append('name', JSON.stringify(data.name))
-
-    await api.changeConfig(formData)
+    const {avatar, ...other} = data
+    await api.changeConfig({...other, image: avatar})
     handleCloseModal()
   }
 

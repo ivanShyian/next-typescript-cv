@@ -105,7 +105,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
 }
 
 const mapStateToProps = (state: StateInterface) => ({
-  config: state.config.config as ConfigInterface
+  config: state.config.config
 })
 
 export default connect(mapStateToProps, {})(IndexCutaway)

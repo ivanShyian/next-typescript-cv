@@ -1,11 +1,10 @@
 import {EnUkStringInterface} from '@/models/index'
 
-interface Responsibilities extends EnUkStringInterface{
-  _id: string
+export interface Responsibilities extends EnUkStringInterface{
+  _id?: string
 }
 
 export interface WorkInterface {
-  _id?: string
   title: string
   subtitle: EnUkStringInterface
   description: EnUkStringInterface
@@ -13,10 +12,14 @@ export interface WorkInterface {
   responsibilities: Responsibilities[] | []
   imageUrl: string
   position: string
-  duration: string
+  duration: string,
+  _id?: string
 }
 
 export interface SimplifiedWork extends Omit<WorkInterface, 'subtitle' | 'description'> {
   subtitle: string
   description: string
 }
+
+
+export type Update = {[key: string]: string | string[] | EnUkStringInterface[] | File}

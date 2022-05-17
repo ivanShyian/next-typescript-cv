@@ -4,6 +4,10 @@ import {getCookie} from 'cookies-next'
 import FormData from 'form-data'
 import {AboutInterface} from '@/models/About'
 import {School, Techs} from '@/models/Education'
+import {Update, WorkInterface} from '@/models/Work'
+import {EnUkStringInterface} from '@/models/index'
+import {ConfigInterface} from '@/models/Config'
+import objectToFormData from '@/utils/objectToFormData'
 
 export default class Api {
   api_token: null | string
@@ -80,9 +84,9 @@ export default class Api {
     }
   }
 
-  async changeConfig(formData: FormData): Promise<void> {
+  async changeConfig(preparedData: Omit<ConfigInterface, 'avatar'> & {image: any}): Promise<void> {
     try {
-      const {data} = await this.init().put('/admin/config', formData, {
+      const {data} = await this.init().put('/admin/config', objectToFormData(preparedData), {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Accept': 'multipart/form-data',
@@ -148,6 +152,42 @@ export default class Api {
     try {
       const {data} = await this.init().delete(`/admin/education/courses/${id}`)
     } catch (e:any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+  async addNewWork(preparedData: Omit<WorkInterface, 'imageUrl'> & {image: any}) {
+    try {
+      const {data} = await this.init().post('/admin/work', objectToFormData(preparedData), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'multipart/form-data',
+        }
+      })
+    } catch (e:any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+
+  async updateWork(preparedData: Update) {
+    try {
+      const {data} = await this.init().put('/admin/work', objectToFormData(preparedData), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'multipart/form-data',
+        }
+      })
+    } catch (e:any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+  async removeWork(id: string) {
+    try {
+      const {data} = await this.init().delete(`/admin/work/${id}`)
+    }
+    catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }

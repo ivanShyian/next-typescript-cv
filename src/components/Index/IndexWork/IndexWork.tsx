@@ -9,13 +9,16 @@ import {connect} from 'react-redux'
 import {FC, useRef, useState} from 'react'
 import {WorkInterface} from '@/models/Work'
 import AdminWork from '@/components/Admin/Work'
+import Api from '@/api/Api'
+
+const api = new Api()
 
 interface Props {
   work: WorkInterface[],
   setWork: (work: WorkInterface[]) => void
 }
 
-const IndexWork: FC<Props> = ({work}) => {
+const IndexWork: FC<Props> = ({work, setWork}) => {
   const [shouldMount, changeMountState] = useState(false)
   const [editIndex, changeEditIndex] = useState<number>(-1)
   const adminModal = useRef<RefModal>(null)
@@ -34,12 +37,18 @@ const IndexWork: FC<Props> = ({work}) => {
     changeMountState(false)
   }
 
+  const removeItem = (idx: number) => {
+    const id = work[idx]._id
+    setWork(work.filter((w) => w._id !== id))
+    if (id) return api.removeWork(id)
+  }
+
   return (
     <section id="work" className="index__work section work">
       <div className="work__wrapper container">
         <SharedSectionTitle>{t('workTitle')}</SharedSectionTitle>
         <div className="work__content">
-          <WorkList workList={work} openAddModal={onOpenModal} />
+          <WorkList workList={work} openAddModal={onOpenModal} removeItem={removeItem} />
         </div>
         {shouldMount && (
           <AdminWork

@@ -27,7 +27,7 @@ const Home: FC<Props> = ({authCookie}: Props) => {
 
   return (
     <Fragment>
-      <IndexCutaway/>
+      <IndexCutaway />
       <IndexAbout />
       <IndexEducation />
       <IndexWork />

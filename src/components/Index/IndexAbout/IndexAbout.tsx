@@ -6,29 +6,29 @@ import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 
 import {useAuthContext} from '@/ctx/auth'
 import {connect} from 'react-redux'
-import {FC, MutableRefObject, useRef} from 'react'
+import {FC, useRef} from 'react'
 import AdminAbout from '@/components/Admin/About'
-import {StateInterface} from '@/models/index'
+import {RefModal, StateInterface} from '@/models/index'
 import useTranslation from 'next-translate/useTranslation'
 import {bindActionCreators, Dispatch} from 'redux'
 import {setAbout} from '@/redux/actions'
 import {AboutInterface} from '@/models/About'
+import {Translate} from 'next-translate'
 
 interface Props {
-  about: any
+  about: AboutInterface
   avatar: string
   setAbout: (about: AboutInterface) => void
 }
 
 const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
-  const modalRef = useRef<MutableRefObject<any>>(null)
+  const modalRef = useRef<RefModal>(null)
   const {isAdmin} = useAuthContext()
-  const {t, lang} = useTranslation('index')
+  const {t, lang} = useTranslation('index') as {lang: 'en' | 'uk', t: Translate}
 
   const handleEditClick = () => {
     if (modalRef.current) {
-      console.log(modalRef.current)
-      return (modalRef as any).current.changeModalVisibility(true)
+      return modalRef.current.changeModalVisibility(true)
     }
   }
 
@@ -78,6 +78,8 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
   )
 }
 
+type IState = (props: StateInterface) => {about: AboutInterface, avatar: string}
+
 const mapStateToProps = (state: StateInterface) => ({
   about: state.about.about,
   avatar: state.config.config.avatar
@@ -87,4 +89,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setAbout: bindActionCreators(setAbout, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(IndexAbout)
+export default connect(mapStateToProps as IState, mapDispatchToProps)(IndexAbout)

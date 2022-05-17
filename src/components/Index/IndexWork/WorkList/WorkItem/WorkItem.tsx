@@ -14,6 +14,7 @@ import useTranslation from 'next-translate/useTranslation'
 interface Props {
   workItem: WorkInterface
   openEditModal: (editId?: number) => void
+  removeItem: (index: number) => void
   index: number
   isAdmin: boolean
 }
@@ -30,7 +31,7 @@ const logoByTech: {
   Nuxt:  <NuxtIcon/>
 }
 
-export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, index}) => {
+export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeItem, index}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
 
   const technologies = workItem.technologies.map((tech: string, idx: number, array: string[]) => array.length - 1 === idx ? tech : `${tech}, `)
@@ -38,7 +39,7 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, index}) =
   return (
     <li className="work__item">
       <div className="work__item_img">
-        <Image src={workItem.imageUrl} layout="fill" alt="work logo" objectFit={"contain"} />
+        <Image src={`http://localhost:8080/${workItem.imageUrl}`} layout="fill" alt="work logo" objectFit="cover" />
       </div>
       <div className="work__item_card card work-card">
         <div className="work-card__content">
@@ -46,7 +47,9 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, index}) =
             <div className="work-card__heading_content">
               <p className="work-card__title">{workItem.title}</p>
               <div className="work-card__position nuxt">
-                {logoByTech[workItem.technologies[0]]}
+                {workItem.technologies.map((v, idx) => (
+                  <span key={idx}>{logoByTech[v]}</span>
+                ))}
                 <span>{workItem.position}</span>
               </div>
             </div>
@@ -78,7 +81,7 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, index}) =
           <div className="work-admin__edit admin-circle-button" onClick={() => openEditModal(index)}>
             <span>e</span>
           </div>
-          <div className="work-admin__remove admin-circle-button remove">
+          <div className="work-admin__remove admin-circle-button remove" onClick={() => removeItem(index)}>
             <span>d</span>
           </div>
         </div>

@@ -1,13 +1,13 @@
+import {EnUkStringInterface} from '@/models/index'
+
 export type FieldsList = 'status' | 'avatar' | 'links' | 'emailReceiver' | 'name'
 
-export type StatusListItem = {en: string, uk: string}
-
 export interface ConfigInterface {
-  name: StatusListItem
+  name: EnUkStringInterface
   links: {
     [key: string]: string
   },
-  status: [StatusListItem],
+  status: [EnUkStringInterface],
   avatar: File | string,
   _id: string,
   emailReceiver: string
