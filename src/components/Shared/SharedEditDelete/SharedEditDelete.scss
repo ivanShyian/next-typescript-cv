@@ -1,0 +1,29 @@
+.shared-edit-delete {
+  display: flex;
+  &__edit {
+    margin: 0 .5rem 0 0;
+  }
+  &_column {
+    display: flex;
+    flex-direction: column;
+    .shared-edit-delete__edit {
+      margin: 0 0 .5rem 0;
+    }
+  }
+}
+.admin-circle-button {
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: $c-white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $c-primary;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  &.remove {
+    background-color: $c-secondary;
+  }
+}

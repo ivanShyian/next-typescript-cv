@@ -1,5 +1,6 @@
 import {FC, FormEvent, useRef, useState} from 'react'
 import {Tech} from '@/models/About'
+import SharedEditDelete from '@/components/Shared/SharedEditDelete'
 
 interface Props {
   onTechRemove: (tech: Tech) => void
@@ -53,8 +54,10 @@ export const AdminAboutTech: FC<Props> = ({tech, idx, onTechRemove, onTechSubmit
         <button type="submit" className="about-tech-item__form_btn"/>
       </form>
       <div className="about-tech-item__edit">
-        <span className="admin-circle-button edit" onClick={handleEdit}>e</span>
-        <span className="admin-circle-button remove" onClick={handleRemove}>d</span>
+        <SharedEditDelete
+          onEditClick={handleEdit}
+          onDeleteClick={handleRemove}
+        />
       </div>
     </li>
   )

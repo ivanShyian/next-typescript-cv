@@ -2,6 +2,7 @@ import {ConfigInterface} from '@/models/Config'
 import {AboutInterface} from '@/models/About'
 import {EducationInterface, Techs} from '@/models/Education'
 import {WorkInterface} from '@/models/Work'
+import {Project, ProjectListItem} from '@/models/Project'
 
 export interface StateInterface {
   config: {
@@ -17,6 +18,10 @@ export interface StateInterface {
   work: {
     work: WorkInterface[]
   }
+  projects: {
+    projectList: ProjectListItem[],
+    project: Project | {}
+  }
 }
 
 export interface EnUkStringInterface {
@@ -26,7 +31,7 @@ export interface EnUkStringInterface {
 
 interface RefModalInterface {
   changeModalVisibility: (value: boolean) => void
-  getActiveTab: number
+  getActiveTab?: number
 }
 
 export type RefModal = RefModalInterface | null

@@ -32,12 +32,13 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
   useEffect(() => {
     if (workItem) {
       changeValues((prevState) => {
-        const {subtitle, description, __v, ...other}: WorkInterface & {__v?: number} = workItem
+        const {subtitle, description,imageUrl, __v, ...other}: WorkInterface & {__v?: number} = workItem
         return {
           ...prevState,
           ...other,
           subtitle: subtitle[lang],
-          description: description[lang]
+          description: description[lang],
+          imageUrl: `http://localhost:8080/${imageUrl}`
         }
       })
     }
@@ -145,7 +146,7 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
         <div className="work-item-content__image">
           <div className="work-item-content__image_img" onClick={onImageClick}>
             {imageUrl
-              ? <Image src={`http://localhost:8080/${imageUrl}`} width={150} height={150} objectFit="cover" alt="work image" />
+              ? <Image src={imageUrl} width={150} height={150} objectFit="cover" alt="work image" />
               : <div className="work-item-content__image_placeholder"><PhotoIcon/></div>
              }
             <input
@@ -187,6 +188,7 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
             <p className="work-item-lists__title">Responsibilities</p>
             <form onSubmit={onRespChange} className="work-item-lists__form">
               <ul className="work-item-lists__list">
+                {/*TODO Refactor li to li > input*/}
                 {responsibilities.map((resp, key) => (
                   <li
                     className={`work-item-lists__item${editing.resp === key ? '_hidden' : ''}`}

@@ -162,21 +162,3 @@ li {
     }
   }
 }
-
-.admin-circle-button {
-  font-weight: 400;
-  font-size: 1.2rem;
-  color: $c-white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $c-primary;
-  border-radius: 50%;
-  height: 35px;
-  width: 35px;
-  cursor: pointer;
-  &.remove {
-    background-color: $c-secondary;
-  }
-}
-

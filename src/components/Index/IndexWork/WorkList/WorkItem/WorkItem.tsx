@@ -10,6 +10,7 @@ import NuxtIcon from '@/public/icons/parallax-icons/nuxt.svg'
 import NextIcon from '@/public/icons/parallax-icons/next.svg'
 import {WorkInterface} from '@/models/Work'
 import useTranslation from 'next-translate/useTranslation'
+import SharedEditDelete from '@/components/Shared/SharedEditDelete'
 
 interface Props {
   workItem: WorkInterface
@@ -78,12 +79,10 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeIte
       </div>
       {isAdmin && (
         <div className="work__item_admin work-admin">
-          <div className="work-admin__edit admin-circle-button" onClick={() => openEditModal(index)}>
-            <span>e</span>
-          </div>
-          <div className="work-admin__remove admin-circle-button remove" onClick={() => removeItem(index)}>
-            <span>d</span>
-          </div>
+          <SharedEditDelete
+            onEditClick={() => openEditModal(index)}
+            onDeleteClick={() => removeItem(index)}
+          />
         </div>
       )}
     </li>

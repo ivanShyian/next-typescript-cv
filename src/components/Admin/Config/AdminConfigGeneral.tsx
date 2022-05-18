@@ -1,12 +1,14 @@
 import {FC, FormEvent, MutableRefObject, useRef, useState} from 'react'
 import NextImage from 'next/image'
-import {StatusListItem, FieldsList} from '@/models/Config'
+import {FieldsList} from '@/models/Config'
 import {useRouter} from 'next/router'
 import readAsDataURL from '@/utils/readAsDataURL'
+import SharedEditDelete from '@/components/Shared/SharedEditDelete'
+import {EnUkStringInterface} from '@/models/index'
 
 interface Props {
   avatar: File | string
-  statusList: StatusListItem[]
+  statusList: EnUkStringInterface[]
   nameValue: {en: string, uk: string}
   changeGeneral: (field: FieldsList, newValues: any) => void
   childFunction: MutableRefObject<FileList | null>
@@ -24,15 +26,16 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
   const onHandleSubmitStatus = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const oppositeLang = locale === 'en' ? 'uk' : 'en' as 'en' | 'uk'
-    let data: StatusListItem[]
+    let data: EnUkStringInterface[]
     if (editIndex !== -1) {
       let statusListCopy = [...statusList]
       statusListCopy[editIndex][locale] = statusValue
       data = statusListCopy
       changeIndex(-1)
     } else {
+      const newStatus = {[locale]: statusValue, [oppositeLang]: ''}
       if (statusValue.length === 0) return
-      data = [...statusList, {[locale]: statusValue, [oppositeLang]: ''} as StatusListItem]
+      data = [...statusList, newStatus] as EnUkStringInterface[]
     }
     changeGeneral('status', data)
     changeStatusValue('')
@@ -48,16 +51,16 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
     changeNameVal('')
   }
 
-  const onHandleEdit = (val: StatusListItem) => {
+  const onHandleEdit = (val: EnUkStringInterface) => {
     let copyOfStatusList = [...statusList]
-    const elementIndex = copyOfStatusList.findIndex((el: StatusListItem) => el === val)
+    const elementIndex = copyOfStatusList.findIndex((el: EnUkStringInterface) => el === val)
     changeIndex(elementIndex)
     changeStatusValue(copyOfStatusList[elementIndex][locale])
   }
 
-  const removeItem = (val: StatusListItem) => {
+  const removeItem = (val: EnUkStringInterface) => {
     let copyOfStatusList = [...statusList]
-    const elementIndex = copyOfStatusList.findIndex((el: StatusListItem) => el === val)
+    const elementIndex = copyOfStatusList.findIndex((el: EnUkStringInterface) => el === val)
     copyOfStatusList.splice(elementIndex, 1)
     changeGeneral('status', copyOfStatusList)
   }
@@ -112,8 +115,10 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
               <li className="modal-status__item" key={id}>
                 <p>{id + 1}. {value[locale]}</p>
                 <div className="modal-status__item_edit">
-                  <span className="admin-circle-button edit" onClick={() => onHandleEdit(value)}>e</span>
-                  <span className="admin-circle-button remove" onClick={() => removeItem(value)}>d</span>
+                  <SharedEditDelete
+                    onEditClick={() => onHandleEdit(value)}
+                    onDeleteClick={() => removeItem(value)}
+                  />
                 </div>
               </li>
             )

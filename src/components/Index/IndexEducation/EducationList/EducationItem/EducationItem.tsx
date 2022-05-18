@@ -3,6 +3,7 @@ import './EducationItem.scss'
 import DegreeIcon from '@/public/icons/education-icons/graduation.svg'
 import {School} from '@/models/Education'
 import useTranslation from 'next-translate/useTranslation'
+import SharedEditDelete from '@/components/Shared/SharedEditDelete'
 
 interface Props {
   item: School
@@ -29,8 +30,11 @@ export const EducationItem: FC<Props> = ({item, isAdmin, handleEdit, deleteItem}
       </div>
       {isAdmin && (
         <div className="education-item__admin education-admin">
-          <span className="education-admin__edit admin-circle-button edit" onClick={() => handleEdit(item)}>e</span>
-          <span className="education-admin__remove admin-circle-button remove" onClick={() => deleteItem(item)}>d</span>
+          <SharedEditDelete
+            direction="column"
+            onEditClick={() => handleEdit(item)}
+            onDeleteClick={() => deleteItem(item)}
+          />
         </div>
       )}
     </li>

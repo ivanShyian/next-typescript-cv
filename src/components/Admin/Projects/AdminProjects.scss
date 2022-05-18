@@ -1,0 +1,92 @@
+.admin-projects {
+  &__techs {
+    margin-bottom: 1rem;
+    &_list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &_item {
+      margin: 0 .5rem .5rem 0;
+      flex: 0 0 calc(33% - 0.33rem);
+      background-color: $c-secondary-lighten;
+      border-radius: 1rem;
+      overflow: hidden;
+      &:nth-child(3n+3) {
+        margin-right: 0;
+      }
+      input {
+        font-size: .9rem;
+        font-weight: 600;
+        color: $c-white;
+        text-align: center;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        line-height: 1.2rem;
+        &::placeholder {
+          font-size: .9rem;
+          font-weight: 600;
+          color: $c-white;
+        }
+        &:focus {
+          background-color: $c-secondary;
+        }
+      }
+      &_new {
+        background-color: $c-primary-lighten;
+        input:focus {
+          background-color: $c-primary;
+        }
+      }
+    }
+  }
+  &__images {
+    &_list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &_item {
+      border-radius: .5rem;
+      position: relative;
+      background-color: black;
+      height: 250px;
+      margin: 0 .5rem .5rem 0;
+      flex: 0 0 calc(33% - .33rem);
+      &:nth-child(3n+3) {
+        margin-right: 0;
+        @include maxWidth1170 {
+          margin-right: .5rem;
+        }
+      }
+      @include maxWidth1170 {
+        height: 150px;
+        flex: 0 0 calc(50% - .5rem);
+        &:nth-child(2n+2) {
+          margin-right: 0;
+        }
+      }
+      @include maxWidth450 {
+        flex: 100%;
+        &:nth-child(2n+2) {
+          margin-right: 0;
+        }
+        margin-right: 0;
+      }
+    }
+    &_item-main {
+      @extend .admin-projects__images_item;
+      border: 2px solid $c-secondary;
+    }
+  }
+}
+
+.admin-projects__techs_title,
+.admin-projects__images_title {
+  text-align: center;
+  color: $c-primary;
+  font-weight: 600;
+  font-family: Rubik, sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}

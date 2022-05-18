@@ -8,6 +8,7 @@ import {Update, WorkInterface} from '@/models/Work'
 import {EnUkStringInterface} from '@/models/index'
 import {ConfigInterface} from '@/models/Config'
 import objectToFormData from '@/utils/objectToFormData'
+import {Project} from '@/models/Project'
 
 export default class Api {
   api_token: null | string
@@ -105,7 +106,7 @@ export default class Api {
     }
   }
 
-  async addTechs(techs: Techs[]) {
+  async addTechs(techs: Techs[]): Promise<any> {
     try {
       const {data} = await this.init().post('/admin/education/techs', {techs})
       if (data) return data.result
@@ -115,7 +116,7 @@ export default class Api {
     }
   }
 
-  async extendTechs(techs: Techs[]) {
+  async extendTechs(techs: Techs[]): Promise<void> {
     try {
       const {data} = await this.init().put('/admin/education/techs', {techs})
     } catch (e:any) {
@@ -123,7 +124,7 @@ export default class Api {
     }
   }
 
-  async addNewSchool(preparedData: {data: School, type: 'add' | 'edit'}) {
+  async addNewSchool(preparedData: {data: School, type: 'add' | 'edit'}): Promise<any> {
     try {
       const {data} = await this.init().post('/admin/education/school', preparedData)
       if (data) return data.result
@@ -132,7 +133,7 @@ export default class Api {
     }
   }
 
-  async removeSchool(id: string) {
+  async removeSchool(id: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/education/school/${id}`)
     } catch (e:any) {
@@ -140,7 +141,7 @@ export default class Api {
     }
   }
 
-  async removeTech(id: string) {
+  async removeTech(id: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/education/techs/${id}`)
     } catch (e:any) {
@@ -148,7 +149,7 @@ export default class Api {
     }
   }
 
-  async removeCourse(id: string) {
+  async removeCourse(id: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/education/courses/${id}`)
     } catch (e:any) {
@@ -156,7 +157,7 @@ export default class Api {
     }
   }
 
-  async addNewWork(preparedData: Omit<WorkInterface, 'imageUrl'> & {image: any}) {
+  async addNewWork(preparedData: Omit<WorkInterface, 'imageUrl'> & {image: any}): Promise<void> {
     try {
       const {data} = await this.init().post('/admin/work', objectToFormData(preparedData), {
         headers: {
@@ -170,7 +171,7 @@ export default class Api {
   }
 
 
-  async updateWork(preparedData: Update) {
+  async updateWork(preparedData: Update): Promise<void> {
     try {
       const {data} = await this.init().put('/admin/work', objectToFormData(preparedData), {
         headers: {
@@ -183,7 +184,7 @@ export default class Api {
     }
   }
 
-  async removeWork(id: string) {
+  async removeWork(id: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/work/${id}`)
     }
@@ -192,9 +193,23 @@ export default class Api {
     }
   }
 
-  //
-  // async getConfig(): Promise<any> {
-  //   const {data} = await this.init().get('/config')
-  //   return data
-  // }
+  async getProjectList(): Promise<any> {
+    try {
+      const {data} = await this.init().get('/projects')
+      if (!data) throw Error('No projects')
+      return data
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+  async getProjectById(id: string): Promise<{project: Project} | undefined> {
+    try {
+      const {data} = await this.init().get(`/projects/${id}`)
+      if (!data) throw Error('Project not found')
+      return data
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
 }

@@ -1,24 +1,29 @@
 import {FC} from 'react'
-import {Project} from '@/models/Project'
+import {ProjectListItem} from '@/models/Project'
 import './ProjectList.scss'
 import ProjectItem from '@/components/Index/IndexProjects/ProjectList/ProjectItem'
 import {useAuthContext} from '@/ctx/auth'
 
 
 interface Props {
-  projects: Project[]
-  onProjectClick: (id: number | string) => void
+  projects: ProjectListItem[]
+  onProjectClick: (projectId: string) => void
+  onEditClick: (projectId: string) => void
+  onDeleteClick: (projectId: string) => void
 }
 
-export const ProjectList: FC<Props> = ({projects, onProjectClick}) => {
+export const ProjectList: FC<Props> = ({projects, onProjectClick, onDeleteClick, onEditClick}) => {
   const {isAdmin} = useAuthContext()
   return (
     <ul className="project-list">
-      {projects.map((pr: Project, idx: number) => (
+      {projects.map((projectItem: ProjectListItem, idx: number) => (
         <ProjectItem
-          project={pr}
+          isAdmin={isAdmin}
+          project={projectItem}
+          onProjectClick={onProjectClick}
+          onDeleteClick={onDeleteClick}
+          onEditClick={onEditClick}
           key={idx}
-          onClick={onProjectClick}
         />
       ))}
       {isAdmin && (
