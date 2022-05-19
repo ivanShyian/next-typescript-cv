@@ -5,6 +5,8 @@ import PhotoIcon from '@/public/icons/photo.svg'
 import Image from 'next/image'
 import {AdminWorkItemForm} from '@/components/Admin/Work/AdminWorkItemForm'
 import readAsDataURL from '@/utils/readAsDataURL'
+import {AdminWorkListItem} from '@/components/Admin/Work/AdminWorkListItem'
+import {EnUkStringInterface} from '@/models/index'
 
 interface Props {
   workRef: MutableRefObject<{getWorkValues: () => SimplifiedWork} | null>
@@ -15,9 +17,8 @@ interface Props {
 export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
   const fileInput = useRef<HTMLInputElement>(null)
-  const [newTech, changeNewTech] = useState<null | string>(null)
-  const [newResp, changeNewResp] = useState<null | string>(null)
-  const [editing, changeEditValue] = useState({tech: -1, resp: -1})
+  const [newTech, changeNewTech] = useState<string>('')
+  const [newResp, changeNewResp] = useState<string>('')
   const [values, changeValues] = useState<SimplifiedWork>({
     title: '',
     subtitle: '',
@@ -78,65 +79,40 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
     }
   }
 
-  const onTechChange = (e: FormEvent) => {
+  const onTechAdd = (e: FormEvent) => {
     e.preventDefault()
-    // Has same value in array
-    if (typeof newTech === 'string' && !(values.technologies as string[]).includes(newTech)) {
-      if (editing.tech !== -1) {
-        const techCopy = [...values.technologies]
-        techCopy[editing.tech] = newTech
-        console.log(techCopy)
-        changeValues((prevState) => ({
-          ...prevState,
-          technologies: techCopy
-        }))
-      } else {
-        changeValues((prevState) => ({
-          ...prevState,
-          technologies: [...prevState.technologies, newTech as string]
-        }))
-      }
+    if (!(values.technologies as string[]).includes(newTech)) {
+      changeValues((prevState) => ({
+        ...prevState,
+        technologies: [...prevState.technologies, newTech as string]
+      }))
     }
-    changeEditValue({tech: -1, resp: -1})
-    changeNewTech(null)
   }
-  const onRespChange = (e: FormEvent) => {
+  const onRespAdd = (e: FormEvent) => {
     e.preventDefault()
     const hasSimilarValue = (values.responsibilities as Responsibilities[]).findIndex((el) => el[lang] === newResp)
-    if (typeof newResp === 'string' && hasSimilarValue === -1) {
+    if (hasSimilarValue === -1) {
       const oppositeLang = lang === 'uk' ? 'en' : 'uk'
-      if (editing.resp !== -1) {
-        const respCopy = [...values.responsibilities]
-        respCopy[editing.resp] = {
-          ...respCopy[editing.resp],
-          [lang]: newResp
-        }
-        changeValues((prevState) => ({
-          ...prevState,
-          responsibilities: respCopy
-        }))
-      } else {
-        changeValues((prevState) => ({
-          ...prevState,
-          responsibilities: [
-            ...prevState.responsibilities,
-            {[lang]: newResp, [oppositeLang]: ''}
-          ] as Responsibilities[]
-        }))
-      }
+      changeValues((prevState) => ({
+        ...prevState,
+        responsibilities: [
+          ...prevState.responsibilities,
+          {[lang]: newResp, [oppositeLang]: ''}
+        ] as Responsibilities[]
+      }))
     }
-    changeEditValue({tech: -1, resp: -1})
-    changeNewResp(null)
   }
 
-  const onItemEdit = (type: 'tech' | 'resp', value: string, idx: number) => {
-    type === 'tech' ? changeNewResp(null) : changeNewTech(null)
-    const editValue = {
-      [type]: idx,
-      [type === 'tech' ? 'resp' : 'tech']: -1
-    } as {tech: number, resp: number}
-    changeEditValue(editValue)
-    type === 'tech' ? changeNewTech(value) : changeNewResp(value)
+  const onListInputChange = (idx: number, value: string, field: 'technologies' | 'responsibilities') => {
+    const listCopy = [...values[field]]
+    listCopy[idx] = field === 'responsibilities'
+      ?  {...listCopy[idx] as EnUkStringInterface, [lang]: value}
+      : value
+
+    changeValues((prevState) => ({
+      ...prevState,
+      [field]: listCopy
+    }))
   }
 
   return (
@@ -160,56 +136,55 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
         <div className="work-item-content__lists work-item-lists">
           <div className="work-item-lists__tech">
             <p className="work-item-lists__title">Technologies</p>
-            <form onSubmit={onTechChange} className="work-item-lists__form">
               <ul className="work-item-lists__list">
                 {technologies.map((tech, key) => (
-                  <li
-                    className={`work-item-lists__item${editing.tech === key ? '_hidden' : ''}`}
-                    key={`${tech}_${key}`}
-                    onClick={() => onItemEdit('tech', tech, key)}
-                  >{tech}</li>
+                  <AdminWorkListItem
+                    className="work-item-lists__item"
+                    index={key}
+                    value={tech}
+                    onInputEnter={(...args) => onListInputChange(...args, 'technologies')}
+                    key={key}
+                  />
                 ))}
-                {newTech !== null && (
-                  <li className="work-item-lists__item_form">
+                <li className="work-item-lists__item_add">
+                  <form onSubmit={onTechAdd} className="work-item-lists__form">
                     <input
                       type="text"
                       value={newTech}
-                      className="work-item-lists__input"
+                      placeholder="Add new+"
+                      className="work-item-lists__input list-input"
                       onChange={(e) => changeNewTech(e.target.value)}
                     />
                     <button type="submit" />
-                  </li>
-                )}
-                <li className="work-item-lists__item_add" onClick={() => changeNewTech('')}>Add new +</li>
+                  </form>
+                </li>
               </ul>
-            </form>
           </div>
           <div className="work-item-lists__resp">
             <p className="work-item-lists__title">Responsibilities</p>
-            <form onSubmit={onRespChange} className="work-item-lists__form">
               <ul className="work-item-lists__list">
-                {/*TODO Refactor li to li > input*/}
                 {responsibilities.map((resp, key) => (
-                  <li
-                    className={`work-item-lists__item${editing.resp === key ? '_hidden' : ''}`}
-                    key={`${resp}_${key}`}
-                    onClick={() => onItemEdit('resp', resp[lang], key)}
-                  >{resp[lang]}</li>
+                  <AdminWorkListItem
+                    className="work-item-lists__item"
+                    index={key}
+                    value={resp[lang]}
+                    onInputEnter={(...args) => onListInputChange(...args, 'responsibilities')}
+                    key={key}
+                  />
                 ))}
-                {newResp !== null && (
-                  <li className="work-item-lists__item_form">
+                <li className="work-item-lists__item_add">
+                  <form onSubmit={onRespAdd} className="work-item-lists__form">
                     <input
                       type="text"
+                      placeholder="Add new+"
                       value={newResp}
-                      className="work-item-lists__input"
+                      className="work-item-lists__input list-input"
                       onChange={(e) => changeNewResp(e.target.value)}
                     />
                     <button type="submit" />
-                  </li>
-                )}
-                <li className="work-item-lists__item_add" onClick={() => changeNewResp('')}>Add new +</li>
+                  </form>
+                </li>
               </ul>
-            </form>
           </div>
         </div>
       </div>

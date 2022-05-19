@@ -46,16 +46,16 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
     if (fileInputRef.current && typeof fileInputRef.current === 'object') data = {...data, avatar: fileInputRef.current[0]}
     if (socialInputRef.current) data = {...data, links: socialInputRef.current.getValues()}
     if (emailInputRef.current) data = {...data, emailReceiver: emailInputRef.current.getValue()}
-    setConfig(data)
     const {avatar, ...other} = data
-    await api.changeConfig({...other, image: avatar})
+    const changedConfig = await api.changeConfig({...other, image: avatar})
+    if (changedConfig?.result) {
+      setConfig(changedConfig.result)
+    }
     handleCloseModal()
   }
 
   const handleCloseModal = () => {
-    if (childFunction?.current) {
-      childFunction.current.changeModalVisibility(false)
-    }
+    childFunction.current.changeModalVisibility(false)
     onUnmounted()
   }
 

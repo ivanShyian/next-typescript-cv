@@ -34,4 +34,11 @@ interface RefModalInterface {
   getActiveTab?: number
 }
 
+export interface Email {
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
 export type RefModal = RefModalInterface | null

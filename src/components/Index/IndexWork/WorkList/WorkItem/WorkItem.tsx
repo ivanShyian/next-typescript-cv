@@ -12,6 +12,8 @@ import {WorkInterface} from '@/models/Work'
 import useTranslation from 'next-translate/useTranslation'
 import SharedEditDelete from '@/components/Shared/SharedEditDelete'
 
+const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
+
 interface Props {
   workItem: WorkInterface
   openEditModal: (editId?: number) => void
@@ -40,7 +42,7 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeIte
   return (
     <li className="work__item">
       <div className="work__item_img">
-        <Image src={`http://localhost:8080/${workItem.imageUrl}`} layout="fill" alt="work logo" objectFit="cover" />
+        <Image src={`${HOST}/${workItem.imageUrl}`} layout="fill" alt="work logo" objectFit="cover" />
       </div>
       <div className="work__item_card card work-card">
         <div className="work-card__content">

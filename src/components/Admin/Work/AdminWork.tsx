@@ -19,7 +19,7 @@ interface Props {
 
 const api = new Api()
 
-export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, workList}) => {
+export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, workList, setWork}) => {
   const workRef = useRef<{getWorkValues: () => SimplifiedWork} | null>(null)
   const imageRef = useRef<{getImage: () => File | null} | null>(null)
   const {lang} = useTranslation() as {lang: 'en' | 'uk'}
@@ -37,10 +37,13 @@ export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, wor
   }
 
   const saveToApi = async(data: WorkInterface, idx: number) => {
-    console.log({idx})
     if (idx === -1) {
       const {imageUrl, ...spread} = data
-      return api.addNewWork({...spread, image: imageUrl})
+      const response = await api.addNewWork({...spread, image: imageUrl})
+      if (response?.result) {
+        setWork([...workList, response.result])
+      }
+      return childFunction.current?.changeModalVisibility(false)
     }
     let updatedKeys: Update | {[key: string]: any} = {}
     for (let key in data) {
@@ -68,7 +71,14 @@ export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, wor
     }
     if (Object.keys(updatedKeys).length) {
       if (updatedKeys.imageUrl) delete Object.assign(updatedKeys, {image: updatedKeys.imageUrl}).imageUrl
-      return api.updateWork({...updatedKeys, _id: data._id} as Update)
+      const response = await api.updateWork({...updatedKeys, _id: data._id} as Update)
+      if (response?.result) {
+        const workListCopy = [...workList]
+        const foundIndex = workListCopy.findIndex((el) => el._id === response.result._id)
+        workListCopy[foundIndex] = response.result
+        setWork(workListCopy)
+      }
+      childFunction.current?.changeModalVisibility(false)
     }
   }
 

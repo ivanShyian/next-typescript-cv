@@ -4,6 +4,10 @@ import { useForm } from 'react-hook-form'
 import SharedButton from '@/components/Shared/SharedButton'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import Api from '@/api/Api'
+import {Email} from '@/models/index'
+
+const api = new Api()
 
 const schema = yup.object({
   name: yup.string().required().min(2),
@@ -13,13 +17,13 @@ const schema = yup.object({
 }).required();
 
 export const ContactMeForm: NextPage = () => {
-  const { register, formState: { errors }, handleSubmit } = useForm({
+  const { register, formState: { errors }, handleSubmit, reset } = useForm<Email>({
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = (data: any) => {
-    console.log(data)
-    console.log(errors)
+  const onSubmit = async (data: Email) => {
+    const response = await api.sendEmail(data)
+    if (response?.result) reset()
   }
 
   return (

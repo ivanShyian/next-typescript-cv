@@ -1,23 +1,22 @@
 import {AxiosInstance, AxiosRequestHeaders} from 'axios'
 import axios from 'axios'
+import objectToFormData from '@/utils/objectToFormData'
 import {getCookie} from 'cookies-next'
-import FormData from 'form-data'
 import {AboutInterface} from '@/models/About'
 import {School, Techs} from '@/models/Education'
 import {Update, WorkInterface} from '@/models/Work'
-import {EnUkStringInterface} from '@/models/index'
 import {ConfigInterface} from '@/models/Config'
-import objectToFormData from '@/utils/objectToFormData'
 import {Project} from '@/models/Project'
+import {Email} from '@/models/index'
 
 export default class Api {
   api_token: null | string
-  api_url: string
+  api_url: string | undefined
   client: null | AxiosInstance
   constructor() {
     this.api_token = null
     this.client = null
-    this.api_url = (typeof window === 'undefined' ? process.env.API_ENDPOINT : process.env.NEXT_PUBLIC_API_ENDPOINT)!
+    this.api_url = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
   }
 
   init(): AxiosInstance {
@@ -85,7 +84,7 @@ export default class Api {
     }
   }
 
-  async changeConfig(preparedData: Omit<ConfigInterface, 'avatar'> & {image: any}): Promise<void> {
+  async changeConfig(preparedData: Omit<ConfigInterface, 'avatar'> & {image: any}): Promise<{result: ConfigInterface} | undefined> {
     try {
       const {data} = await this.init().put('/admin/config', objectToFormData(preparedData), {
         headers: {
@@ -93,6 +92,8 @@ export default class Api {
           'Accept': 'multipart/form-data',
         }
       })
+      if (!data) throw Error('Config changing error')
+      return data
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
@@ -157,7 +158,7 @@ export default class Api {
     }
   }
 
-  async addNewWork(preparedData: Omit<WorkInterface, 'imageUrl'> & {image: any}): Promise<void> {
+  async addNewWork(preparedData: Omit<WorkInterface, 'imageUrl'> & {image: any}): Promise<{result: WorkInterface} | undefined> {
     try {
       const {data} = await this.init().post('/admin/work', objectToFormData(preparedData), {
         headers: {
@@ -165,13 +166,15 @@ export default class Api {
           'Accept': 'multipart/form-data',
         }
       })
+      if (!data) throw Error('Work wasn\'t added')
+      return data
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
 
 
-  async updateWork(preparedData: Update): Promise<void> {
+  async updateWork(preparedData: Update): Promise<{result: WorkInterface} | undefined> {
     try {
       const {data} = await this.init().put('/admin/work', objectToFormData(preparedData), {
         headers: {
@@ -179,6 +182,8 @@ export default class Api {
           'Accept': 'multipart/form-data',
         }
       })
+      if (!data) throw Error('Work wasn\'t added')
+      return data
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
@@ -246,6 +251,16 @@ export default class Api {
   async deleteProject(projectId: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/project/${projectId}`)
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+  async sendEmail(email: Email): Promise<{result: string} | undefined> {
+    try {
+      const {data} = await this.init().post('/email', email)
+      if (!data) throw Error('Something went wrong')
+      return data
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }

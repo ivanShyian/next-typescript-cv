@@ -65,20 +65,15 @@
     flex-wrap: wrap;
   }
   &__item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 22px;
-    white-space: nowrap;
     margin: 0 .5rem .5rem 0;
     font-family: Rubik, sans-serif;
-    border-radius: 1.5rem;
-    //padding: 2.5px 0;
+    border-radius: 1rem;
     font-weight: 600;
     font-size: .9rem;
     color: $c-white;
     flex: 0 0 calc(33.333% - .333rem);
     background-color: $c-secondary-lighten;
+    overflow: hidden;
     &:nth-child(3n+3) {
       margin-right: 0;
     }
@@ -86,6 +81,9 @@
       @extend .work-item-lists__item;
       background-color: $c-primary-lighten;
       cursor: pointer;
+      .list-input:focus {
+        background-color: $c-primary !important;
+      }
     }
     &_form {
       @extend .work-item-lists__item;
@@ -111,5 +109,21 @@
     height: 100%;
     margin: 0;
     flex: 100%;
+  }
+}
+
+.list-input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  color: $c-white;
+  font-weight: 600;
+  width: 100%;
+  &::placeholder {
+    color: $c-white;
+  }
+  &:focus {
+    background-color: $c-secondary;
   }
 }
