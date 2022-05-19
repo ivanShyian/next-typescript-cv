@@ -47,6 +47,7 @@
       flex-wrap: wrap;
     }
     &_item {
+      cursor: pointer;
       border-radius: .5rem;
       position: relative;
       background-color: black;
@@ -77,6 +78,43 @@
     &_item-main {
       @extend .admin-projects__images_item;
       border: 2px solid $c-secondary;
+    }
+    &_item-new {
+      @extend .admin-projects__images_item;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      border: 2px solid $adminColor;
+      color: $adminColor;
+      font-weight: 600;
+      font-size: 1.2rem;
+      transition: all .15s linear;
+      input {
+        display: none;
+      }
+      &:hover {
+        transition: all .15s linear;
+        border-color: $c-primary;
+        color: $c-primary
+      }
+    }
+    &_item-remove {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 1rem;
+      width: 1rem;
+      position: absolute;
+      top: -.5rem;
+      right: -.5rem;
+      background-color: $c-secondary;
+      z-index: 100;
+      cursor: pointer;
+      border-radius: 50%;
+      color: $c-white;
+      font-weight: 700;
+      font-size: .9rem;
     }
   }
 }

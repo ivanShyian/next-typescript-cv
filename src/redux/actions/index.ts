@@ -17,4 +17,4 @@ export const setEducation = (payload: any): any => {
 export const setWork = (payload: WorkInterface[]) => ({type: type.SET_WORK, payload})
 
 export const setProjects = (payload: ProjectListItem[]) => ({type: type.SET_PROJECTS, payload})
-export const addProject = (payload: Project) => ({type: type.ADD_PROJECT, payload})
+export const addProject = (payload: Project | {}) => ({type: type.ADD_PROJECT, payload})

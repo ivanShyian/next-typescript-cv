@@ -2,7 +2,7 @@ import Modal from 'react-modal';
 import './IndexProjects.scss'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import ProjectsList from '@/components/Index/IndexProjects/ProjectList'
-import {FC, useEffect, useRef, useState} from 'react'
+import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {connect} from 'react-redux'
 import {RefModal, StateInterface} from '@/models/index'
 import {bindActionCreators, Dispatch} from 'redux'
@@ -19,10 +19,10 @@ interface Props {
   projectList: ProjectListItem[]
   project: Project | {}
   setProjects: (projects: ProjectListItem[]) => void
-  addProject: (project: Project) => void
+  addProject: (project: Project | {}) => void
 }
 
-const IndexProjects: FC<Props> = ({projectList, project, addProject}) => {
+const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects}) => {
   const [isOpen, changeModalState] = useState(false)
   const [isAdminEdit, changeAdminEdit] = useState(false)
   const [shouldAdminMount, changeAdminMountState] = useState(false)
@@ -41,19 +41,63 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject}) => {
     changeAdminMountState(true)
   }
 
+  const onAdd = () => {
+    changeAdminMountState(true)
+  }
+
+  const beforeAdminModalClose = useCallback(() => {
+    changeAdminEdit(false)
+    changeAdminMountState(false)
+    addProject({})
+  }, [changeAdminMountState, changeAdminEdit, addProject])
+
+  // onEdit watcher
   useEffect(() => {
-    if (Object.keys(project).length && isAdminEdit) {
-      if (adminModalRef.current) {
-        adminModalRef.current.changeModalVisibility(true)
-      }
-    } else if (isAdminEdit) {
-      changeAdminEdit(false)
+    if (Object.keys(project).length && isAdminEdit && adminModalRef.current) {
+      adminModalRef.current.changeModalVisibility(true)
     }
   }, [project, isAdminEdit])
 
-  const onDelete = (projectId: string) => {}
+  // onAdd watcher
+  useEffect(() => {
+    if (!Object.keys(project).length && !isAdminEdit && shouldAdminMount && adminModalRef.current) {
+      adminModalRef.current.changeModalVisibility(true)
+    }
+  }, [project, isAdminEdit, shouldAdminMount, adminModalRef])
+
+  const onDelete = async(projectId: string) => {
+    await api.deleteProject(projectId)
+    const filteredList = (projectList as Project[]).filter((project: Project) => project._id !== projectId)
+    setProjects(filteredList)
+  }
 
   const handleCloseModal = () => changeModalState(false)
+
+  const updateProjects = async(project: Project, files?: File[]) => {
+    const foundMainIndex = project.images.findIndex(el => el === project.mainImage)
+    const mainImage = (project.mainImage as string).includes('data:image/') ? foundMainIndex : project.mainImage
+    const data = {
+      ...project,
+      images: (project.images as string[]).filter((el: string) => !el.includes('data:image/')),
+      mainImage: mainImage as string,
+      'fileToUpload[]': files
+    }
+    if (project._id) {
+      const response = await api.updateProject(data)
+      if (response?.result) {
+        const projectsCopy = [...projectList]
+        const foundIndex = projectsCopy.findIndex(el => el._id === response.result._id)
+        projectsCopy[foundIndex] = response.result
+        setProjects(projectsCopy)
+      }
+    } else {
+      const response = await api.addProject(data)
+      if (response?.result) {
+        setProjects([...projectList, response.result])
+      }
+    }
+    adminModalRef.current?.changeModalVisibility(false)
+  }
 
   return (
     <div className="index__projects section projects">
@@ -65,6 +109,7 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject}) => {
             onEditClick={onEdit}
             onDeleteClick={onDelete}
             onProjectClick={onProjectClick}
+            onAdd={onAdd}
           />
         </div>
       </div>
@@ -87,7 +132,9 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject}) => {
       {shouldAdminMount && (
         <AdminProjects
           project={project}
+          updateProjects={updateProjects}
           modalRef={adminModalRef}
+          beforeClose={beforeAdminModalClose}
         />
       )}
     </div>

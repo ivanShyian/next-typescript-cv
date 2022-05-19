@@ -10,9 +10,10 @@ interface Props {
   onProjectClick: (projectId: string) => void
   onEditClick: (projectId: string) => void
   onDeleteClick: (projectId: string) => void
+  onAdd: () => void
 }
 
-export const ProjectList: FC<Props> = ({projects, onProjectClick, onDeleteClick, onEditClick}) => {
+export const ProjectList: FC<Props> = ({projects, onProjectClick, onDeleteClick, onEditClick, onAdd}) => {
   const {isAdmin} = useAuthContext()
   return (
     <ul className="project-list">
@@ -27,7 +28,7 @@ export const ProjectList: FC<Props> = ({projects, onProjectClick, onDeleteClick,
         />
       ))}
       {isAdmin && (
-        <div className="project-item project-item__admin card">
+        <div className="project-item project-item__admin card" onClick={onAdd}>
           <span>Add new project!</span>
         </div>
       )}

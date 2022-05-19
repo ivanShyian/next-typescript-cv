@@ -44,7 +44,7 @@ export default class Api {
     try {
       const {data} = await this.init().post('/login', dataObj)
       return data
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -53,7 +53,7 @@ export default class Api {
     try {
       const {data} = await this.init().get('/config')
       return data
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -62,7 +62,7 @@ export default class Api {
     try {
       const {data} = await this.init().get('/about')
       return data
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -71,7 +71,7 @@ export default class Api {
     try {
       const {data} = await this.init().get('/education')
       return data
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -93,7 +93,7 @@ export default class Api {
           'Accept': 'multipart/form-data',
         }
       })
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -101,7 +101,7 @@ export default class Api {
   async changeAbout(preparedData: AboutInterface): Promise<void> {
     try {
       const {data} = await this.init().put('/admin/about', preparedData)
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -111,7 +111,7 @@ export default class Api {
       const {data} = await this.init().post('/admin/education/techs', {techs})
       if (data) return data.result
       else throw new Error('Something going wrong...')
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -119,7 +119,7 @@ export default class Api {
   async extendTechs(techs: Techs[]): Promise<void> {
     try {
       const {data} = await this.init().put('/admin/education/techs', {techs})
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -128,7 +128,7 @@ export default class Api {
     try {
       const {data} = await this.init().post('/admin/education/school', preparedData)
       if (data) return data.result
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -136,7 +136,7 @@ export default class Api {
   async removeSchool(id: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/education/school/${id}`)
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -144,7 +144,7 @@ export default class Api {
   async removeTech(id: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/education/techs/${id}`)
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -152,7 +152,7 @@ export default class Api {
   async removeCourse(id: string): Promise<void> {
     try {
       const {data} = await this.init().delete(`/admin/education/courses/${id}`)
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -165,7 +165,7 @@ export default class Api {
           'Accept': 'multipart/form-data',
         }
       })
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -179,7 +179,7 @@ export default class Api {
           'Accept': 'multipart/form-data',
         }
       })
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
@@ -208,6 +208,44 @@ export default class Api {
       const {data} = await this.init().get(`/projects/${id}`)
       if (!data) throw Error('Project not found')
       return data
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+  
+  async addProject(preparedData: Project & {'fileToUpload[]'?: File[]}): Promise<{result: Project} | undefined> {
+    try {
+      const {data} = await this.init().post('/admin/project', objectToFormData(preparedData), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'multipart/form-data',
+        }
+      })
+      if (!data) throw Error('Something went wrong')
+      return data
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+  async updateProject(preparedData: Project & {'fileToUpload[]'?: File[]}): Promise<{result: Project} | undefined> {
+    try {
+      const {data} = await this.init().put('/admin/project', objectToFormData(preparedData), {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'multipart/form-data',
+        }
+      })
+      if (!data) throw Error('Something went wrong')
+      return data
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+  async deleteProject(projectId: string): Promise<void> {
+    try {
+      const {data} = await this.init().delete(`/admin/project/${projectId}`)
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
