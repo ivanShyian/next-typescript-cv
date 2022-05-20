@@ -6,7 +6,7 @@ import Letter from '@/public/icons/letter.svg'
 
 export const IndexContactMe: NextPage = () => {
   return (
-    <div className="section index__contact contact">
+    <section className="index__contact section contact">
       <div className="contact__wrapper container">
         <SharedSectionTitle>Contact me</SharedSectionTitle>
         <div className="contact__content">
@@ -24,6 +24,6 @@ export const IndexContactMe: NextPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

@@ -8,13 +8,12 @@ import Gear from '@/public/icons/navigation-icons/gear.svg'
 
 import {useScroll} from '@/use/useScroll'
 import './SharedNavbar.scss'
-import {MutableRefObject, ReactElement, useRef, useState} from 'react'
+import {MutableRefObject, ReactElement, useCallback, useEffect, useRef, useState} from 'react'
 import {NextPage} from 'next'
 import {useAuthContext} from '@/ctx/auth'
 import AdminConfig from '@/components/Admin/Config'
 import useTranslation from 'next-translate/useTranslation'
 import {useRouter} from 'next/router'
-import {useElementOnScreen} from '@/use/useElementOnScreen'
 
 interface ListItem {
   id: number
@@ -28,18 +27,17 @@ export const SharedNavbar:  NextPage = () => {
   const modalRef = useRef<MutableRefObject<any>>(null)
   const [shouldMount, changeMountStatus] = useState(false)
   const {t} = useTranslation('common') as {t: any, lang: 'uk' | 'en'}
-  // const [] = useElementOnScreen({})
   const router = useRouter()
   const [scrollTo] = useScroll()
   const {isAdmin} = useAuthContext()
 
   const navList: ListItem[] = [
-    {id: 0, name: t('navigation.home'), iconComponent: <Home />, className: '.index__cutaway'},
-    {id: 1, name: t('navigation.about'), iconComponent: <Person />, className: '.index__about'},
-    {id: 2, name: t('navigation.education'), iconComponent: <Book />, className: '.index__education'},
-    {id: 3, name: t('navigation.work'), iconComponent: <Briefcase />, className: '.index__work'},
-    {id: 4, name: t('navigation.projects'), iconComponent: <Workflow />, className: '.index__projects'},
-    {id: 5, name: t('navigation.contactMe'), iconComponent: <IdBadge />, className: '.index__contact'},
+    {id: 0, name: t('navigation.home'), iconComponent: <Home />, className: 'index__cutaway'},
+    {id: 1, name: t('navigation.about'), iconComponent: <Person />, className: 'index__about'},
+    {id: 2, name: t('navigation.education'), iconComponent: <Book />, className: 'index__education'},
+    {id: 3, name: t('navigation.work'), iconComponent: <Briefcase />, className: 'index__work'},
+    {id: 4, name: t('navigation.projects'), iconComponent: <Workflow />, className: 'index__projects'},
+    {id: 5, name: t('navigation.contactMe'), iconComponent: <IdBadge />, className: 'index__contact'},
     {id: 6, name: t('navigation.config'), iconComponent: <Gear />, className: 'gear', isAdmin: true}
   ]
 
@@ -51,7 +49,7 @@ export const SharedNavbar:  NextPage = () => {
     if (router.route === '/login') {
       await router.push('/')
     }
-    scrollTo(className)
+    scrollTo(`section.${className}`)
   }
 
   const listItem = (item: ListItem) => {
@@ -59,12 +57,47 @@ export const SharedNavbar:  NextPage = () => {
       return null
     }
     return (
-      <li className="nav__item" key={item.id} onClick={() => handleClick(item.className!, item.isAdmin)}>
+      <li className={`nav__item ${item.className}`} key={item.id} onClick={() => handleClick(item.className!, item.isAdmin)}>
         {item.iconComponent}
         <span>{item.name}</span>
       </li>
     )
   }
+
+  const scrollHandler = (sections: NodeListOf<HTMLElement>, navLi: NodeListOf<Element>) => {
+    let current: string | null = ''
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop
+      if (scrollY + window.innerHeight === document.body.scrollHeight) {
+        current = 'index__contact'
+      } else if (scrollY >= sectionTop - 90) {
+        const firstSectionClass = section.getAttribute('class')?.split(' ')[0]
+        current = firstSectionClass || null
+      }
+    })
+
+    navLi.forEach((li) => {
+      li.classList.remove("active")
+      if (current && li.classList.contains(current)) {
+        li.classList.add("active")
+      }
+    })
+  }
+
+  const toggleUserScrollHandler = useCallback((addListener: boolean) => {
+    const sections = document.querySelectorAll('section')
+    const navLi = document.querySelectorAll('.nav__item')
+    scrollHandler(sections, navLi)
+    addListener
+      ? window.addEventListener('scroll', () => scrollHandler(sections, navLi))
+      : window.removeEventListener('scroll', () => scrollHandler(sections, navLi))
+  }, [scrollHandler])
+
+  useEffect(() => {
+    toggleUserScrollHandler(true)
+    return () => toggleUserScrollHandler(false)
+  }, [toggleUserScrollHandler])
 
   return (
     <div className="navigation">

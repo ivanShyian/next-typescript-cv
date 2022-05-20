@@ -22,8 +22,9 @@
   &__indicator {
     border-radius: 1rem;
     height: 100%;
-    width: 100%;
+    width: 0;
     mask: linear-gradient(90deg, #fff 0%, #fff 100%);
+    transition: width 1.5s ease-out;
     &:before {
       content: "";
       position: absolute;

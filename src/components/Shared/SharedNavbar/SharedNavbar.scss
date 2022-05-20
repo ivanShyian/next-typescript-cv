@@ -22,10 +22,14 @@
       &:last-child {
         margin-bottom: 0;
       }
-      &:hover {
+      &.active {
         transition: all .2s ease-out;
         transform: translateX(5px);
-        color: $c-secondary-lighten;
+        color: $c-secondary-lighten !important;
+      }
+      &:hover {
+        transition: color .2s ease-out;
+        color: lighten($c-secondary-lighten, 15%);
       }
       svg {
         position: relative;

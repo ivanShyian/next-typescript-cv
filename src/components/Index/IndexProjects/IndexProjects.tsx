@@ -100,7 +100,7 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects
   }
 
   return (
-    <div className="index__projects section projects">
+    <section className="index__projects section projects">
       <div className="projects__wrapper container">
         <SharedSectionTitle>Projects</SharedSectionTitle>
         <div className="projects__content">
@@ -137,7 +137,7 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects
           beforeClose={beforeAdminModalClose}
         />
       )}
-    </div>
+    </section>
   )
 }
 

@@ -6,7 +6,7 @@ import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 
 import {useAuthContext} from '@/ctx/auth'
 import {connect} from 'react-redux'
-import {FC, useRef} from 'react'
+import {FC, RefObject, useRef} from 'react'
 import AdminAbout from '@/components/Admin/About'
 import {RefModal, StateInterface} from '@/models/index'
 import useTranslation from 'next-translate/useTranslation'
@@ -14,6 +14,7 @@ import {bindActionCreators, Dispatch} from 'redux'
 import {setAbout} from '@/redux/actions'
 import {AboutInterface} from '@/models/About'
 import {Translate} from 'next-translate'
+import {useElementOnScreen} from '@/use/useElementOnScreen'
 
 interface Props {
   about: AboutInterface
@@ -25,6 +26,11 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
   const modalRef = useRef<RefModal>(null)
   const {isAdmin} = useAuthContext()
   const {t, lang} = useTranslation('index') as {lang: 'en' | 'uk', t: Translate}
+  const [containerRef, isVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0
+  }) as [RefObject<HTMLDivElement> | null, boolean]
 
   const handleEditClick = () => {
     if (modalRef.current) {
@@ -33,7 +39,7 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
   }
 
   return (
-    <section id="about" className="index__about section about">
+    <section id="about" className="index__about section about" ref={containerRef}>
       <div className="about__wrapper container">
         <SharedSectionTitle>{t('aboutTitle')}</SharedSectionTitle>
         <div className="about__skills about-skills">
@@ -56,7 +62,7 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
               </div>
             </div>
             <div className="about-skills__tech">
-              <IndexAboutTech techs={about.techs} />
+              <IndexAboutTech techs={about.techs} aboutVisible={isVisible} />
             </div>
             <div className="about-skills__button-wrapper">
               <div className="about-skills__button">
