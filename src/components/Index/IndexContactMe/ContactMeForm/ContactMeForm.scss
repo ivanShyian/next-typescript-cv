@@ -2,9 +2,28 @@
   &__content {
     margin: 0 auto;
   }
-  &__button {
+  &__footer {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__success {
+    color: $c-primary;
+    font-weight: 600;
+    font-family: Rubik, sans-serif;
+    margin-right: 1.5em;
+    text-align: left;
+    opacity: 0;
+    width: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity .25s linear, width .5s linear;
+    &_appear {
+      @extend .contact-form__success;
+      opacity: 1;
+      width: 100%;
+      transition: opacity .25s linear, width .5s linear;
+    }
   }
   .form-control__textarea {
     height: 150px;

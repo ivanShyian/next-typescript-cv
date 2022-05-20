@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Api from '@/api/Api'
 import {Email} from '@/models/index'
+import {useEffect, useState} from 'react'
 
 const api = new Api()
 
@@ -21,10 +22,25 @@ export const ContactMeForm: NextPage = () => {
     resolver: yupResolver(schema)
   })
 
+  const [isMessageLoading, changeMessageLoading] = useState(false)
+  const [isSuccess, changeSuccessStatus] = useState(false)
+
   const onSubmit = async (data: Email) => {
+    changeMessageLoading(true)
     const response = await api.sendEmail(data)
-    if (response?.result) reset()
+    if (response?.result) changeSuccessStatus(true)
+
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      reset()
+      changeMessageLoading(false)
+      setTimeout(() => {
+        changeSuccessStatus(false)
+      }, 5000)
+    }
+  }, [isSuccess, reset, changeMessageLoading])
 
   return (
     <form className="contact-form" onSubmit={handleSubmit(onSubmit)}>
@@ -81,8 +97,14 @@ export const ContactMeForm: NextPage = () => {
             placeholder="Your message..."
           />
         </div>
-        <div className="contact-form__button">
-          <SharedButton type="submit">Send</SharedButton>
+        <div className="contact-form__footer">
+          <p className={`contact-form__success${isSuccess ? '_appear' : ''}`}>Message was sent successfully! &#128539;</p>
+          <div className="contact-form__button">
+            <SharedButton
+              loading={isMessageLoading}
+              type="submit"
+            >Send</SharedButton>
+          </div>
         </div>
       </div>
     </form>

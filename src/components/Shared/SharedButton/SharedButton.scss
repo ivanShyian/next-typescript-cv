@@ -9,11 +9,47 @@
   border: none;
   cursor: pointer;
   transform: scale(1);
-  transition: transform .15s ease-out;
+  transition: all .15s ease-out;
   font-weight: 600;
   height: 50px;
   &:hover {
     transform: scale(1.07);
     transition: transform .15s ease-out;
+  }
+}
+.shared-button.loading {
+  color: transparent;
+  position: relative;
+  background-color: lighten($c-secondary-lighten, 15%);
+  transition: color .15s linear;
+}
+.shared-button.loading:after {
+  position: absolute;
+  content: "";
+  border-radius: 100%;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin-top: -2px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-left-color: #FFF;
+  border-top-color: #FFF;
+  animation: spin .6s infinite linear, grow .3s forwards ease-out;
+}
+
+@keyframes spin {
+  to {
+    transform: translateX(-50%) rotate(359deg);
+  }
+}
+
+@keyframes grow {
+  to {
+    width: 14px;
+    height: 14px;
+    margin-top: -8px;
+    right: 13px;
   }
 }
