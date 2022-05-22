@@ -42,7 +42,14 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeIte
   return (
     <li className="work__item">
       <div className="work__item_img">
-        <Image src={`${HOST}/${workItem.imageUrl}`} layout="fill" alt="work logo" objectFit="cover" />
+        <Image
+          src={`${HOST}/${workItem.imageUrl}`}
+          blurDataURL="/assets/image-placeholder.png"
+          placeholder="blur"
+          layout="fill"
+          alt="work logo"
+          objectFit="cover"
+        />
       </div>
       <div className="work__item_card card work-card">
         <div className="work-card__content">
@@ -77,7 +84,7 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeIte
             </div>
           </div>
         </div>
-        <div className="work-card__background">{workItem.duration}</div>
+        <div className="work-card__background text-heroic">{workItem.duration}</div>
       </div>
       {isAdmin && (
         <div className="work__item_admin work-admin">

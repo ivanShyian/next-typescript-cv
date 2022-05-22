@@ -16,6 +16,8 @@ import {AboutInterface} from '@/models/About'
 import {Translate} from 'next-translate'
 import {useElementOnScreen} from '@/use/useElementOnScreen'
 
+const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
+
 interface Props {
   about: AboutInterface
   avatar: string
@@ -44,7 +46,14 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
         <SharedSectionTitle>{t('aboutTitle')}</SharedSectionTitle>
         <div className="about__skills about-skills">
           <div className="about-skills__image">
-            <Image src={`http://localhost:8080/${avatar}`} width={200} height={200} alt="Avatar"/>
+            <Image
+              src={`${HOST}/${avatar}`}
+              blurDataURL="/assets/image-placeholder.png"
+              placeholder="blur"
+              width={200}
+              height={200}
+              alt="Avatar"
+            />
           </div>
           <div className="card about-skills__card">
             <div className="about-skills__card_triangle about-triangle" />

@@ -95,14 +95,18 @@ li {
     background-color: rgba(0, 0, 0, .4) !important;
   }
   &__Content {
-    inset: 15% !important;
+    inset: 8% 12% !important;
     border-radius: 2rem !important;
     padding: 40px !important;
     &::-webkit-scrollbar {
       display: none;  /* Safari and Chrome */
     }
     @include maxWidth767 {
+      padding: 30px !important;
       inset: 5% !important;
+    }
+    @include maxWidth450 {
+      padding: 20px !important;
     }
     @include minWidth1824 {
       inset: 15% 25% !important;
@@ -149,6 +153,9 @@ li {
     background-color: $c-white-darken-1;
     resize: none;
     height: 50px;
+    &::placeholder {
+      font-family: 'Rubik', 'sans-serif';
+    }
     &_error {
       @extend .form-control__input;
       border: 2px solid $c-secondary-lighten;
@@ -161,4 +168,23 @@ li {
       height: 120px;
     }
   }
+}
+
+.text-heroic {
+  font-size: 7rem;
+  font-family: 'Oswald', 'sans-serif';
+  letter-spacing: 2px;
+  z-index: 0;
+  opacity: .15;
+  color: $c-primary;
+  //text-decoration: underline;
+  text-shadow:
+          -0.0075em 0.0075em 0 mix(#fff, #e91e63, 94%),
+          0.005em 0.005em 0 mix(#fff, #e91e63, 60%),
+          0.01em 0.01em 0 mix(#fff, #e91e63, 62%),
+          0.015em 0.015em mix(#fff, #e91e63, 64%),
+          0.02em 0.02em 0 mix(#fff, #e91e63, 66%),
+          0.025em 0.025em 0 mix(#fff, #e91e63, 68%),
+          0.03em 0.03em 0 mix(#fff, #e91e63, 70%),
+          0.035em 0.035em 0 mix(#fff, #e91e63, 72%);
 }

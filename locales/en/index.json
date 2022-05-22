@@ -1,9 +1,24 @@
 {
   "aboutTitle": "About",
   "educationTitle": "Education",
+  "projectsTitle": "Projects",
+  "contactMeTitle": "Contact me",
+  "contactSubtitleMain": "Lets talk about everything",
+  "contactSubtitle": "Just write me an email",
   "workTitle":  "Work",
   "hire": "Hire!",
   "downloadCV": "Download CV",
   "edit": "Edit",
-  "addEducItem": "Add education item"
+  "addEducItem": "Add education",
+  "addWorkItem": "Add work",
+  "addProjectItem": "Add project",
+  "formName": "Name",
+  "formNamePlaceholder": "Your name...",
+  "formEmail": "Email",
+  "formEmailPlaceholder": "Your email...",
+  "formSubject": "Subject",
+  "formSubjectPlaceholder": "Enter subject...",
+  "formText": "Message",
+  "formTextPlaceholder": "Your message...",
+  "buttonSend": "Send"
 }

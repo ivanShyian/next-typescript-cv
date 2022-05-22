@@ -13,6 +13,7 @@ import CutawaySocial from '@/components/Index/IndexCutaway/CutawaySocial'
 import {Translate} from 'next-translate'
 import {StateInterface} from '@/models/index'
 
+const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
 const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, name, avatar}}) => {
   const [transformValue, changeTransformValue] = useState(0)
@@ -69,7 +70,9 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
           {/*@TODO Optimize src*/}
           <Image
             className="cutaway__image_img"
-            src={`http://localhost:8080/${avatar}`}
+            src={`${HOST}/${avatar}`}
+            blurDataURL="/assets/image-placeholder.png"
+            placeholder="blur"
             width="175"
             height="175"
             quality="100"
@@ -93,7 +96,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
         <div className="cutaway__hire">
           <SharedButton onClick={() => scrollTo('.index__contact', 1200)}>{t('hire')}</SharedButton>
         </div>
-        <div className="cutaway__scroll" onClick={() => scrollTo('.index__about', 600)}>
+        <div className="cutaway__scroll" onClick={() => scrollTo('section.index__about', 600)}>
           <div className="field">
             <div className="mouse" />
           </div>

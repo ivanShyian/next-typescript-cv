@@ -1,5 +1,5 @@
 import './AdminEducation.scss'
-import {FC, MutableRefObject, useMemo, useRef} from 'react'
+import {FC, MutableRefObject, useCallback, useMemo, useRef} from 'react'
 import SharedAdminModal from '@/components/Shared/SharedAdminModal'
 import useTranslation from 'next-translate/useTranslation'
 import transformCourseHelper from '@/utils/transformCourseHelper'
@@ -34,6 +34,47 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
   const newSchoolRef = useRef<{getValues: SimplifiedSchool} | null>(null)
   const newTechRef = useRef<TechRef>(null)
+
+  const removeTech = useCallback((tech: Techs) => {
+    setEducation({
+      ...education,
+      techs: education.techs.filter((el: Techs) => el !== tech)
+    })
+  }, [education, setEducation])
+
+  const addNewTech = useCallback((tech: Techs) => {
+    setEducation({
+      ...education,
+      techs: [...education.techs, tech]
+    })
+  }, [education, setEducation])
+
+  const addCourse = useCallback((techMeta: MetaTech, course: any) => {
+    const {transformedCourse, injection: {techIdx, courseIdx}} = transformCourseHelper(course, techMeta.name, [...education.techs], lang)
+    let techsCopy = [...education.techs]
+    techsCopy[techIdx].courses = [...techsCopy[techIdx].courses, transformedCourse]
+
+    setEducation({
+      ...education,
+      techs: techsCopy
+    })
+    extendTechRef(techMeta, transformedCourse)
+  }, [education, lang, setEducation])
+
+
+  const removeCourse = useCallback((techMeta: MetaTech, course: SimplifiedCourse) => {
+    const techsCopy = [...education.techs]
+    const foundTechIndex = techsCopy.findIndex((tech: Techs) => tech._id === techMeta._id)
+    techsCopy[foundTechIndex].courses = techsCopy[foundTechIndex].courses.filter((c: Course) => {
+      if (c._id) return c._id !== course._id
+      return c.name !== course.name
+    })
+    setEducation({
+      ...education,
+      techs: techsCopy
+    })
+    clearRefCourse(techMeta, course)
+  }, [education, setEducation])
 
   const tabList = useMemo(() => ([
     {id: 0, name: 'School', component: <AdminEducationSchool newSchoolRef={newSchoolRef} schoolList={education.school} editIndex={editIndex} />},
@@ -89,33 +130,6 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
     }
   }
 
-  function removeTech(tech: Techs) {
-    setEducation({
-      ...education,
-      techs: education.techs.filter((el: Techs) => el !== tech)
-    })
-  }
-
-
-  function addNewTech(tech: Techs) {
-    setEducation({
-      ...education,
-      techs: [...education.techs, tech]
-    })
-  }
-
-  function addCourse(techMeta: MetaTech, course: any) {
-    const {transformedCourse, injection: {techIdx, courseIdx}} = transformCourseHelper(course, techMeta.name, [...education.techs], lang)
-    let techsCopy = [...education.techs]
-    techsCopy[techIdx].courses = [...techsCopy[techIdx].courses, transformedCourse]
-
-    setEducation({
-      ...education,
-      techs: techsCopy
-    })
-    extendTechRef(techMeta, transformedCourse)
-  }
-
   function extendTechRef(techMeta: MetaTech, course: Course) {
     const foundAddIndex = newTechRef.current?.techToAdd.findIndex((el: Techs) => el.name === techMeta.name)
     if (foundAddIndex !== -1) {
@@ -132,20 +146,6 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
       if (techMeta._id) data._id = techMeta._id
       newTechRef.current?.techToExtend.push(data)
     }
-  }
-
-  function removeCourse(techMeta: MetaTech, course: SimplifiedCourse) {
-    const techsCopy = [...education.techs]
-    const foundTechIndex = techsCopy.findIndex((tech: Techs) => tech.name === techMeta.name)
-    techsCopy[foundTechIndex].courses = techsCopy[foundTechIndex].courses.filter((c: Course) => {
-      if (c._id) return c._id !== course._id
-      return c.name !== course.name
-    })
-    setEducation({
-      ...education,
-      techs: techsCopy
-    })
-    clearRefCourse(techMeta, course)
   }
 
   function clearRefCourse(techMeta: MetaTech, course: SimplifiedCourse) {

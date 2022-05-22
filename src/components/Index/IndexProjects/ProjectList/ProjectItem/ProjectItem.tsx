@@ -2,7 +2,6 @@ import {FC} from 'react'
 import Image from 'next/image'
 import {ProjectListItem} from '@/models/Project'
 import './ProjectItem.scss'
-import avatar from '@/public/assets/Avatar.png'
 import FindIcon from '@/public/icons/find.svg'
 import useTranslation from 'next-translate/useTranslation'
 import SharedEditDelete from '@/components/Shared/SharedEditDelete'
@@ -14,6 +13,8 @@ interface Props {
   onEditClick: (projectId: string) => void
   onDeleteClick: (projectId: string) => void
 }
+
+const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
 export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDeleteClick, onEditClick}: Props) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
@@ -39,7 +40,14 @@ export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDele
         </div>
       </div>
       <div className="project-item__background">
-        <Image src={`http://localhost:8080/${project.mainImage}`} priority={false} layout="fill" objectFit={'cover'} alt={'project image'}/>
+        <Image
+          src={`${HOST as string}/${project.mainImage as string}`}
+          blurDataURL="/assets/image-placeholder.png"
+          placeholder="blur"
+          layout="fill"
+          objectFit={'cover'}
+          alt={'project image'}
+        />
       </div>
     </div>
   )

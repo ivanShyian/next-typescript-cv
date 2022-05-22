@@ -3,6 +3,7 @@ import {ProjectListItem} from '@/models/Project'
 import './ProjectList.scss'
 import ProjectItem from '@/components/Index/IndexProjects/ProjectList/ProjectItem'
 import {useAuthContext} from '@/ctx/auth'
+import useTranslation from 'next-translate/useTranslation'
 
 
 interface Props {
@@ -15,6 +16,8 @@ interface Props {
 
 export const ProjectList: FC<Props> = ({projects, onProjectClick, onDeleteClick, onEditClick, onAdd}) => {
   const {isAdmin} = useAuthContext()
+  const {t} = useTranslation('index')
+
   return (
     <ul className="project-list">
       {projects.map((projectItem: ProjectListItem, idx: number) => (
@@ -29,7 +32,7 @@ export const ProjectList: FC<Props> = ({projects, onProjectClick, onDeleteClick,
       ))}
       {isAdmin && (
         <div className="project-item project-item__admin card" onClick={onAdd}>
-          <span>Add new project!</span>
+          <span>{t('addProjectItem')}</span>
         </div>
       )}
     </ul>

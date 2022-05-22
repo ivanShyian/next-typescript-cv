@@ -3,7 +3,7 @@ import {select} from 'd3-selection'
 import { scaleOrdinal } from 'd3-scale'
 import { schemeTableau10 } from 'd3-scale-chromatic'
 import { transition } from 'd3-transition'
-import { line, curveCardinalClosed } from 'd3-shape'
+import {line, curveCardinalClosed, Line} from 'd3-shape'
 import './EducationCircles.scss'
 import {useAuthContext} from '@/ctx/auth'
 import {Techs} from '@/models/Education'
@@ -14,14 +14,13 @@ interface Props {
   width: number
   height: number
   skillList: Techs[]
-  onCourseClick: (id: number | string) => void
+  onCourseClick: (id: string) => void
 }
 
 const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: Props) => {
   const {isAdmin} = useAuthContext()
 
   useEffect(() => {
-    console.log({skillList})
     draw()
   })
 
@@ -71,7 +70,7 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
     const createPathCircle = (dataset: any[], cRad = 30, idx: number) => {
       const path = svg.append("path")
         .datum(dataset)
-        .attr("d", lineFunction as any)
+        .attr("d", lineFunction as Line<[number, number]>)
         .attr("stroke", "black")
         .attr("stroke-width", 1)
         .attr("fill", "none")
@@ -84,7 +83,7 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
         .style('position', 'relative')
         .style('z-index', '1')
         .on('click', (e) => {
-          onCourseClick(idx)
+          onCourseClick((skillList[idx] as Techs).id!)
         })
         .on("mouseover", function() {
           select(this)

@@ -1,0 +1,82 @@
+.project-modal {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  &__heading {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: .5rem;
+    color: $c-primary;
+  }
+  &__title {
+    font-size: 1.5rem;
+    font-family: 'Rubik', 'sans-serif';
+    font-weight: 600;
+    text-align: center;
+    margin-right: .5rem;
+  }
+
+  &__subtitle {
+    font-size: 1.1rem;
+    letter-spacing: 1.3px;
+  }
+  &__images {
+    margin-bottom: .75rem;
+    border-radius: .5rem;
+    overflow: hidden;
+    .swiper-button-prev,
+    .swiper-button-next, {
+      &:after {
+        font-size: 20px;
+        color: $c-white;
+        font-weight: 700;
+      }
+    }
+    .swiper-button-prev {
+      left: 5px;
+    }
+    .swiper-button-right {
+      right: 5px;
+    }
+    .swiper-pagination {
+      position: absolute;
+      bottom: 0 !important;
+      background-color: rgba(0, 0, 0, .3);
+      &-bullet {
+        background-color: $c-white;
+      }
+    }
+  }
+  &__image {
+    height: 300px !important;
+    position: relative;
+    > span {
+      height: 100% !important;
+      width: 100% !important;
+    }
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    color: $c-primary;
+    font-family: Rubik, sans-serif;
+  }
+  &__description {
+    text-align: justify;
+    line-height: 1.3rem;
+    opacity: .9;
+    font-size: 1.05rem;
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    &_item {
+      font-size: .9rem;
+      font-weight: 600;
+      margin: 0 .5rem 0 0;
+    }
+  }
+}

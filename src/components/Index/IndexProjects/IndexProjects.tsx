@@ -10,6 +10,8 @@ import {addProject, setProjects} from '@/redux/actions'
 import {ProjectListItem, Project} from '@/models/Project'
 import AdminProjects from '@/components/Admin/Projects'
 import Api from '@/api/Api'
+import useTranslation from 'next-translate/useTranslation'
+import ProjectModal from '@/components/Index/IndexProjects/ProjectModal'
 
 const api = new Api()
 
@@ -23,13 +25,15 @@ interface Props {
 }
 
 const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects}) => {
-  const [isOpen, changeModalState] = useState(false)
+  const [chosenProject, changeChosenProject] = useState<Project | null>(null)
   const [isAdminEdit, changeAdminEdit] = useState(false)
   const [shouldAdminMount, changeAdminMountState] = useState(false)
   const adminModalRef = useRef<RefModal>(null)
+  const {t} = useTranslation('index')
 
-  const onProjectClick = (projectId: string) => {
-    changeModalState(true)
+  const onProjectClick = async(projectId: string) => {
+    const response = await api.getProjectById(projectId)
+    if (response?.project) changeChosenProject(response.project)
   }
 
   const onEdit = async(projectId: string) => {
@@ -71,8 +75,6 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects
     setProjects(filteredList)
   }
 
-  const handleCloseModal = () => changeModalState(false)
-
   const updateProjects = async(project: Project, files?: File[]) => {
     const foundMainIndex = project.images.findIndex(el => el === project.mainImage)
     const mainImage = (project.mainImage as string).includes('data:image/') ? foundMainIndex : project.mainImage
@@ -102,7 +104,7 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects
   return (
     <section className="index__projects section projects">
       <div className="projects__wrapper container">
-        <SharedSectionTitle>Projects</SharedSectionTitle>
+        <SharedSectionTitle>{t('projectsTitle')}</SharedSectionTitle>
         <div className="projects__content">
           <ProjectsList
             projects={projectList}
@@ -113,22 +115,10 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects
           />
         </div>
       </div>
-      <Modal
-        isOpen={isOpen}
-        shouldCloseOnOverlayClick={true}
-        onRequestClose={handleCloseModal}
-        contentLabel="Example Modal"
-      >
-        <h2>Hello</h2>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
-      </Modal>
+      <ProjectModal
+        chosenProject={chosenProject}
+        onModalClose={() => changeChosenProject(null)}
+      />
       {shouldAdminMount && (
         <AdminProjects
           project={project}

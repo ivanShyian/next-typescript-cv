@@ -1,0 +1,79 @@
+.education-modal {
+  &__title {
+    font-family: Rubik, sans-serif;
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: $c-primary;
+    margin-bottom: 2rem;
+    @include maxWidth767 {
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+  }
+  &__courses {}
+  &__course {
+    position: relative;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    @for $i from 1 through 7 {
+      &:nth-child(#{$i}) {
+        background-color: darken(#f7f6fa, $i * 5%);
+      }
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &_wrapper {
+      display: flex;
+      align-items: center;
+    }
+    &_title {
+      text-align: center;
+      font-family: Oswald, sans-serif;
+      margin-bottom: .75rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: $c-primary;
+      @include maxWidth767 {
+        font-size: 1.1rem;
+      }
+    }
+    &_content {
+      flex: 1;
+      margin-left: 75px;
+      @include maxWidth767 {
+        margin-left: 0;
+      }
+      > p {
+        font-family: "League Spartan", sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.3rem;
+        margin-bottom: .15rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+        > b {
+          color: $c-primary;
+          font-family: Oswald, sans-serif;
+          font-size: 1.1rem;
+          @include maxWidth767 {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+    &_background {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      @include maxWidth767 {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}

@@ -26,6 +26,7 @@ export interface Course {
 export interface Techs {
   name: string
   courses: Course[]
+  id?: string
   _id?: string
 }
 

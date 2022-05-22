@@ -65,7 +65,19 @@
     }
     @include maxWidth1170 {
       order: 1;
-      //margin-bottom: .75rem;
+    }
+    &.uk span {
+      font-family: Rubik, sans-serif !important;
+      font-size: 1.6rem;
+      &:last-child {
+        font-size: 1.4rem;
+      }
+      @include maxWidth1170 {
+        font-size: 1.4rem;
+        &:last-child {
+          font-size: 1.2rem;
+        }
+      }
     }
   }
   &__image {

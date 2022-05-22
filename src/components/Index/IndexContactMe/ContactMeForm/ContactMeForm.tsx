@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Api from '@/api/Api'
 import {Email} from '@/models/index'
 import {useEffect, useState} from 'react'
+import useTranslation from 'next-translate/useTranslation'
 
 const api = new Api()
 
@@ -21,6 +22,8 @@ export const ContactMeForm: NextPage = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm<Email>({
     resolver: yupResolver(schema)
   })
+
+  const {t} = useTranslation('index')
 
   const [isMessageLoading, changeMessageLoading] = useState(false)
   const [isSuccess, changeSuccessStatus] = useState(false)
@@ -47,7 +50,7 @@ export const ContactMeForm: NextPage = () => {
       <div className="contact-form__content">
         <div className="form-control">
           <div className="form-control__heading">
-            <label htmlFor="contactName">Name</label>
+            <label htmlFor="contactName">{t('formName')}</label>
             <span>{errors.name?.message}</span>
           </div>
           <input
@@ -55,12 +58,12 @@ export const ContactMeForm: NextPage = () => {
             className={`form-control__input${errors.name ? '_error' : ''}`}
             id="contactName"
             type="text"
-            placeholder="Your name..."
+            placeholder={t('formNamePlaceholder')}
           />
         </div>
         <div className="form-control">
           <div className="form-control__heading">
-            <label htmlFor="contactEmail">Email</label>
+            <label htmlFor="contactEmail">{t('formEmail')}</label>
             <span>{errors.email?.message}</span>
           </div>
           <input
@@ -68,12 +71,12 @@ export const ContactMeForm: NextPage = () => {
             className={`form-control__input${errors.email ? '_error' : ''}`}
             id="contactEmail"
             type="text"
-            placeholder="Email address..."
+            placeholder={t('formEmailPlaceholder')}
           />
         </div>
         <div className="form-control">
           <div className="form-control__heading">
-            <label htmlFor="contactSubject">Subject</label>
+            <label htmlFor="contactSubject">{t('formSubject')}</label>
             <span>{errors.subject?.message}</span>
           </div>
           <input
@@ -81,12 +84,12 @@ export const ContactMeForm: NextPage = () => {
             className={`form-control__input${errors.subject ? '_error' : ''}`}
             id="contactSubject"
             type="text"
-            placeholder="Subject..."
+            placeholder={t('formSubjectPlaceholder')}
           />
         </div>
         <div className="form-control">
           <div className="form-control__heading">
-            <label htmlFor="contactText">Message</label>
+            <label htmlFor="contactText">{t('formText')}</label>
             <span>{errors.message?.message}</span>
           </div>
           <textarea
@@ -94,7 +97,7 @@ export const ContactMeForm: NextPage = () => {
             className={`form-control__input${errors.message ? '_error' : ''} form-control__textarea`}
             id="contactText"
             rows={5}
-            placeholder="Your message..."
+            placeholder={t('formTextPlaceholder')}
           />
         </div>
         <div className="contact-form__footer">
@@ -103,7 +106,7 @@ export const ContactMeForm: NextPage = () => {
             <SharedButton
               loading={isMessageLoading}
               type="submit"
-            >Send</SharedButton>
+            >{t('buttonSend')}</SharedButton>
           </div>
         </div>
       </div>

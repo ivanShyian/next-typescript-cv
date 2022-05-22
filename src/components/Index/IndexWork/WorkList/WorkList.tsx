@@ -3,6 +3,7 @@ import './WorkList.scss'
 import WorkItem from '@/components/Index/IndexWork/WorkList/WorkItem'
 import {WorkInterface} from '@/models/Work'
 import { useAuthContext } from 'src/context/auth'
+import useTranslation from 'next-translate/useTranslation'
 
 interface Props {
   workList: WorkInterface[]
@@ -12,7 +13,7 @@ interface Props {
 
 export const WorkList: FC<Props> = ({workList, openAddModal, removeItem}) => {
   const {isAdmin} = useAuthContext()
-
+  const {t} = useTranslation('index')
   return (
     <ul className="work__list">
       {workList.map((item: WorkInterface, idx: number) => (
@@ -20,7 +21,7 @@ export const WorkList: FC<Props> = ({workList, openAddModal, removeItem}) => {
       ))}
       {isAdmin && (
         <li className="work__item_admin card" onClick={() => openAddModal()}>
-          <span>Add work item</span>
+          <span>{t('addWorkItem')}</span>
         </li>
       )}
     </ul>

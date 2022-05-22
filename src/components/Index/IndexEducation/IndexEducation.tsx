@@ -6,7 +6,6 @@ import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import useTranslation from 'next-translate/useTranslation'
 
-import Modal from 'react-modal'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import EducationList from '@/components/Index/IndexEducation/EducationList'
 const EducationCircles = dynamic(() => import('@/components/Index/IndexEducation/EducationCircles'), {ssr: false})
@@ -17,6 +16,7 @@ import {setEducation} from '@/redux/actions'
 import AdminEducation from '@/components/Admin/Education'
 
 import Api from '@/api/Api'
+import EducationModal from '@/components/Index/IndexEducation/EducationModal'
 const api = new Api()
 
 //
@@ -45,7 +45,7 @@ interface Props {
 
 const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
   const [circleSizes, changeCircleSizes] = useState<{width: number, height: number}>({width: 0, height: 0})
-  const [isModalOpen, changeModalState] = useState<boolean>(false) // user modal
+  const [userModalId, changeUserModalId] = useState<string | null>(null) // user modal
   const [editIndex, changeEditIndex] = useState<number>(-1) // for admin
   const [shouldMount, changeMountValue] = useState<boolean>(false)
 
@@ -55,7 +55,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
   const educationRef = useRef<HTMLDivElement>(null)
   const adminModalRef = useRef<RefModal>(null) // admin ref modal
 
-  useEffect(() => {
+  useEffect(() => {0
     const cardCurrent = cardRef.current
     const educationCurrent = educationRef.current
     if (cardCurrent && educationCurrent) {
@@ -70,10 +70,13 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
     }
   }, [cardRef, educationRef])
 
-  const onCourseClick = useCallback((id: string | number) => {
-    // open modal
-    return changeModalState(true)
-  }, [changeModalState])
+  const onCourseClick = useCallback((id: string) => {
+    changeUserModalId(id)
+  }, [])
+
+  const onUserModalClose = () => {
+    changeUserModalId(null)
+  }
 
   const onOpenAdminModal = async() => {
     await changeMountValue(true);
@@ -98,7 +101,12 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
     if (item._id) return api.removeSchool(item._id)
   }
 
-  const handleCloseModal = () => changeModalState(false)
+  const getTechItemForModal = useCallback(() => {
+    if (userModalId) {
+      return education.techs.find(tech => tech._id === userModalId)!
+    }
+    return null
+  }, [userModalId, education.techs])
 
   return (
     <section id="education" className='index__education section education'>
@@ -124,14 +132,10 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
           </div>
         </div>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        shouldCloseOnOverlayClick={true}
-        onRequestClose={handleCloseModal}
-        contentLabel="Example Modal"
-      >
-        modal
-      </Modal>
+      <EducationModal
+        onModalClose={onUserModalClose}
+        techItem={getTechItemForModal()}
+      />
       {shouldMount && (
         <AdminEducation
           childFunction={adminModalRef}

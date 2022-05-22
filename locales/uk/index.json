@@ -1,9 +1,24 @@
 {
-  "aboutTitle": "Про мене",
+  "about  Title": "Про мене",
   "educationTitle": "Освіта",
+  "projectsTitle": "Проекти",
+  "contactMeTitle": "Зв'язатись",
+  "contactSubtitleMain": "Давайте поговоримо про все",
+  "contactSubtitle": "Просто напишіть мені лист!",
   "workTitle":  "Досвід",
   "hire": "Найняти!",
   "downloadCV": "Завантажити CV",
   "edit": "Редагувати",
-  "addEducItem": "Додати освіту"
+  "addEducItem": "Додати освіту",
+  "addWorkItem": "Додати досвід",
+  "addProjectItem": "Додати проект",
+  "formName": "Ім'я",
+  "formNamePlaceholder": "Ваше ім'я...",
+  "formEmail": "Email",
+  "formEmailPlaceholder": "Ваш email...",
+  "formSubject": "Тема",
+  "formSubjectPlaceholder": "Введіть тему листа...",
+  "formText": "Повідомлення",
+  "formTextPlaceholder": "Ваше повідомлення...",
+  "buttonSend": "Відправити"
 }
