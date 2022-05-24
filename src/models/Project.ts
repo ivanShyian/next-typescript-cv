@@ -1,13 +1,14 @@
-import {EnUkStringInterface} from '@/models/index'
+import {EnUkStringInterface, ImageInterface} from '@/models/index'
 
 export interface Project {
   title: string
   subtitle: EnUkStringInterface
   description: EnUkStringInterface
   technologies: string[]
-  images: File[] | string[]
-  mainImage: File | string
+  images: ImageInterface[]
+  mainImage: ImageInterface
+  link: string
   _id?: string
 }
 
-export type ProjectListItem = Omit<Project, 'description' | 'technologies' | 'images'>
+export type ProjectListItem = Omit<Project, 'description' | 'technologies' | 'images' | 'link'>

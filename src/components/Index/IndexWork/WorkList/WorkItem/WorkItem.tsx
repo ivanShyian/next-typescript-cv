@@ -31,7 +31,7 @@ const logoByTech: {
   Vue: <VueIcon />,
   Node: <NodeIcon />,
   Next: <NextIcon className="next" />,
-  Nuxt:  <NuxtIcon/>
+  Nuxt: <NuxtIcon/>
 }
 
 export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeItem, index}) => {
@@ -43,8 +43,8 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeIte
     <li className="work__item">
       <div className="work__item_img">
         <Image
-          src={`${HOST}/${workItem.imageUrl}`}
-          blurDataURL="/assets/image-placeholder.png"
+          src={`${HOST}/${workItem.imageUrl.src}`}
+          blurDataURL={workItem.imageUrl.base64}
           placeholder="blur"
           layout="fill"
           alt="work logo"

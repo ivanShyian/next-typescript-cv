@@ -29,8 +29,13 @@ export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, wor
     let performedData: SimplifiedWork = workRef.current.getWorkValues()
     const image = imageRef.current?.getImage()
     // @TODO Add react-hook-form with yup
-    const someFieldIsEmpty = Object.keys(performedData).some(v => !performedData[v as keyof SimplifiedWork]?.length)
-    console.log(performedData)
+    const someFieldIsEmpty = Object.keys(performedData).some(v => {
+      const value = performedData[v as keyof SimplifiedWork]
+      if (typeof value === 'object') {
+        return !Object.keys(value).length
+      }
+      return !(value as unknown as string[] | [] | string).length
+    })
     if (someFieldIsEmpty) return
     const transformedWork = transformWorkHelper(performedData, workList, editIndex, lang, image)
     return saveToApi(transformedWork, editIndex)
@@ -38,8 +43,7 @@ export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, wor
 
   const saveToApi = async(data: WorkInterface, idx: number) => {
     if (idx === -1) {
-      const {imageUrl, ...spread} = data
-      const response = await api.addNewWork({...spread, image: imageUrl})
+      const response = await api.addNewWork(data)
       if (response?.result) {
         setWork([...workList, response.result])
       }
@@ -70,7 +74,7 @@ export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, wor
       }
     }
     if (Object.keys(updatedKeys).length) {
-      if (updatedKeys.imageUrl) delete Object.assign(updatedKeys, {image: updatedKeys.imageUrl}).imageUrl
+      if (updatedKeys.fileToUpload) updatedKeys.imageUrl = {src: '', base64: ''}
       const response = await api.updateWork({...updatedKeys, _id: data._id} as Update)
       if (response?.result) {
         const workListCopy = [...workList]

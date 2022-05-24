@@ -1,4 +1,4 @@
-import {EnUkStringInterface} from '@/models/index'
+import {EnUkStringInterface, ImageInterface} from '@/models/index'
 
 export interface Responsibilities extends EnUkStringInterface{
   _id?: string
@@ -10,9 +10,10 @@ export interface WorkInterface {
   description: EnUkStringInterface
   technologies: string[] | []
   responsibilities: Responsibilities[] | []
-  imageUrl: string
+  imageUrl: ImageInterface | Record<string, string>
   position: string
   duration: string,
+  fileToUpload?: File
   _id?: string
 }
 

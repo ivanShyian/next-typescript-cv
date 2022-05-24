@@ -19,6 +19,9 @@
       color: $c-white;
       margin-bottom: 1.5rem;
       transition: all .2s ease-out;
+      @media (max-width: 767px) and (orientation: landscape) {
+        margin-bottom: 1rem;
+      }
       &:last-child {
         margin-bottom: 0;
       }

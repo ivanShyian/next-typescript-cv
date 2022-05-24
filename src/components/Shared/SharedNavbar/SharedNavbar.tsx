@@ -8,8 +8,7 @@ import Gear from '@/public/icons/navigation-icons/gear.svg'
 
 import {useScroll} from '@/use/useScroll'
 import './SharedNavbar.scss'
-import {MutableRefObject, ReactElement, useCallback, useEffect, useRef, useState} from 'react'
-import {NextPage} from 'next'
+import {FC, MutableRefObject, ReactElement, useCallback, useEffect, useRef, useState} from 'react'
 import {useAuthContext} from '@/ctx/auth'
 import AdminConfig from '@/components/Admin/Config'
 import useTranslation from 'next-translate/useTranslation'
@@ -23,7 +22,7 @@ interface ListItem {
   isAdmin?: boolean
 }
 
-export const SharedNavbar:  NextPage = () => {
+export const SharedNavbar:  FC<{onNavigationClick: () => void}> = ({onNavigationClick}) => {
   const modalRef = useRef<MutableRefObject<any>>(null)
   const [shouldMount, changeMountStatus] = useState(false)
   const {t} = useTranslation('common') as {t: any, lang: 'uk' | 'en'}
@@ -50,6 +49,7 @@ export const SharedNavbar:  NextPage = () => {
       await router.push('/')
     }
     scrollTo(`section.${className}`)
+    onNavigationClick()
   }
 
   const listItem = (item: ListItem) => {
@@ -64,7 +64,7 @@ export const SharedNavbar:  NextPage = () => {
     )
   }
 
-  const scrollHandler = (sections: NodeListOf<HTMLElement>, navLi: NodeListOf<Element>) => {
+  const scrollHandler = useCallback((sections: NodeListOf<HTMLElement>, navLi: NodeListOf<Element>) => {
     let current: string | null = ''
 
     sections.forEach((section) => {
@@ -83,7 +83,7 @@ export const SharedNavbar:  NextPage = () => {
         li.classList.add("active")
       }
     })
-  }
+  }, [])
 
   const toggleUserScrollHandler = useCallback((addListener: boolean) => {
     const sections = document.querySelectorAll('section')

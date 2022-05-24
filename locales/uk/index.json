@@ -1,10 +1,10 @@
 {
-  "about  Title": "Про мене",
+  "aboutTitle": "Про мене",
   "educationTitle": "Освіта",
   "projectsTitle": "Проекти",
   "contactMeTitle": "Зв'язатись",
   "contactSubtitleMain": "Давайте поговоримо про все",
-  "contactSubtitle": "Просто напишіть мені лист!",
+  "contactSubtitle": "Просто напишіть мені листа!",
   "workTitle":  "Досвід",
   "hire": "Найняти!",
   "downloadCV": "Завантажити CV",

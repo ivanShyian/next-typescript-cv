@@ -40,16 +40,16 @@ const Home: FC<Props> = ({authCookie}: Props) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async({req, res}: {req: any, res: any}) => {
   const api = new Api()
-  const {config} = await api.getConfig()
-  const {about} = await api.getAbout()
-  const {education} = await api.getEducation()
-  const {work} = await api.getWork()
-  const {projects} = await api.getProjectList()
-  store.dispatch(setConfig(config))
-  store.dispatch(setAbout(about))
-  store.dispatch(setEducation(education))
-  store.dispatch(setWork(work))
-  store.dispatch(setProjects(projects))
+  const config = await api.getConfig()
+  const about = await api.getAbout()
+  const education = await api.getEducation()
+  const work = await api.getWork()
+  const projects = await api.getProjectList()
+  if (config) store.dispatch(setConfig(config))
+  if (about) store.dispatch(setAbout(about))
+  if (education) store.dispatch(setEducation(education))
+  if (work) store.dispatch(setWork(work))
+  if (projects) store.dispatch(setProjects(projects))
   const authCookie = getCookie('auth', {req, res})
   return {
     props: {

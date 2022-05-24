@@ -67,11 +67,10 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
     <section id="cutaway" className="index__cutaway section cutaway">
       <div className="cutaway__wrapper container">
         <div className="cutaway__image">
-          {/*@TODO Optimize src*/}
           <Image
             className="cutaway__image_img"
-            src={`${HOST}/${avatar}`}
-            blurDataURL="/assets/image-placeholder.png"
+            src={`${HOST}/${avatar.src}`}
+            blurDataURL={avatar.base64}
             placeholder="blur"
             width="175"
             height="175"

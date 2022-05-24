@@ -8,7 +8,7 @@ import {useAuthContext} from '@/ctx/auth'
 import {connect} from 'react-redux'
 import {FC, RefObject, useRef} from 'react'
 import AdminAbout from '@/components/Admin/About'
-import {RefModal, StateInterface} from '@/models/index'
+import {ImageInterface, RefModal, StateInterface} from '@/models/index'
 import useTranslation from 'next-translate/useTranslation'
 import {bindActionCreators, Dispatch} from 'redux'
 import {setAbout} from '@/redux/actions'
@@ -20,7 +20,7 @@ const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
 interface Props {
   about: AboutInterface
-  avatar: string
+  avatar: ImageInterface
   setAbout: (about: AboutInterface) => void
 }
 
@@ -47,9 +47,10 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
         <div className="about__skills about-skills">
           <div className="about-skills__image">
             <Image
-              src={`${HOST}/${avatar}`}
-              blurDataURL="/assets/image-placeholder.png"
+              src={`${HOST}/${avatar.src}`}
+              blurDataURL={avatar.base64}
               placeholder="blur"
+              objectFit="cover"
               width={200}
               height={200}
               alt="Avatar"
@@ -93,7 +94,7 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
   )
 }
 
-type IState = (props: StateInterface) => {about: AboutInterface, avatar: string}
+type IState = (props: StateInterface) => {about: AboutInterface, avatar: ImageInterface}
 
 const mapStateToProps = (state: StateInterface) => ({
   about: state.about.about,

@@ -1,6 +1,6 @@
 export default function objectToFormData(object: any, valuesToExcludeFromStringify: string[] = []): FormData {
   const formData = new FormData()
-  let extendedValuesToExclude = [...valuesToExcludeFromStringify, 'image']
+  let extendedValuesToExclude = [...valuesToExcludeFromStringify, 'fileToUpload']
   for (let key in object) {
     if (key === 'fileToUpload[]') {
       object[key].forEach((file: File) => {

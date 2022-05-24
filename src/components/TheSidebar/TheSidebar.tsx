@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import {RefObject, useState} from 'react'
+import {RefObject, useEffect, useState} from 'react'
 import './TheSidebar.scss'
 import SharedNavbar from '@/components/Shared/SharedNavbar'
 import SharedLogo from '@/components/Shared/SharedLogo'
@@ -16,11 +16,22 @@ export const TheSidebar: NextPage = () => {
     root: null,
     rootMargin: '0px',
     threshold: 0.05
-  }, '.index__cutaway') as [RefObject<HTMLDivElement> | null, boolean]
+  }, 'section.index__cutaway') as [RefObject<HTMLDivElement> | null, boolean]
 
   const onBurgerClick = () => {
     changeNavState((state: boolean) => !state)
   }
+
+  const onDeviceClickHandler = (e: MouseEvent) => {
+    console.log(e.target)
+  }
+
+  useEffect(() => {
+    if (document.documentElement.clientHeight < 767) {
+      document.addEventListener('click', (e) => onDeviceClickHandler(e))
+      return () => document.removeEventListener('click', (e) => onDeviceClickHandler(e))
+    }
+  }, [])
 
   const burgerClass = isVisible ? 'aside__burger' : 'aside__burger darken'
 
@@ -31,7 +42,7 @@ export const TheSidebar: NextPage = () => {
           <SharedLogo />
         </div>
         <div className="aside__navbar">
-          <SharedNavbar />
+          <SharedNavbar onNavigationClick={onBurgerClick} />
         </div>
         <div className="aside__lang">
           <SharedLang />

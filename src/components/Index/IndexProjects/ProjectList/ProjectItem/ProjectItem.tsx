@@ -41,8 +41,8 @@ export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDele
       </div>
       <div className="project-item__background">
         <Image
-          src={`${HOST as string}/${project.mainImage as string}`}
-          blurDataURL="/assets/image-placeholder.png"
+          src={`${HOST as string}/${project.mainImage.src}`}
+          blurDataURL={project.mainImage.base64}
           placeholder="blur"
           layout="fill"
           objectFit={'cover'}

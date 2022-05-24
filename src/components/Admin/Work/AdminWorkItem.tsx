@@ -14,6 +14,8 @@ interface Props {
   workItem?: WorkInterface
 }
 
+const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
+
 export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
   const fileInput = useRef<HTMLInputElement>(null)
@@ -25,7 +27,7 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
     description: '',
     technologies: [],
     responsibilities: [],
-    imageUrl: '',
+    imageUrl: {},
     position: '',
     duration: ''
   })
@@ -39,7 +41,10 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
           ...other,
           subtitle: subtitle[lang],
           description: description[lang],
-          imageUrl: `http://localhost:8080/${imageUrl}`
+          imageUrl: {
+            ...imageUrl,
+            src: `${HOST}/${imageUrl.src}`
+          }
         }
       })
     }
@@ -72,7 +77,10 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
       readAsDataURL(fileToLoad, (data) => {
         changeValues((prevState) => ({
           ...prevState,
-          imageUrl: data as string
+          imageUrl: {
+            ...prevState.imageUrl,
+            src: data as string
+          }
         }))
         imageRef.current = {getImage: () => fileToLoad}
       })
@@ -121,8 +129,8 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
       <div className="admin-work-item__content work-item-content">
         <div className="work-item-content__image">
           <div className="work-item-content__image_img" onClick={onImageClick}>
-            {imageUrl
-              ? <Image src={imageUrl} width={150} height={150} objectFit="cover" alt="work image" />
+            {imageUrl.src
+              ? <Image src={imageUrl.src as string} width={150} height={150} objectFit="cover" alt="work image" />
               : <div className="work-item-content__image_placeholder"><PhotoIcon/></div>
              }
             <input

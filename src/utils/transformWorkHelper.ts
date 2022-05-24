@@ -3,6 +3,7 @@ import {EnUkStringInterface} from '@/models/index'
 
 export default function transformWorkHelper(incomingDataSet: SimplifiedWork, originalList: WorkInterface[], editIndex: number, lang: 'en' | 'uk', imageFile?: File | null): WorkInterface {
   let data = {...incomingDataSet}
+  console.log({data})
   const oppositeLang = lang === 'uk' ? 'en' : 'uk'
   for (const key in data) {
     if (['description', 'subtitle'].includes(key)) {
@@ -45,7 +46,7 @@ export default function transformWorkHelper(incomingDataSet: SimplifiedWork, ori
         }
       })
     } else if (key === 'imageUrl' && imageFile) {
-      (data.imageUrl as unknown as File) = imageFile
+      data.fileToUpload = imageFile
     }
   }
   return data as unknown as WorkInterface

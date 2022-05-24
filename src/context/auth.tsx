@@ -39,7 +39,7 @@ export function AuthWrapper({ children }: Props) {
 
   const login = async(data: LoginInterface) => {
     const response = await api.postLogin(data)
-    if (response.token) {
+    if (response?.token) {
       const remainingMilliseconds = 60 * 60 * 1000
       const expiryDate = new Date(new Date().getTime() + remainingMilliseconds)
       setCookies('auth', {
@@ -54,11 +54,9 @@ export function AuthWrapper({ children }: Props) {
       setIsAdmin(true)
       return router.push('/')
     }
-    // set axios interceptor
   }
 
   const logout = () => {
-    console.log('go')
     removeCookies('auth')
   }
 

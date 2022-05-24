@@ -1,7 +1,7 @@
 import {FC, FormEvent, MutableRefObject, useEffect, useRef, useState} from 'react'
 import './AdminProjects.scss'
 import SharedAdminModal from '@/components/Shared/SharedAdminModal'
-import {EnUkStringInterface, RefModal} from '@/models/index'
+import {EnUkStringInterface, ImageInterface, RefModal} from '@/models/index'
 import {Project} from '@/models/Project'
 import useTranslation from 'next-translate/useTranslation'
 import {AdminProjectsForm} from '@/components/Admin/Projects/AdminProjectsForm'
@@ -24,7 +24,7 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
   const [newFiles, changeNewFiles] = useState<File[]>([])
   const fileInput = useRef<HTMLInputElement | null>(null)
   // Just testing approach with predefined values
-  const [values, changeValues] = useState<Project | Record<string, string | string[] | EnUkStringInterface | {} | []>>({
+  const [values, changeValues] = useState<Project | Record<string, string | string[] | EnUkStringInterface | ImageInterface | {} | []>>({
     title: '',
     subtitle: {
       en: '',
@@ -36,7 +36,11 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
     },
     technologies: [],
     images: [],
-    mainImage: ''
+    mainImage: {
+      src: '',
+      base64: ''
+    },
+    link: ''
   })
 
   useEffect(() => {
@@ -46,8 +50,16 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
         return {
           ...prevState,
           ...other as Project,
-          mainImage: `${HOST + mainImage}`,
-          images: images.map(image => `${HOST + image}`)
+          mainImage: {
+            ...mainImage,
+            src: `${HOST}${mainImage.src}`
+          },
+          images: images.map(image => {
+            return {
+              ...image,
+              src: `${HOST}${image.src}`
+            }
+          })
         }
       })
     }
@@ -97,7 +109,7 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
     }
   }
 
-  const changeMainImage = (image: string) => {
+  const changeMainImage = (image: ImageInterface) => {
     changeValues((prevState) => {
       return {
         ...prevState,
@@ -117,10 +129,10 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
       const file = fileList[0]
       readAsDataURL(file, (dataURL) => {
         changeValues((prevState) => {
-          const mainImage = (prevState.mainImage as string)?.length ? prevState.mainImage : dataURL as string
+          const mainImage = (prevState.mainImage as ImageInterface).src?.length ? prevState.mainImage : {src: dataURL as string, base64: ''}
           return {
             ...prevState,
-            images: [...prevState.images as string[], dataURL],
+            images: [...prevState.images as ImageInterface[], {src: dataURL, base64: ''}],
             mainImage
           }
         })
@@ -137,10 +149,10 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
     }
   }
 
-  const removeImage = (e: FormEvent, image: string) => {
+  const removeImage = (e: FormEvent, image: ImageInterface) => {
     e.stopPropagation()
-    let imagesCopy = [...values.images as string[]]
-    const foundImageIndex = imagesCopy.findIndex(im => im === image)
+    let imagesCopy = [...values.images as ImageInterface[]]
+    const foundImageIndex = imagesCopy.findIndex(im => im.src === image.src)
     imagesCopy.splice(foundImageIndex, 1)
     if (newFiles.length) {
       const diff = imagesCopy.length - newFiles.length
@@ -151,12 +163,12 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
         changeNewFiles(filesCopy)
       }
     }
-    if (values.mainImage === image) {
+    if ((values.mainImage as ImageInterface).src === image.src) {
       changeValues((prevState) => {
         return {
           ...prevState,
           images: imagesCopy,
-          mainImage: imagesCopy.length ? imagesCopy[0] : ''
+          mainImage: imagesCopy.length ? imagesCopy[0] : {src: '', base64: ''}
         }
       })
     } else {
@@ -170,10 +182,14 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
   }
 
   const sendData = () => {
+    console.log({values})
     updateProjects({
       ...values as Project,
-      mainImage: (values.mainImage as string).replace(HOST, ''),
-      images: (values.images as string[]).map(val => val.replace(HOST, ''))
+      mainImage: {
+        ...values.mainImage as ImageInterface,
+        src: ((values.mainImage as ImageInterface).src as string).replace(HOST, '')
+      },
+      images: (values.images as ImageInterface[]).map(image => ({...image, src: (image.src as string).replace(HOST, '')}))
     }, newFiles)
   }
 
@@ -189,6 +205,7 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
           title={values.title as string}
           subtitle={(values.subtitle as EnUkStringInterface)[lang] as string}
           description={(values.description as EnUkStringInterface)[lang] as string}
+          link={values.link as string}
           onInputChange={onInputChange}
         />
         <div className="admin-projects__techs">
@@ -219,15 +236,22 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
         <div className="admin-projects__images">
           <p className="admin-projects__images_title">Images</p>
           <ul className="admin-projects__images_list">
-            {(values.images as string[]).map((image, key) => {
+            {(values.images as ImageInterface[]).map((image, key, array) => {
               return (
                 <li
                   onClick={() => changeMainImage(image)}
-                  className={`admin-projects__images_item${values.mainImage === image ? '-main' : ''}`}
+                  className={`admin-projects__images_item${(values.mainImage as ImageInterface).src === image.src ? '-main' : ''}`}
                   key={key}
                 >
-                  <Image src={image} layout="fill" alt="project image" objectFit="contain"/>
-                  <span className="admin-projects__images_item-remove" onClick={(e) => removeImage(e, image)}>x</span>
+                  <Image
+                    src={image.src}
+                    blurDataURL={image.base64 || image.src}
+                    placeholder="blur"
+                    layout="fill"
+                    alt="project image"
+                    objectFit="contain"
+                  />
+                  {array.length > 1 && <span className="admin-projects__images_item-remove" onClick={(e) => removeImage(e, image)}>x</span>}
                 </li>
               )
             })}

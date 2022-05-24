@@ -10,7 +10,7 @@
     &_img {
       position: relative;
       flex: 0 0 20%;
-      height: 165px;
+      height: 200px;
       margin-right: 1rem;
       border-radius: 1rem;
       overflow: hidden;
@@ -19,7 +19,7 @@
         width: 100% !important;
       }
       @include minWidth1824 {
-        height: 200px;
+        height: 220px;
       }
       @include maxWidth1170 {
         display: none;

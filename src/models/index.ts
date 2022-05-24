@@ -24,6 +24,11 @@ export interface StateInterface {
   }
 }
 
+export interface ImageInterface {
+  src: string
+  base64: string
+}
+
 export interface EnUkStringInterface {
   en: string
   uk: string

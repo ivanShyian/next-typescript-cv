@@ -4,10 +4,10 @@ import {FieldsList} from '@/models/Config'
 import {useRouter} from 'next/router'
 import readAsDataURL from '@/utils/readAsDataURL'
 import SharedEditDelete from '@/components/Shared/SharedEditDelete'
-import {EnUkStringInterface} from '@/models/index'
+import {EnUkStringInterface, ImageInterface} from '@/models/index'
 
 interface Props {
-  avatar: File | string
+  avatar: ImageInterface
   statusList: EnUkStringInterface[]
   nameValue: {en: string, uk: string}
   changeGeneral: (field: FieldsList, newValues: any) => void
@@ -17,7 +17,7 @@ interface Props {
 const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValue, childFunction}) => {
   const [statusValue, changeStatusValue] = useState('')
   const [editIndex, changeIndex] = useState(-1)
-  const [image, changeImage] = useState(`http://localhost:8080/${avatar}`)
+  const [image, changeImage] = useState(`http://localhost:8080/${avatar.src}`)
   const router = useRouter()
   const fileInput = useRef<HTMLInputElement>(null)
   const locale = router.locale as 'en' | 'uk'

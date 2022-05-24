@@ -3,7 +3,7 @@ import axios from 'axios'
 import objectToFormData from '@/utils/objectToFormData'
 import {getCookie} from 'cookies-next'
 import {AboutInterface} from '@/models/About'
-import {School, Techs} from '@/models/Education'
+import {EducationInterface, School, Techs} from '@/models/Education'
 import {Update, WorkInterface} from '@/models/Work'
 import {ConfigInterface} from '@/models/Config'
 import {Project} from '@/models/Project'
@@ -35,7 +35,6 @@ export default class Api {
       timeout: 31000,
       headers: headers,
     })
-
     return this.client
   }
 
@@ -48,52 +47,58 @@ export default class Api {
     }
   }
 
-  async getConfig(): Promise<any> {
+  async getConfig(): Promise<ConfigInterface | undefined> {
     try {
       const {data} = await this.init().get('/config')
-      return data
+      if (data) return data.config
+      throw Error('Config loading error')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
 
-  async getAbout(): Promise<any> {
+  async getAbout(): Promise<AboutInterface | undefined> {
     try {
       const {data} = await this.init().get('/about')
-      return data
+      if (data) return data.about
+      throw Error('About loading error')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
 
-  async getEducation(): Promise<any> {
+  async getEducation(): Promise<EducationInterface | undefined> {
     try {
       const {data} = await this.init().get('/education')
-      return data
+      if (data) return data.education
+      throw Error('Education loading error')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
 
-  async getWork(): Promise<any> {
+  async getWork(): Promise<WorkInterface[] | undefined> {
     try {
       const {data} = await this.init().get('/work')
-      return data
+      if (data) return data.work
+      throw Error('Work loading error')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
   }
 
-  async changeConfig(preparedData: Omit<ConfigInterface, 'avatar'> & {image: any}): Promise<{result: ConfigInterface} | undefined> {
+  async changeConfig(preparedData: ConfigInterface): Promise<{result: ConfigInterface} | undefined> {
+    const d = objectToFormData(preparedData)
+    console.log(d)
     try {
-      const {data} = await this.init().put('/admin/config', objectToFormData(preparedData), {
+      const {data} = await this.init().put('/admin/config', d, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Accept': 'multipart/form-data',
         }
       })
-      if (!data) throw Error('Config changing error')
-      return data
+      if (data) return data
+      throw Error('Config changing error')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
@@ -158,7 +163,7 @@ export default class Api {
     }
   }
 
-  async addNewWork(preparedData: Omit<WorkInterface, 'imageUrl'> & {image: any}): Promise<{result: WorkInterface} | undefined> {
+  async addNewWork(preparedData: WorkInterface): Promise<{result: WorkInterface} | undefined> {
     try {
       const {data} = await this.init().post('/admin/work', objectToFormData(preparedData), {
         headers: {
@@ -201,8 +206,8 @@ export default class Api {
   async getProjectList(): Promise<any> {
     try {
       const {data} = await this.init().get('/projects')
-      if (!data) throw Error('No projects')
-      return data
+      if (data) return data.projects
+      throw Error('No projects')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
@@ -211,8 +216,8 @@ export default class Api {
   async getProjectById(id: string): Promise<{project: Project} | undefined> {
     try {
       const {data} = await this.init().get(`/projects/${id}`)
-      if (!data) throw Error('Project not found')
-      return data
+      if (data) return data
+      throw Error('Project not found')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }

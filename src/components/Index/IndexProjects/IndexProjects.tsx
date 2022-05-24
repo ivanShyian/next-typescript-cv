@@ -4,7 +4,7 @@ import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import ProjectsList from '@/components/Index/IndexProjects/ProjectList'
 import {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {connect} from 'react-redux'
-import {RefModal, StateInterface} from '@/models/index'
+import {ImageInterface, RefModal, StateInterface} from '@/models/index'
 import {bindActionCreators, Dispatch} from 'redux'
 import {addProject, setProjects} from '@/redux/actions'
 import {ProjectListItem, Project} from '@/models/Project'
@@ -76,12 +76,12 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects
   }
 
   const updateProjects = async(project: Project, files?: File[]) => {
-    const foundMainIndex = project.images.findIndex(el => el === project.mainImage)
-    const mainImage = (project.mainImage as string).includes('data:image/') ? foundMainIndex : project.mainImage
+    const foundMainIndex = project.images.findIndex(el => el.src === project.mainImage.src)
+    const mainImage = project.mainImage.src.includes('data:image/') ? foundMainIndex : project.mainImage
     const data = {
       ...project,
-      images: (project.images as string[]).filter((el: string) => !el.includes('data:image/')),
-      mainImage: mainImage as string,
+      images: (project.images as ImageInterface[]).filter((el: ImageInterface) => !(el.src as string).includes('data:image/')),
+      mainImage: mainImage as ImageInterface,
       'fileToUpload[]': files
     }
     if (project._id) {
@@ -131,7 +131,7 @@ const IndexProjects: FC<Props> = ({projectList, project, addProject, setProjects
   )
 }
 
-type IState = (state: StateInterface) => {projectList: ProjectListItem[]}
+type IState = (state: StateInterface) => {projectList: ProjectListItem[], project: Project | {}}
 
 const mapStateToProps = (state: StateInterface) => ({
   projectList: state.projects.projectList,

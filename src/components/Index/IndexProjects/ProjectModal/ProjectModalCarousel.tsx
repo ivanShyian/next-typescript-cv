@@ -5,14 +5,15 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 import Image from 'next/image'
+import {ImageInterface} from '@/models/index'
 
 interface Props {
-  imageList: string[]
+  imageList: ImageInterface[]
 }
 
 const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
-export const EducationModalSlider: FC<Props> = ({imageList}) => {
+export const ProjectModalCarousel: FC<Props> = ({imageList}) => {
   const [isMobile, changeIsMobile] = useState(false)
 
   useEffect(() => {
@@ -29,14 +30,16 @@ export const EducationModalSlider: FC<Props> = ({imageList}) => {
         pagination={{clickable: true}}
       >
         {imageList.map((image, idx) => {
-          const src = `${HOST}/${image as string}`
+          const src = `${HOST}/${image.src}`
           return (
             <SwiperSlide className="project-modal__image" key={idx}>
               <Image
                 src={src}
-                objectFit={"cover"}
+                blurDataURL={image.base64}
+                placeholder="blur"
+                objectFit="cover"
                 layout="fill"
-                alt={"image"}
+                alt="project image"
               />
             </SwiperSlide>
           )

@@ -1,6 +1,9 @@
 .cutaway-social {
   margin-bottom: 1.5rem;
   cursor: pointer;
+  @media (max-width: 767px) and (orientation:landscape) {
+    margin-bottom: .75rem;
+  }
   &__list {
     display: flex;
   }
@@ -9,6 +12,10 @@
     svg {
       fill: $c-white;
       width: 38px;
+      @media (max-width: 767px) and (orientation:landscape) {
+        width: 25px;
+        height: 25px;
+      }
     }
     &:hover {
       animation: .5s bounce;

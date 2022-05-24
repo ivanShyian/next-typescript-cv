@@ -8,7 +8,6 @@ export default function Core({ children }: PropsWithChildren<{}>) {
     <div className="core-layout">
       <TheSidebar/>
       <main className="main">{children}</main>
-      {/*<TheFooter />*/}
     </div>
   )
 }
