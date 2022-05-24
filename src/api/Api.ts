@@ -104,9 +104,11 @@ export default class Api {
     }
   }
 
-  async changeAbout(preparedData: AboutInterface): Promise<void> {
+  async changeAbout(preparedData: AboutInterface): Promise<{result: AboutInterface} | undefined> {
     try {
       const {data} = await this.init().put('/admin/about', preparedData)
+      if (data) return data
+      throw Error('About updating goes wrong')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }

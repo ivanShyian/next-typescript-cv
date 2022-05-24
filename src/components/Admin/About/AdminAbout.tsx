@@ -67,8 +67,10 @@ export const AdminAbout: FC<Props> = ({childFunction, about, setAbout}) => {
   }
 
   const saveToApi = async() => {
-    setAbout(aboutCopy)
-    await api.changeAbout(aboutCopy)
+    let data = {...aboutCopy}
+    if (aboutCopy.text[lang] !== text) data.text[lang] = text
+    const response = await api.changeAbout(data)
+    if (response?.result) setAbout(response.result)
     handleCloseModal()
   }
 
