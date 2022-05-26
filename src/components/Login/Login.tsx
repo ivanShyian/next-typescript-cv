@@ -43,6 +43,7 @@ export const Login: FC<{authCookie: any}> = ({authCookie}) => {
               {...register("email")}
               className={`form-control__input${errors.email ? '_error' : ''}`}
               id="emailField"
+              autoComplete="on"
               type="text"
             />
           </div>
@@ -55,6 +56,7 @@ export const Login: FC<{authCookie: any}> = ({authCookie}) => {
               {...register("password")}
               className={`form-control__input${errors.password ? '_error' : ''}`}
               id="passwordField"
+              autoComplete="on"
               type="password"
             />
           </div>

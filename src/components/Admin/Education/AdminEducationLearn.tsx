@@ -65,7 +65,7 @@ const AdminEducationLearn: FC<Props> = ({learnList, newTechRef, postTech, remove
   }
 
   const onTechExtend = (techMeta: MetaTech, course: any) => {
-    addCourse(techMeta, {...course})
+    addCourse(techMeta, course)
     if (addNewCourse) changeAddNewCourse(false)
   }
 

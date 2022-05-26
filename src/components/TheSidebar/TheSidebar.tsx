@@ -22,16 +22,16 @@ export const TheSidebar: NextPage = () => {
     changeNavState((state: boolean) => !state)
   }
 
-  const onDeviceClickHandler = (e: MouseEvent) => {
-    console.log(e.target)
-  }
+  // const onDeviceClickHandler = (e: MouseEvent) => {
+  //   console.log(e.target)
+  // }
 
-  useEffect(() => {
-    if (document.documentElement.clientHeight < 767) {
-      document.addEventListener('click', (e) => onDeviceClickHandler(e))
-      return () => document.removeEventListener('click', (e) => onDeviceClickHandler(e))
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (document.documentElement.clientHeight < 767) {
+  //     document.addEventListener('click', (e) => onDeviceClickHandler(e))
+  //     return () => document.removeEventListener('click', (e) => onDeviceClickHandler(e))
+  //   }
+  // }, [])
 
   const burgerClass = isVisible ? 'aside__burger' : 'aside__burger darken'
 

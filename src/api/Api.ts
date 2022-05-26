@@ -124,9 +124,11 @@ export default class Api {
     }
   }
 
-  async extendTechs(techs: Techs[]): Promise<void> {
+  async extendTechs(techs: Techs[]): Promise<{result: EducationInterface} | undefined> {
     try {
       const {data} = await this.init().put('/admin/education/techs', {techs})
+      if (data) return data
+      throw new Error('Some thing went wrong while extending tech')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }
@@ -136,6 +138,7 @@ export default class Api {
     try {
       const {data} = await this.init().post('/admin/education/school', preparedData)
       if (data) return data.result
+      throw new Error('New school adding failed')
     } catch (e: any) {
       console.error(e.response?.data?.message)
     }

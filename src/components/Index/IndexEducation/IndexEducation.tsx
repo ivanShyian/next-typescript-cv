@@ -55,7 +55,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
   const educationRef = useRef<HTMLDivElement>(null)
   const adminModalRef = useRef<RefModal>(null) // admin ref modal
 
-  useEffect(() => {0
+  useEffect(() => {
     const cardCurrent = cardRef.current
     const educationCurrent = educationRef.current
     if (cardCurrent && educationCurrent) {

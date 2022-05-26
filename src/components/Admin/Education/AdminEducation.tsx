@@ -52,7 +52,11 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
   const addCourse = useCallback((techMeta: MetaTech, course: any) => {
     const {transformedCourse, injection: {techIdx, courseIdx}} = transformCourseHelper(course, techMeta.name, [...education.techs], lang)
     let techsCopy = [...education.techs]
-    techsCopy[techIdx].courses = [...techsCopy[techIdx].courses, transformedCourse]
+    if (courseIdx === -1) {
+      techsCopy[techIdx].courses = [...techsCopy[techIdx].courses, transformedCourse]
+    } else {
+      techsCopy[techIdx].courses[courseIdx] = transformedCourse
+    }
 
     setEducation({
       ...education,
@@ -105,17 +109,22 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
             const emptyOppositeLang = {[lang]: data[val as keyof School], [oppositeLang]: ''}
             const filledOppositeLang = {...(data[val as keyof School] as EnUkStringInterface), [lang]: values[val as keyof SimplifiedSchool]}
             data = {...data, [val]: type === 'add' ? emptyOppositeLang : filledOppositeLang}
+          } else {
+            data = {...data, [val]: values[val as keyof SimplifiedSchool]}
           }
         }
         const response = await api.addNewSchool({data: data as School, type})
         setEducation(response)
       }
     } else if (newTechRef.current && childFunction.current?.getActiveTab === 1) {
+      let result
       if (newTechRef.current.techToAdd.length) {
-        await api.addTechs(newTechRef.current.techToAdd)
+        const response = await api.addTechs(newTechRef.current.techToAdd)
+        if (response?.result) result = response.result
       }
       if (newTechRef.current.techToExtend.length) {
-        await api.extendTechs(newTechRef.current.techToExtend)
+        const response = await api.extendTechs(newTechRef.current.techToExtend)
+        if (response?.result) result = response.result
       }
       if (newTechRef.current.techToRemove.length) {
         await api.removeTech(newTechRef.current.techToRemove.join(';'))
