@@ -20,5 +20,6 @@
   "formSubjectPlaceholder": "Введіть тему листа...",
   "formText": "Повідомлення",
   "formTextPlaceholder": "Ваше повідомлення...",
-  "buttonSend": "Відправити"
+  "buttonSend": "Відправити",
+  "messageSendSuccess": "Лист був успішно відправленний!"
 }

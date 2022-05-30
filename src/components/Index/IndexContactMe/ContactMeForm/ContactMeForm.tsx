@@ -101,7 +101,7 @@ export const ContactMeForm: NextPage = () => {
           />
         </div>
         <div className="contact-form__footer">
-          <p className={`contact-form__success${isSuccess ? '_appear' : ''}`}>Message was sent successfully! &#128539;</p>
+          <p className={`contact-form__success${isSuccess ? '_appear' : ''}`}>{t('messageSentSuccess')} &#128539;</p>
           <div className="contact-form__button">
             <SharedButton
               loading={isMessageLoading}

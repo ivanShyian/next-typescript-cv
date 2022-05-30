@@ -23,7 +23,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['localhost', ""]
+    domains: ["localhost", "api-vanjkes.site"]
   }
 }
 

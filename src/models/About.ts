@@ -1,3 +1,5 @@
+import {EnUkStringInterface} from '@/models/index'
+
 export interface Tech {
   name: string
   value: number
@@ -6,9 +8,6 @@ export interface Tech {
 
 export interface AboutInterface {
   _id: string
-  techs: [Tech]
-  text: {
-    en: string
-    uk: string
-  }
+  techs: Tech[]
+  text: EnUkStringInterface
 }

@@ -20,5 +20,6 @@
   "formSubjectPlaceholder": "Enter subject...",
   "formText": "Message",
   "formTextPlaceholder": "Your message...",
-  "buttonSend": "Send"
+  "buttonSend": "Send",
+  "messageSendSuccess": "Message was sent successfully!"
 }

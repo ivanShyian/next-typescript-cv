@@ -4,7 +4,7 @@ import IndexAboutTechItem from '@/components/Index/IndexAbout/IndexAboutTech/Ind
 import {Tech} from '@/models/About'
 
 interface Props {
-  techs: [Tech]
+  techs: Tech[]
   aboutVisible: boolean
 }
 
