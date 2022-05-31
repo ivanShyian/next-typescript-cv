@@ -11,7 +11,7 @@ export const SharedLogo: NextPage = () => {
     if (router.route !== '/') {
       return router.push('/')
     }
-    scrollTo('.index__cutaway')
+    scrollTo('section.index__cutaway')
   }
 
   return (

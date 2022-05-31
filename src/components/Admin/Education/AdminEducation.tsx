@@ -28,9 +28,10 @@ interface Props {
   setEducation: (education: EducationInterface) => void
   editIndex: number
   beforeClose?: () => void
+  onModalClose: () => void
 }
 
-export const AdminEducation: FC<Props> = ({setEducation, childFunction, education, editIndex, beforeClose}) => {
+export const AdminEducation: FC<Props> = ({setEducation, childFunction, education, editIndex, beforeClose, onModalClose}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
   const newSchoolRef = useRef<{getValues: SimplifiedSchool} | null>(null)
   const newTechRef = useRef<TechRef>(null)
@@ -119,12 +120,10 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
     } else if (newTechRef.current && childFunction.current?.getActiveTab === 1) {
       let result
       if (newTechRef.current.techToAdd.length) {
-        const response = await api.addTechs(newTechRef.current.techToAdd)
-        if (response?.result) result = response.result
+        await api.addTechs(newTechRef.current.techToAdd)
       }
       if (newTechRef.current.techToExtend.length) {
-        const response = await api.extendTechs(newTechRef.current.techToExtend)
-        if (response?.result) result = response.result
+        await api.extendTechs(newTechRef.current.techToExtend)
       }
       if (newTechRef.current.techToRemove.length) {
         await api.removeTech(newTechRef.current.techToRemove.join(';'))
@@ -137,6 +136,7 @@ export const AdminEducation: FC<Props> = ({setEducation, childFunction, educatio
         await api.removeCourse(query)
       }
     }
+    onModalClose()
   }
 
   function extendTechRef(techMeta: MetaTech, course: Course) {

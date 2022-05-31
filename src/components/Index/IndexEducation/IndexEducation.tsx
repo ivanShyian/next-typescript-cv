@@ -19,24 +19,6 @@ import Api from '@/api/Api'
 import EducationModal from '@/components/Index/IndexEducation/EducationModal'
 const api = new Api()
 
-//
-// const educationGraduation = [
-//   {id: 0, title: 'KITZ NAU (Jr. Specialist)', term: '2012-2016', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, pariatur!' },
-//   {id: 1, title: 'NAU (Bachelor)', term: '2016-2021', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, pariatur!' },
-// ]
-
-// const skillList = [
-//   {id: 0, name: 'Typescript'},
-//   {id: 1, name: 'VueJS'},
-//   {id: 2, name: 'ReactJS'},
-//   {id: 3, name: 'Node'},
-//   {id: 4, name: 'NextJS'},
-//   {id: 5, name: 'Express'},
-//   {id: 6, name: 'Javascript'},
-//   {id: 7, name: 'NuxtJS'},
-//   {id: 8, name: 'D3JS'}
-// ]
-
 interface Props {
   education: EducationInterface
   techList: Techs[]
@@ -93,6 +75,11 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
     changeMountValue(false)
   }
 
+  const onAdminModalClose = () => {
+    beforeAdminModalClose()
+    adminModalRef.current?.changeModalVisibility(false)
+  }
+
   const deleteItem = async(item: School) => {
     setEducation({
       ...education,
@@ -138,6 +125,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
       />
       {shouldMount && (
         <AdminEducation
+          onModalClose={onAdminModalClose}
           childFunction={adminModalRef}
           education={education}
           setEducation={setEducation}

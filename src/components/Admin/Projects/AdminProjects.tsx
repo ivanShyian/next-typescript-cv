@@ -16,7 +16,7 @@ interface Props {
   beforeClose: () => void
 }
 
-const HOST = 'http://localhost:8080/'
+const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
 export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, updateProjects}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
@@ -187,9 +187,9 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
       ...values as Project,
       mainImage: {
         ...values.mainImage as ImageInterface,
-        src: ((values.mainImage as ImageInterface).src as string).replace(HOST, '')
+        src: ((values.mainImage as ImageInterface).src as string).replace(HOST!, '')
       },
-      images: (values.images as ImageInterface[]).map(image => ({...image, src: (image.src as string).replace(HOST, '')}))
+      images: (values.images as ImageInterface[]).map(image => ({...image, src: (image.src as string).replace(HOST!, '')}))
     }, newFiles)
   }
 

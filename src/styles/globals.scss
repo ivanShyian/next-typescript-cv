@@ -40,13 +40,6 @@ div {
   box-sizing: border-box;
 }
 
-//html[lang="uk"] {
-//  font-family: 'Rubik', 'sans-serif';
-//  body, div {
-//    font-family: 'Rubik', 'sans-serif';
-//  }
-//}
-
 body, html {
   background-color: $c-white-darken-1;
 }
@@ -95,7 +88,7 @@ li {
     background-color: rgba(0, 0, 0, .4) !important;
   }
   &__Content {
-    inset: 8% 12% !important;
+    inset: 6% 10% !important;
     border-radius: 2rem !important;
     padding: 40px !important;
     &::-webkit-scrollbar {

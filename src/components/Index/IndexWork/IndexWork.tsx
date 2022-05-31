@@ -1,4 +1,3 @@
-import './IndexWork.scss'
 import SharedSectionTitle from '@/components/Shared/SharedSectionTitle'
 import WorkList from '@/components/Index/IndexWork/WorkList'
 import useTranslation from 'next-translate/useTranslation'

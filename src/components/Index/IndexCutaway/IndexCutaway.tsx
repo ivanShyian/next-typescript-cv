@@ -96,9 +96,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
           <SharedButton onClick={() => scrollTo('.index__contact', 1200)}>{t('hire')}</SharedButton>
         </div>
         <div className="cutaway__scroll" onClick={() => scrollTo('section.index__about', 600)}>
-          <div className="field">
-            <div className="mouse" />
-          </div>
+          <div className="mouse" />
         </div>
       </div>
       <CutawayParallax/>

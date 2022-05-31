@@ -94,6 +94,7 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
         ...prevState,
         technologies: [...prevState.technologies, newTech as string]
       }))
+      changeNewTech('')
     }
   }
   const onRespAdd = (e: FormEvent) => {
@@ -108,6 +109,7 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
           {[lang]: newResp, [oppositeLang]: ''}
         ] as Responsibilities[]
       }))
+      changeNewResp('')
     }
   }
 

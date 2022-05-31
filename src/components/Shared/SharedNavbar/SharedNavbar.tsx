@@ -95,9 +95,11 @@ export const SharedNavbar:  FC<{onNavigationClick: () => void}> = ({onNavigation
   }, [scrollHandler])
 
   useEffect(() => {
-    toggleUserScrollHandler(true)
+    if (router.route === '/') {
+      toggleUserScrollHandler(true)
+    }
     return () => toggleUserScrollHandler(false)
-  }, [toggleUserScrollHandler])
+  }, [toggleUserScrollHandler, router.route])
 
   return (
     <div className="navigation">
