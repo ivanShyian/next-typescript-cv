@@ -14,10 +14,12 @@ interface Props {
   childFunction: MutableRefObject<FileList | null>
 }
 
+const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
+
 const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValue, childFunction}) => {
   const [statusValue, changeStatusValue] = useState('')
   const [editIndex, changeIndex] = useState(-1)
-  const [image, changeImage] = useState(`http://localhost:8080/${avatar.src}`)
+  const [image, changeImage] = useState(`${HOST}/${avatar.src}`)
   const router = useRouter()
   const fileInput = useRef<HTMLInputElement>(null)
   const locale = router.locale as 'en' | 'uk'
@@ -41,14 +43,13 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
     changeStatusValue('')
   }
 
-  const changeName = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (nameVal.length === 0) return
+  const changeName = (value: string) => {
+    if (value.length === 0) return
     changeGeneral('name', {
       ...nameValue,
-      [locale]: nameVal
+      [locale]: value
     })
-    changeNameVal('')
+    changeNameVal(value)
   }
 
   const onHandleEdit = (val: EnUkStringInterface) => {
@@ -97,14 +98,12 @@ const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValu
           </form>
         </div>
         <div className="modal-general__name modal-name">
-          <form className="modal-name__wrapper" onSubmit={changeName}>
-            <input
-              className="modal-name__input"
-              type="text"
-              value={nameVal}
-              onChange={(e) => changeNameVal(e.target.value)}
-            />
-          </form>
+          <input
+            className="modal-name__input"
+            type="text"
+            value={nameVal}
+            onChange={(e) => changeName(e.target.value)}
+          />
         </div>
       </div>
       <div className="modal-general__status modal-status">

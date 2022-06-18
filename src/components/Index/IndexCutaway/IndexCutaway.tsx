@@ -80,7 +80,6 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
           />
         </div>
         <div className={`cutaway__name ${lang}`}>
-          {/*@TODO SET LANG*/}
           <h2>{name[lang]}</h2>
         </div>
         <div className={`cutaway__subtitle ${lang}`}>
@@ -93,7 +92,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
         </div>
         <CutawaySocial links={links}/>
         <div className="cutaway__hire">
-          <SharedButton onClick={() => scrollTo('.index__contact', 1200)}>{t('hire')}</SharedButton>
+          <SharedButton onClick={() => scrollTo('section.index__contact', 1200)}>{t('hire')}</SharedButton>
         </div>
         <div className="cutaway__scroll" onClick={() => scrollTo('section.index__about', 600)}>
           <div className="mouse" />

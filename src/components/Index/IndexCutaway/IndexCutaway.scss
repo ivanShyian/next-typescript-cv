@@ -138,7 +138,7 @@
     @media (max-width: 767px) and (orientation:landscape) {
       display: none;
     }
-    @include maxWidth450 {
+    @include maxWidth350 {
       display: none;
     }
   }

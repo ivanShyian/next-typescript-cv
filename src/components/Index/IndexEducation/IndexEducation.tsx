@@ -110,7 +110,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
           </div>
           <div className="education__courses typeLearning">
             <EducationCircles
-              key={`educationCircles_${techList.length || 0}_${lang}`}
+              key={`educationCircles_${techList.length || 0}_${Math.floor(Date.now())}_${lang}`}
               width={circleSizes.width}
               height={circleSizes.height}
               skillList={techList}
