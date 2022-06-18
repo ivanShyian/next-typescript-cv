@@ -1,4 +1,4 @@
-import { FC, useEffect, memo } from 'react'
+import {FC, useEffect, memo, useCallback} from 'react'
 import {select} from 'd3-selection'
 import { scaleOrdinal } from 'd3-scale'
 import { schemeTableau10 } from 'd3-scale-chromatic'
@@ -20,11 +20,7 @@ interface Props {
 const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: Props) => {
   const {isAdmin} = useAuthContext()
 
-  useEffect(() => {
-    draw()
-  })
-
-  const draw = () => {
+  const draw = useCallback(() => {
     const clientWidth = document.documentElement.clientWidth
     const r = clientWidth > 1824 ? 70 : clientWidth > 767 ? 45 : 30
     const margin = (r * 2) / 1.5
@@ -181,7 +177,11 @@ const EducationCircles: FC<Props> = ({width, height, skillList, onCourseClick}: 
         }
       }
     }
-  }
+  }, [height, isAdmin, onCourseClick, skillList, width])
+
+  useEffect(() => {
+    if (skillList?.length) draw()
+  }, [skillList, draw])
 
   return (
     <div className="education-circles">
