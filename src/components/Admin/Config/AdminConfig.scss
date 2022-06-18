@@ -17,6 +17,12 @@
 
 .modal-image {
   margin-right: 1rem;
+
+  @include maxWidth767 {
+    margin-right: 0;
+    margin-bottom: .5rem;
+  }
+
   &__wrapper {
     margin: 0 auto;
     border-radius: 50%;
@@ -58,6 +64,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include maxWidth767 {
+      flex-direction: column;
+    }
   }
   .modal-status {
     display: flex;

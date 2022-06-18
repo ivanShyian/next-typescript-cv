@@ -1,6 +1,11 @@
 .modal__tab {
   margin: -40px -40px 0px;
   background-color: $c-primary;
+
+  @include maxWidth767 {
+    margin: -20px -20px 0px;
+  }
+
   &_list {
     display: flex;
   }
