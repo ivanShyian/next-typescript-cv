@@ -4,14 +4,21 @@ import type {AppProps} from 'next/app'
 import Layout from '../layouts/Core/Core'
 import {AuthWrapper} from '@/ctx/auth'
 import {wrapper} from '@/redux/store'
+import Head from 'next/head'
 
 const MyApp = ({Component, pageProps}: AppProps) => {
   return (
-    <AuthWrapper>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </AuthWrapper>
+    <>
+      <Head>
+        <title>ivanShyian</title>
+        <meta/>
+      </Head>
+      <AuthWrapper>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AuthWrapper>
+    </>
   )
 }
 
