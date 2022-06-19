@@ -1,4 +1,4 @@
-import {createContext, ReactChild, useContext, useEffect} from 'react'
+import {createContext, ReactChild, useContext } from 'react'
 import {useState} from 'react'
 import { setCookies, removeCookies } from 'cookies-next';
 import Api from '../api/Api'
@@ -14,7 +14,7 @@ export interface LoginInterface {
   password: string
 }
 
-const AppContext = createContext({
+export const AppContext = createContext({
   isAdmin: false,
   login: (data: LoginInterface) => {},
   autoLogin: (cookies: any) => {},
