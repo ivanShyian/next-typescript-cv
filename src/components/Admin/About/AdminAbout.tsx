@@ -1,5 +1,5 @@
 import './AdminAbout.scss'
-import {FC, FormEvent, MutableRefObject, useState} from 'react'
+import {FC, FormEvent, MutableRefObject, useEffect, useState} from 'react'
 import {AboutInterface, Tech} from '@/models/About'
 import useTranslation from 'next-translate/useTranslation'
 import {AdminAboutTech} from '@/components/Admin/About/AdminAboutTech'
@@ -21,6 +21,10 @@ export const AdminAbout: FC<Props> = ({childFunction, about, setAbout}) => {
   const [aboutCopy, changeCopy] = useState({...about})
   const [newTech, changeNewTech] = useState('')
   const [newTechValue, changeNewTechValue] = useState('')
+
+  useEffect(() => {
+    changeText(about.text[lang])
+  }, [about, lang])
 
   const handleCloseModal = () => {
     if (childFunction.current) {
