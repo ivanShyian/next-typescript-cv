@@ -30,7 +30,7 @@ export default class EducationCircles extends PureComponent<Props> {
     const r = clientWidth > 1824 ? 70 : clientWidth > 767 ? 45 : 30
     const margin = (r * 2) / 1.5
     const w = width - margin
-    const h = height - margin
+    const h = (clientWidth > 767 ? height : height / 1.5) - margin
 
     const datasets: [{ x: number, y: number }][] | [] = []
     const selectionList: any[] = []
