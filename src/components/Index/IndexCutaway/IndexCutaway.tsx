@@ -49,7 +49,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
       })
     }, 2674)
     return () => clearInterval(interval)
-  }, [transformValue, negativeOrder, status.length])
+  }, [transformValue, negativeOrder, status])
 
   const subtitleList = status.map((item, idx) => {
     return (
