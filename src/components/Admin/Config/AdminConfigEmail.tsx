@@ -1,14 +1,14 @@
-import {FC, MutableRefObject, useCallback, useEffect, useRef} from 'react'
+import {FC, MutableRefObject, useMemo, useEffect, useRef} from 'react'
 
 interface Props {
-  childValue: MutableRefObject<{getValue: () => string} | null>
+  childValue: MutableRefObject<{getValue: string} | null>
   emailReceiver: string
 }
 
 const ModalEmailTab: FC<Props> = ({emailReceiver, childValue}) => {
   const emailRef = useRef<HTMLInputElement>(null)
 
-  const getValue = useCallback(() => {
+  const getValue = useMemo(() => {
     const email = emailRef.current
     if (email) return email.value || email.placeholder
     return emailReceiver

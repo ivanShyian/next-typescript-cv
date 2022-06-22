@@ -1,7 +1,7 @@
 import './IndexEducation.scss'
 
 import dynamic from 'next/dynamic'
-import {useEffect, useRef, useState, useCallback, FC} from 'react'
+import {useEffect, useRef, useState, useCallback, FC, useMemo} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import useTranslation from 'next-translate/useTranslation'
@@ -88,7 +88,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
     if (item._id) return api.removeSchool(item._id)
   }
 
-  const getTechItemForModal = useCallback(() => {
+  const getTechItemForModal = useMemo(() => {
     if (userModalId) {
       return education.techs.find(tech => tech._id === userModalId)!
     }
@@ -121,7 +121,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
       </div>
       <EducationModal
         onModalClose={onUserModalClose}
-        techItem={getTechItemForModal()}
+        techItem={getTechItemForModal}
       />
       {shouldMount && (
         <AdminEducation

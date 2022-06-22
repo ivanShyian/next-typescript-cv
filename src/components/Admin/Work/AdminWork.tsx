@@ -20,13 +20,13 @@ interface Props {
 const api = new Api()
 
 export const AdminWork: FC<Props> = ({beforeClose, childFunction, editIndex, workList, setWork}) => {
-  const workRef = useRef<{getWorkValues: () => SimplifiedWork} | null>(null)
+  const workRef = useRef<{getWorkValues: SimplifiedWork} | null>(null)
   const imageRef = useRef<{getImage: () => File | null} | null>(null)
   const {lang} = useTranslation() as {lang: 'en' | 'uk'}
 
   const saveWork = () => {
     if (!workRef.current) return
-    let performedData: SimplifiedWork = workRef.current.getWorkValues()
+    let performedData: SimplifiedWork = workRef.current.getWorkValues
     const image = imageRef.current?.getImage()
     // @TODO Add react-hook-form with yup
     const someFieldIsEmpty = Object.keys(performedData).some(v => {

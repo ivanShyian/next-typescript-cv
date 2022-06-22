@@ -1,4 +1,4 @@
-import {FC, FormEvent, MutableRefObject, useCallback, useEffect, useRef, useState} from 'react'
+import {FC, FormEvent, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {Responsibilities, SimplifiedWork, WorkInterface} from '@/models/Work'
 import useTranslation from 'next-translate/useTranslation'
 import PhotoIcon from '@/public/icons/photo.svg'
@@ -9,7 +9,7 @@ import {AdminWorkListItem} from '@/components/Admin/Work/AdminWorkListItem'
 import {EnUkStringInterface} from '@/models/index'
 
 interface Props {
-  workRef: MutableRefObject<{getWorkValues: () => SimplifiedWork} | null>
+  workRef: MutableRefObject<{getWorkValues: SimplifiedWork} | null>
   imageRef: MutableRefObject<{getImage: () => File | null} | null>
   workItem?: WorkInterface
 }
@@ -50,7 +50,7 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
     }
   }, [workItem, lang])
 
-  const getWorkValues = useCallback(() => values, [values])
+  const getWorkValues = useMemo(() => values, [values])
 
   useEffect(() => {
     workRef.current = {getWorkValues}

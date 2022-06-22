@@ -4,9 +4,10 @@ import {
   useState,
   useRef,
   useMemo,
+  useCallback,
   MutableRefObject,
   ReactElement,
-  FC, useCallback
+  FC
 } from 'react'
 import {connect} from 'react-redux'
 import dynamic from 'next/dynamic'
@@ -34,8 +35,8 @@ interface Props {
 const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction }) => {
   const [configCopy, changeConfigCopy] = useState({...config})
   const fileInputRef = useRef<FileList | null>(null)
-  const socialInputRef = useRef<{getValues: () => {[key: string]: string}} | null>(null)
-  const emailInputRef = useRef<{getValue: () => string} | null>(null)
+  const socialInputRef = useRef<{getValues: {[key: string]: string}} | null>(null)
+  const emailInputRef = useRef<{getValue: string} | null>(null)
 
   const changeLocalConfig = useCallback((field: FieldsList, newValues: any) => {
     changeConfigCopy({...configCopy, [field]: newValues})
@@ -49,8 +50,8 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
         'fileToUpload': fileInputRef.current[0]
       }
     }
-    if (socialInputRef.current) data = {...data, links: socialInputRef.current.getValues()}
-    if (emailInputRef.current) data = {...data, emailReceiver: emailInputRef.current.getValue()}
+    if (socialInputRef.current) data = {...data, links: socialInputRef.current.getValues}
+    if (emailInputRef.current) data = {...data, emailReceiver: emailInputRef.current.getValue}
     const changedConfig = await api.changeConfig(data)
     if (changedConfig?.result) {
       setConfig(changedConfig.result)
@@ -79,7 +80,8 @@ const AdminConfig: FC<Props> = ({ config, setConfig, onUnmounted, childFunction 
     <SharedAdminModal
       onSave={onSave}
       childFunction={childFunction}
-      tabList={tabList}>
+      tabList={tabList}
+    >
       {tabList}
     </SharedAdminModal>
   )

@@ -1,14 +1,14 @@
-import {FC, MutableRefObject, useCallback, useEffect} from 'react'
+import {FC, MutableRefObject, useEffect, useMemo} from 'react'
 import {FieldsList} from '@/models/Config'
 
 interface Props {
   linksMap: { [key: string]: string }
-  childFunction: MutableRefObject<{getValues: () => {[key: string]: string}} | null>
+  childFunction: MutableRefObject<{getValues: {[key: string]: string}} | null>
   changeSocial: (field: FieldsList, newValues: any) => void
 }
 
 const ModalSocialTab: FC<Props> = ({linksMap, childFunction, changeSocial}) => {
-  const getValues = useCallback(() => {
+  const getValues = useMemo(() => {
     let result: {[key: string]: string} = {}
     const inputList = document.querySelectorAll('#socialInput') as NodeListOf<HTMLInputElement>
     inputList.forEach((input: HTMLInputElement) => {
