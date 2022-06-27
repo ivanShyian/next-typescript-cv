@@ -8,6 +8,7 @@ import {AdminProjectsForm} from '@/components/Admin/Projects/AdminProjectsForm'
 import {AdminProjectsTech} from '@/components/Admin/Projects/AdminProjectsTech'
 import Image from 'next/image'
 import readAsDataURL from '@/utils/readAsDataURL'
+import imageSource, {HOST} from '@/utils/imageSource'
 
 interface Props {
   modalRef: MutableRefObject<RefModal>
@@ -15,8 +16,6 @@ interface Props {
   updateProjects: (project: Project, files?: File[]) => void
   beforeClose: () => void
 }
-
-const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
 export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, updateProjects}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
@@ -52,12 +51,12 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
           ...other as Project,
           mainImage: {
             ...mainImage,
-            src: `${HOST}${mainImage.src}`
+            src: imageSource(mainImage.src)
           },
           images: images.map(image => {
             return {
               ...image,
-              src: `${HOST}${image.src}`
+              src: imageSource(image.src)
             }
           })
         }
@@ -244,8 +243,8 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
                   key={key}
                 >
                   <Image
-                    src={image.src}
-                    blurDataURL={image.base64 || image.src}
+                    src={imageSource(image.src)}
+                    blurDataURL={image.base64}
                     placeholder="blur"
                     layout="fill"
                     alt="project image"

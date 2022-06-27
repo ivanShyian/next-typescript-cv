@@ -11,8 +11,7 @@ import NextIcon from '@/public/icons/parallax-icons/next.svg'
 import {WorkInterface} from '@/models/Work'
 import useTranslation from 'next-translate/useTranslation'
 import SharedEditDelete from '@/components/Shared/SharedEditDelete'
-
-const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
+import imageSource from '@/utils/imageSource'
 
 interface Props {
   workItem: WorkInterface
@@ -43,7 +42,7 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeIte
     <li className="work__item">
       <div className="work__item_img">
         <Image
-          src={`${HOST}/${workItem.imageUrl.src}`}
+          src={imageSource(workItem.imageUrl.src)}
           blurDataURL={workItem.imageUrl.base64}
           placeholder="blur"
           layout="fill"

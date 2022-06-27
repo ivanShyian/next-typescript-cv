@@ -5,6 +5,7 @@ import {useRouter} from 'next/router'
 import readAsDataURL from '@/utils/readAsDataURL'
 import SharedEditDelete from '@/components/Shared/SharedEditDelete'
 import {EnUkStringInterface, ImageInterface} from '@/models/index'
+import imageSource from '@/utils/imageSource'
 
 interface Props {
   avatar: ImageInterface
@@ -14,12 +15,10 @@ interface Props {
   childFunction: MutableRefObject<FileList | null>
 }
 
-const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
-
 const ModalGeneralTab: FC<Props> = ({avatar, statusList, changeGeneral, nameValue, childFunction}) => {
   const [statusValue, changeStatusValue] = useState('')
   const [editIndex, changeIndex] = useState(-1)
-  const [image, changeImage] = useState(`${HOST}/${avatar.src}`)
+  const [image, changeImage] = useState(imageSource(avatar.src))
   const router = useRouter()
   const fileInput = useRef<HTMLInputElement>(null)
   const locale = router.locale as 'en' | 'uk'

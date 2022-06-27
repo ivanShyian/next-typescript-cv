@@ -5,6 +5,7 @@ import './ProjectItem.scss'
 import FindIcon from '@/public/icons/find.svg'
 import useTranslation from 'next-translate/useTranslation'
 import SharedEditDelete from '@/components/Shared/SharedEditDelete'
+import imageSource from '@/utils/imageSource'
 
 interface Props {
   project: ProjectListItem,
@@ -13,8 +14,6 @@ interface Props {
   onEditClick: (projectId: string) => void
   onDeleteClick: (projectId: string) => void
 }
-
-const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
 export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDeleteClick, onEditClick}: Props) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
@@ -41,7 +40,7 @@ export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDele
       </div>
       <div className="project-item__background">
         <Image
-          src={`${HOST as string}/${project.mainImage.src}`}
+          src={imageSource(project.mainImage.src)}
           blurDataURL={project.mainImage.base64}
           placeholder="blur"
           layout="fill"

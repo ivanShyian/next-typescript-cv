@@ -12,8 +12,7 @@ import CutawayParallax from '@/components/Index/IndexCutaway/CutawayParallax'
 import CutawaySocial from '@/components/Index/IndexCutaway/CutawaySocial'
 import {Translate} from 'next-translate'
 import {StateInterface} from '@/models/index'
-
-const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
+import imageSource from '@/utils/imageSource'
 
 const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, name, avatar}}) => {
   const [transformValue, changeTransformValue] = useState(0)
@@ -69,7 +68,7 @@ const IndexCutaway: FC<{ config: ConfigInterface }> = ({config: {status, links, 
         <div className="cutaway__image">
           <Image
             className="cutaway__image_img"
-            src={`${HOST}/${avatar.src}`}
+            src={imageSource(avatar.src)}
             blurDataURL={avatar.base64}
             placeholder="blur"
             width="175"

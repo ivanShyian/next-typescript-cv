@@ -15,8 +15,7 @@ import {setAbout} from '@/redux/actions'
 import {AboutInterface} from '@/models/About'
 import {Translate} from 'next-translate'
 import {useElementOnScreen} from '@/use/useElementOnScreen'
-
-const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
+import imageSource from '@/utils/imageSource'
 
 interface Props {
   about: AboutInterface
@@ -47,7 +46,7 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
         <div className="about__skills about-skills">
           <div className="about-skills__image">
             <Image
-              src={`${HOST}/${avatar.src}`}
+              src={imageSource(avatar.src)}
               blurDataURL={avatar.base64}
               placeholder="blur"
               objectFit="cover"
@@ -59,7 +58,7 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
           <div className="card about-skills__card">
             <div className="about-skills__card_triangle about-triangle" />
             <div className="about-skills__card_resume about-resume">
-              <p className="about-resume__text">{about.text[lang]}</p>
+              <div className="about-resume__text" dangerouslySetInnerHTML={{__html: about.text[lang]}} />
               <div className="about-resume__button-wrapper">
                 <div className="about-resume__button">
                   <SharedButton>{t('downloadCV')}</SharedButton>

@@ -7,14 +7,13 @@ import {AdminWorkItemForm} from '@/components/Admin/Work/AdminWorkItemForm'
 import readAsDataURL from '@/utils/readAsDataURL'
 import {AdminWorkListItem} from '@/components/Admin/Work/AdminWorkListItem'
 import {EnUkStringInterface} from '@/models/index'
+import imageSource from '@/utils/imageSource'
 
 interface Props {
   workRef: MutableRefObject<{getWorkValues: SimplifiedWork} | null>
   imageRef: MutableRefObject<{getImage: () => File | null} | null>
   workItem?: WorkInterface
 }
-
-const HOST = process.env.API_ENDPOINT || process.env.NEXT_PUBLIC_API_ENDPOINT
 
 export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
@@ -43,7 +42,7 @@ export const AdminWorkItem: FC<Props> = ({workItem, workRef, imageRef}) => {
           description: description[lang],
           imageUrl: {
             ...imageUrl,
-            src: `${HOST}/${imageUrl.src}`
+            src: imageSource(imageUrl.src)
           }
         }
       })
