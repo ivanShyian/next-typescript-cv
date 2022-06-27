@@ -181,7 +181,6 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
   }
 
   const sendData = () => {
-    console.log({values})
     updateProjects({
       ...values as Project,
       mainImage: {
@@ -243,7 +242,7 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
                   key={key}
                 >
                   <Image
-                    src={imageSource(image.src)}
+                    src={image.src}
                     blurDataURL={image.base64}
                     placeholder="blur"
                     layout="fill"
