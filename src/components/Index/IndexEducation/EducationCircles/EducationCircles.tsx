@@ -1,5 +1,5 @@
 import {PureComponent, ContextType} from 'react'
-import {select} from 'd3-selection'
+import {select, selectAll} from 'd3-selection'
 import {scaleOrdinal} from 'd3-scale'
 import {schemeTableau10} from 'd3-scale-chromatic'
 import {transition} from 'd3-transition'
@@ -124,7 +124,7 @@ export default class EducationCircles extends PureComponent<Props> {
             result[result.length - 1] = lCoordinates.join()
             result = result.join('')
 
-            select(`path_${n}`).remove()
+            select(`.path_${n}`).remove()
 
             selectionList[n].path = svg.append('path')
               .datum(datasets[foundDatasetIndex])
