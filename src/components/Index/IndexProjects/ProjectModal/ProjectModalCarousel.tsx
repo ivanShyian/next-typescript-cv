@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect, useCallback, useState, useMemo} from 'react'
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/scss';
@@ -7,6 +7,7 @@ import 'swiper/scss/pagination';
 import Image from 'next/image'
 import {ImageInterface} from '@/models/index'
 import imageSource from '@/utils/imageSource'
+import ImageViewer from 'react-simple-image-viewer'
 
 interface Props {
   imageList: ImageInterface[]
@@ -14,10 +15,27 @@ interface Props {
 
 export const ProjectModalCarousel: FC<Props> = ({imageList}) => {
   const [isMobile, changeIsMobile] = useState(false)
+  const [currentImage, setCurrentImage] = useState(0)
+  const [isViewerOpen, setIsViewerOpen] = useState(false)
 
   useEffect(() => {
     changeIsMobile(document.documentElement.clientWidth < 767)
   }, [])
+
+  const modifiedImageList = useMemo(() => {
+    return imageList.map((image) => imageSource(image.src))
+  }, [imageList])
+
+  const openImageViewer = useCallback((index: number) => {
+    setCurrentImage(index)
+    setIsViewerOpen(true)
+  }, [])
+
+  const closeImageViewer = () => {
+    setCurrentImage(0)
+    setIsViewerOpen(false)
+  }
+
 
   return (
     <div className="project-modal__images">
@@ -38,11 +56,21 @@ export const ProjectModalCarousel: FC<Props> = ({imageList}) => {
                 objectFit="cover"
                 layout="fill"
                 alt="project image"
+                onClick={() => openImageViewer(idx)}
               />
             </SwiperSlide>
           )
         })}
       </Swiper>
+      {isViewerOpen && (
+        <ImageViewer
+          src={ modifiedImageList }
+          currentIndex={ currentImage }
+          disableScroll={ false }
+          closeOnClickOutside={ true }
+          onClose={ closeImageViewer }
+        />
+      )}
     </div>
   )
 }
