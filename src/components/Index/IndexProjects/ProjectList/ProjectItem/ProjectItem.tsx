@@ -44,7 +44,7 @@ export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDele
           blurDataURL={project.mainImage.base64}
           placeholder="blur"
           layout="fill"
-          objectFit={'contain'}
+          objectFit={'cover'}
           alt={'project image'}
         />
       </div>
