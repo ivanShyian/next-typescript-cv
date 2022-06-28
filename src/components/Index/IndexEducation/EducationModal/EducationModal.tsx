@@ -33,6 +33,12 @@ export const EducationModal: FC<Props> = ({techItem, onModalClose}) => {
       {techItem &&
       (
         <div className="education-modal">
+          <div
+            className="education-modal__close"
+            onClick={handleCloseModal}
+          >
+            &#10006;
+          </div>
           <p className="education-modal__title">{techItem.name}</p>
           <ul className="education-modal__courses">
             {techItem.courses.map((course, idx) => (

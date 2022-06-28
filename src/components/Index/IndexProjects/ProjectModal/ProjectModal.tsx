@@ -33,6 +33,12 @@ export const ProjectModal: FC<Props> = ({chosenProject, onModalClose}) => {
     >
       {chosenProject && (
         <div className="project-modal">
+          <div
+            className="project-modal__close"
+            onClick={handleCloseModal}
+          >
+            &#10006;
+          </div>
           <div className="project-modal__heading">
             <p className="project-modal__title">{chosenProject.title}</p>
             <p className="project-modal__subtitle">{chosenProject.subtitle[lang]}</p>

@@ -53,7 +53,7 @@ export const ProjectModalCarousel: FC<Props> = ({imageList}) => {
                 src={imageSource(image.src)}
                 blurDataURL={image.base64}
                 placeholder="blur"
-                objectFit="cover"
+                objectFit="contain"
                 layout="fill"
                 alt="project image"
                 onClick={() => openImageViewer(idx)}
@@ -64,10 +64,10 @@ export const ProjectModalCarousel: FC<Props> = ({imageList}) => {
       </Swiper>
       {isViewerOpen && (
         <ImageViewer
-          src={ modifiedImageList }
-          currentIndex={ currentImage }
-          disableScroll={ false }
-          closeOnClickOutside={ true }
+          src={modifiedImageList}
+          currentIndex={currentImage}
+          disableScroll={false}
+          closeOnClickOutside={true}
           onClose={ closeImageViewer }
         />
       )}
