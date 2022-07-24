@@ -1,16 +1,16 @@
 import {FC} from 'react'
 import {Project} from '@/models/Project'
-import {EnUkStringInterface} from '@/models/index'
 
 interface Props {
   title: string
   subtitle: string
   description: string
   link: string
-  onInputChange: (field: keyof Project, value: string) => void
+  onInputChange: (field: keyof Project, value: string | boolean) => void
+  isWork: boolean
 }
 
-export const AdminProjectsForm: FC<Props> = ({title, subtitle, description, link, onInputChange}) => {
+export const AdminProjectsForm: FC<Props> = ({title, subtitle, description, link, onInputChange, isWork}) => {
   return (
     <div className="admin-projects__form">
       <div className="form-control">
@@ -19,7 +19,8 @@ export const AdminProjectsForm: FC<Props> = ({title, subtitle, description, link
         </div>
         <input
           className="form-control__input"
-          type="text" value={title}
+          type="text"
+          value={title}
           onChange={(e) => onInputChange('title', e.target.value)}
         />
       </div>
@@ -40,7 +41,8 @@ export const AdminProjectsForm: FC<Props> = ({title, subtitle, description, link
         </div>
         <input
           className="form-control__input"
-          type="text" value={description}
+          type="text"
+          value={description}
           onChange={(e) => onInputChange('description', e.target.value)}
         />
       </div>
@@ -50,8 +52,20 @@ export const AdminProjectsForm: FC<Props> = ({title, subtitle, description, link
         </div>
         <input
           className="form-control__input"
-          type="text" value={link}
+          type="text"
+          value={link}
           onChange={(e) => onInputChange('link', e.target.value)}
+        />
+      </div>
+      <div className="form-control checkbox">
+        <div className="form-control__heading">
+          <label htmlFor="">Is work project?</label>
+        </div>
+        <input
+          className="form-control__input"
+          type="checkbox"
+          checked={isWork}
+          onChange={(e) => onInputChange('isWork', !isWork)}
         />
       </div>
     </div>

@@ -39,7 +39,8 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
       src: '',
       base64: ''
     },
-    link: ''
+    link: '',
+    isWork: false
   })
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
     }
   }, [project])
 
-  const onInputChange = (field: keyof Project, value: string) => {
+  const onInputChange = (field: keyof Project, value: string | boolean) => {
     if (['description', 'subtitle'].includes(field)) {
       changeValues((prevState) => {
         const values = {...prevState[field] as EnUkStringInterface, [lang]: value}
@@ -205,6 +206,7 @@ export const AdminProjects: FC<Props> = ({modalRef, project, beforeClose, update
           description={(values.description as EnUkStringInterface)[lang] as string}
           link={values.link as string}
           onInputChange={onInputChange}
+          isWork={values.isWork as boolean}
         />
         <div className="admin-projects__techs">
           <p className="admin-projects__techs_title">Techs</p>

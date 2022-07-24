@@ -162,6 +162,19 @@ li {
       height: 120px;
     }
   }
+  &.checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    > .form-control__heading label {
+      font-size: 1.3rem;
+    }
+    > .form-control__input {
+      margin-left: 1rem;
+      height: 18px;
+      width: 18px;
+    }
+  }
 }
 
 #ReactSimpleImageViewer {

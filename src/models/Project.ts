@@ -9,6 +9,7 @@ export interface Project {
   mainImage: ImageInterface
   link: string
   _id?: string
+  isWork?: boolean
 }
 
 export type ProjectListItem = Omit<Project, 'description' | 'technologies' | 'images' | 'link'>
