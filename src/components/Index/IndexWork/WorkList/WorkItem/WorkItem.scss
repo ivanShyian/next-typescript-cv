@@ -55,6 +55,7 @@
       @include maxWidth767 {
         margin-bottom: .25rem;
         font-size: 1.3rem;
+        margin-right: 1.5rem;
       }
     }
     &__position {
@@ -96,8 +97,9 @@
           height: 18px;
         }
       }
-      &.nuxt svg {
-        margin-top: -5px;
+
+      &_name {
+        text-align: right;
       }
     }
     &__subtitle {

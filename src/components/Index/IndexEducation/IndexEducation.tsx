@@ -115,6 +115,7 @@ const IndexEducation: FC<Props> = ({education, techList, setEducation}) => {
               height={circleSizes.height}
               skillList={techList}
               onCourseClick={onCourseClick}
+              text={t('circlesText')}
             />
           </div>
         </div>

@@ -1,12 +1,12 @@
 import {PureComponent, ContextType} from 'react'
-import {select, selectAll} from 'd3-selection'
+import {select} from 'd3-selection'
 import {scaleOrdinal} from 'd3-scale'
 import {schemeTableau10} from 'd3-scale-chromatic'
 import {transition} from 'd3-transition'
 import {line, curveCardinalClosed, Line} from 'd3-shape'
-import './EducationCircles.scss'
 import {AppContext} from '@/ctx/auth'
 import {Techs} from '@/models/Education'
+import './EducationCircles.scss'
 
 select.prototype.transition = transition
 
@@ -15,6 +15,7 @@ interface Props {
   height: number
   skillList: Techs[]
   onCourseClick: (id: string) => void
+  text: string
 }
 
 export default class EducationCircles extends PureComponent<Props> {
@@ -187,6 +188,7 @@ export default class EducationCircles extends PureComponent<Props> {
   render() {
     return (
       <div className="education-circles">
+        <p className="education-circles__text">{this.props.text}</p>
         <svg id="circleCanvas"/>
       </div>
     )

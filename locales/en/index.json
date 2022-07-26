@@ -3,7 +3,7 @@
   "educationTitle": "Education",
   "projectsTitle": "Projects",
   "contactMeTitle": "Contact me",
-  "contactSubtitleMain": "Lets talk about everything",
+  "contactSubtitleMain": "Have questions or suggestions?",
   "contactSubtitle": "Just write me an email",
   "workTitle":  "Work",
   "hire": "Hire!",
@@ -21,5 +21,6 @@
   "formText": "Message",
   "formTextPlaceholder": "Your message...",
   "buttonSend": "Send",
-  "messageSentSuccess": "Message was sent successfully!"
+  "messageSentSuccess": "Message was sent successfully!",
+  "circlesText": "*Catch and click on the circle*"
 }

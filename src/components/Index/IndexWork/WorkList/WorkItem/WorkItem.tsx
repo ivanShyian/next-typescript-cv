@@ -55,11 +55,11 @@ export const WorkItem: FC<Props> = ({workItem, isAdmin, openEditModal, removeIte
           <div className="work-card__heading">
             <div className="work-card__heading_content">
               <p className="work-card__title">{workItem.title}</p>
-              <div className="work-card__position nuxt">
+              <div className="work-card__position">
                 {workItem.technologies.map((v, idx) => (
                   <span key={idx}>{logoByTech[v]}</span>
                 ))}
-                <span>{workItem.position}</span>
+                <span className="work-card__position_name">{workItem.position}</span>
               </div>
             </div>
             <p className="work-card__subtitle">{workItem.subtitle[lang]}</p>
