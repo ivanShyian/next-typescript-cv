@@ -2,10 +2,11 @@ import {FC} from 'react'
 import Image from 'next/image'
 import {ProjectListItem} from '@/models/Project'
 import './ProjectItem.scss'
-import FindIcon from '@/public/icons/find.svg'
 import useTranslation from 'next-translate/useTranslation'
 import SharedEditDelete from '@/components/Shared/SharedEditDelete'
 import imageSource from '@/utils/imageSource'
+import FindIcon from '@/public/icons/find.svg'
+import WorkIcon from '@/public/icons/navigation-icons/briefcase.svg'
 
 interface Props {
   project: ProjectListItem,
@@ -17,10 +18,15 @@ interface Props {
 
 export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDeleteClick, onEditClick}: Props) => {
   const {lang} = useTranslation() as {lang: 'uk' | 'en'}
+
   return (
     <div className="card project-item">
       <div className="project-item__wrapper project-wrapper">
         <div className="project-wrapper__content project-content">
+          <ProjectItemBookmark
+            isWork={project.isWork}
+            className="project-item__work-item-adaptive"
+          />
           <div className="project-content__heading">
             <p className="project-content__title">{project.title}</p>
             <p className="project-content__subtitle">{project.subtitle[lang]}</p>
@@ -39,6 +45,9 @@ export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDele
         </div>
       </div>
       <div className="project-item__background">
+        <ProjectItemBookmark
+          isWork={project.isWork}
+        />
         <Image
           src={imageSource(project.mainImage.src)}
           blurDataURL={project.mainImage.base64}
@@ -47,6 +56,20 @@ export const ProjectItem: FC<Props> = ({project, onProjectClick, isAdmin, onDele
           objectFit={'cover'}
           alt={'project image'}
         />
+      </div>
+    </div>
+  )
+}
+
+const ProjectItemBookmark: FC<{isWork: boolean | undefined, className?: string}> = ({isWork, className}) => {
+  if (!isWork) {
+    return null
+  }
+
+  return (
+    <div className={`project-item__work-item ${className}`}>
+      <div className="project-item__work-item-wrapper">
+        <WorkIcon />
       </div>
     </div>
   )
