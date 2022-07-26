@@ -48,7 +48,10 @@ export const ProjectModalCarousel: FC<Props> = ({imageList}) => {
       >
         {imageList.map((image, idx) => {
           return (
-            <SwiperSlide className="project-modal__image" key={idx}>
+            <SwiperSlide
+              className="project-modal__image"
+              key={idx}
+            >
               <Image
                 src={imageSource(image.src)}
                 blurDataURL={image.base64}

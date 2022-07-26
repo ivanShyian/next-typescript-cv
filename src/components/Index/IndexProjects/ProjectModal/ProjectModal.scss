@@ -42,10 +42,25 @@
         font-weight: 700;
       }
     }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      height: 25px;
+      width: 25px;
+      background-color: rgba(0, 0, 0, .5);
+      border-radius: 50%;
+      &::after {
+        transform: translateX(1px);
+        font-size: 12px;
+      }
+    }
     .swiper-button-prev {
       left: 5px;
+      &::after {
+        transform: translateX(-1px);
+      }
     }
-    .swiper-button-right {
+    .swiper-button-next {
       right: 5px;
     }
     .swiper-pagination {
