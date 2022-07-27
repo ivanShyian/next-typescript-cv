@@ -38,7 +38,7 @@ export const ProjectModalCarousel: FC<Props> = ({imageList}) => {
 
 
   return (
-    <div className="project-modal__images">
+    <div className={`project-modal__images ${isViewerOpen ? 'o-hidden' : ''}`}>
       <Swiper
         modules={[Navigation, Pagination]}
         slidesPerView={isMobile ? 1: 2}

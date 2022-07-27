@@ -107,7 +107,8 @@ li {
     }
   }
   &__Body--open {
-    overflow-y: hidden;
+    overflow: hidden;
+    position: relative;
     margin-right: 12px;
   }
 }

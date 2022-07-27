@@ -1,12 +1,21 @@
 .education-modal {
   position: relative;
   &__close {
-    position: absolute;
-    right: 0;
-    top: 0;
+    position: fixed;
+    right: 12%;
+    top: 9%;
     font-size: 1.2rem;
     color: $c-primary;
     cursor: pointer;
+    z-index: 10;
+    @include maxWidth767 {
+      right: 12%;
+      top: 9%;
+    }
+    @include minWidth1824 {
+      top: 17%;
+      right: 26%;
+    }
   }
   &__title {
     font-family: Rubik, sans-serif;

@@ -5,12 +5,21 @@
   flex: 1;
   height: 100%;
   &__close {
-    position: absolute;
-    right: 0;
-    top: 0;
+    position: fixed;
+    right: 12%;
+    top: 9%;
     font-size: 1.2rem;
     color: $c-primary;
     cursor: pointer;
+    z-index: 2;
+    @include maxWidth767 {
+      right: 12%;
+      top: 9%;
+    }
+    @include minWidth1824 {
+      top: 17%;
+      right: 26%;
+    }
   }
   &__heading {
     display: flex;
@@ -24,16 +33,29 @@
     font-weight: 600;
     text-align: center;
     margin-right: .5rem;
+    @include maxWidth767 {
+      font-size: 1.2rem;
+      margin-right: 1rem;
+    }
   }
 
   &__subtitle {
     font-size: 1.1rem;
     letter-spacing: 1.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include maxWidth767 {
+      font-size: 1rem;
+    }
   }
   &__images {
     margin-bottom: .75rem;
     border-radius: .5rem;
-    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, .15);
+    .swiper-pagination {
+      border-radius: 0 0 .5rem .5rem;
+    }
     .swiper-button-prev,
     .swiper-button-next, {
       &:after {
@@ -41,6 +63,9 @@
         color: $c-white;
         font-weight: 700;
       }
+    }
+    &.o-hidden {
+      overflow: hidden;
     }
 
     .swiper-button-prev,
@@ -94,19 +119,30 @@
     line-height: 1.3rem;
     opacity: .9;
     font-size: 1.05rem;
+    margin-bottom: 1rem;
   }
   &__footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    @include maxWidth767 {
+      margin-bottom: 1rem;
+    }
   }
   &__list {
     display: flex;
     flex-wrap: wrap;
+    width: 70%;
+    @include maxWidth767 {
+      margin-bottom: -0.5rem;
+    }
     &_item {
       font-size: .9rem;
       font-weight: 600;
       margin: 0 .5rem 0 0;
+      @include maxWidth767 {
+        margin-bottom: 0.5rem;
+      }
     }
   }
   &__link {
@@ -115,5 +151,17 @@
     text-decoration: none;
     font-weight: 600;
     font-size: .9rem;
+  }
+
+  #ReactSimpleImageViewer {
+    z-index: 3;
+    .react-simple-image-viewer__previous,
+    .react-simple-image-viewer__next {
+      font-size: 40px;
+      @include maxWidth767 {
+        font-size: 24px;
+        margin: 0 10px;
+      }
+    }
   }
 }
