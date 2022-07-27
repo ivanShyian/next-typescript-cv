@@ -68,7 +68,7 @@ const seo: ISeo = {
       },
       {
         name: 'og:image',
-        content: image
+        content: this.meta.social.graphic
       },
       {
         name: 'og:description',
