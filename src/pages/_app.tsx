@@ -4,15 +4,11 @@ import type {AppProps} from 'next/app'
 import Layout from '../layouts/Core/Core'
 import {AuthWrapper} from '@/ctx/auth'
 import {wrapper} from '@/redux/store'
-import Head from 'next/head'
-
-const MyApp = ({Component, pageProps}: AppProps) => {
+import TheSeo from '@/components/TheSeo'
+const MyApp = ({Component, pageProps, url}: AppProps & {url: string}) => {
   return (
     <>
-      <Head>
-        <title>ivanShyian</title>
-        <meta/>
-      </Head>
+      <TheSeo url={url} />
       <AuthWrapper>
         <Layout>
           <Component {...pageProps} />
@@ -20,6 +16,12 @@ const MyApp = ({Component, pageProps}: AppProps) => {
       </AuthWrapper>
     </>
   )
+}
+
+MyApp.getInitialProps = ({ctx}: any) => {
+  return {
+    url: ctx.req.headers.host
+  }
 }
 
 export default wrapper.withRedux(MyApp)
