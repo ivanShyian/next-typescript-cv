@@ -83,7 +83,7 @@ const IndexAbout: FC<Props> = ({about, avatar, setAbout}) => {
             </div>
             <div className="about-skills__button-wrapper">
               <div className="about-skills__button">
-                <SharedButton>{t('downloadCV')}</SharedButton>
+                <SharedButton onClick={downloadCV}>{t('downloadCV')}</SharedButton>
               </div>
               {isAdmin && (
                 <>

@@ -63,7 +63,6 @@
     @include maxWidth1170 {
       display: flex;
       justify-content: center;
-      margin-bottom: 1rem;
     }
     @include maxWidth767 {
       .shared-button {
@@ -72,6 +71,10 @@
         font-size: 1rem;
       }
     }
+  }
+
+  &__admin {
+    margin: 1rem 0;
   }
   &__upload,
   &__admin {
