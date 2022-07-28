@@ -8,6 +8,7 @@ export interface Tech {
 
 export interface AboutInterface {
   _id: string
+  cvPath: string
   techs: Tech[]
   text: EnUkStringInterface
 }

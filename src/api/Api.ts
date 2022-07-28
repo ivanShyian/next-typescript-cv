@@ -275,4 +275,30 @@ export default class Api {
       console.error(e.response?.data?.message)
     }
   }
+
+  async postNewCV(file: File): Promise<{result: string} | undefined> {
+    try {
+      const {data} = await this.init().post('/admin/cv/upload', objectToFormData({fileToUpload: file}))
+      if (!data) throw Error('Something went wrong')
+      return data
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
+
+  async downloadCV(filepath: string): Promise<void> {
+    try {
+      const response = await this.init().get(`/cv/download?filepath=${filepath}`, {
+        responseType: "blob"
+      })
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a');
+      link.href = url
+      link.setAttribute('download', 'CV_Ivan_Shyian.pdf')
+      document.body.appendChild(link)
+      link.click()
+    } catch (e: any) {
+      console.error(e.response?.data?.message)
+    }
+  }
 }
